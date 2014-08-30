@@ -22,5 +22,5 @@
 spider
 
 
-#External Folder
-ext
+#Kdevelop project
+*.kdev4*

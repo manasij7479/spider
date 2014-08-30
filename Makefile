@@ -1,8 +1,6 @@
 CXX:= g++
-LDFLAGS := -lpthread 
-INCPATHS := -I ext
-LIBPATHS := -L ext
-CXXFLAGS :=-c -Wall -std=c++11 -g $(INCPATHS)
+LDFLAGS := -lpthread -lOGDF
+CXXFLAGS :=-c -Wall -std=c++11 -g 
 # Sources are all .cpp files in this dir
 SRCS :=         $(wildcard *.cpp)
 # Object files are everything in $SRCS, with the .cpp replaced by a .o
