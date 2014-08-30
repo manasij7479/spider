@@ -1,6 +1,6 @@
 CXX:= g++
-LDFLAGS := -lpthread -lOGDF
-CXXFLAGS :=-c -Wall -std=c++11 -g 
+LDFLAGS := -lOGDF -lpthread
+CXXFLAGS :=-c -Wall -std=c++11
 # Sources are all .cpp files in this dir
 SRCS :=         $(wildcard *.cpp)
 # Object files are everything in $SRCS, with the .cpp replaced by a .o
@@ -21,7 +21,7 @@ default :       $(TARGET)
 # Use all the requisites ($^), as input files (the .o files) for the linker
 # Output file is $TARGET, which is executable_name
 $(TARGET) :     $(OBJS)
-	$(CXX) $(LIBPATHS) $(LDFLAGS) $^ -o $(TARGET)
+	$(CXX)  $^ -o $(TARGET) $(LDFLAGS)
 
 # Simple clean up target
 clean :
