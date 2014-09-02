@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iostream>
 //Only generate things we actually need
 //No need to go overboard
 //We do not need a whole/(or technically correct) C++ AST.
@@ -93,9 +94,13 @@ namespace spider
             {
                 std::ostringstream out;
                 out<<name<<"(";
-                for(int i=0;i<args.size()-1;++i)
-                    out<<args[i]<<',';
-                out<<args[args.size()-1];                    
+                if (args.size() != 0 )
+                {
+                    for(int i=0;i<args.size()-1;++i)
+                        out<<args[i]<<',';
+                    std::cerr<<args.size();
+                        out<<args[args.size()-1];
+                }                    
                 out<<")";
                 return out.str();
             }

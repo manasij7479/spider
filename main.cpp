@@ -1,8 +1,16 @@
 #include <iostream>
 #include "CppGen.hpp"
- 
+
+using namespace spider::cpp;
 int main()
 {
-    std::cout<<spider::cpp::WhileStmt(new spider::cpp::Literal("true"),new spider::cpp::Stmt()).str();
     
-}
+    auto stmt = 
+    new WhileStmt
+        (new Literal("true"),
+            new StmtBlock(
+                {new StandaloneExprStmt(new FunctionCallExpr("foo",{}))}
+            ));
+    std::cout<< stmt;
+    
+} 
