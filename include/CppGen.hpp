@@ -9,7 +9,7 @@
 //We do not need a whole/(or technically correct) C++ AST.
 namespace spider
 {
-    namespace cpp
+    namespace cppgen
     {
         class Printable
         {
@@ -175,7 +175,7 @@ namespace spider
                 std::ostringstream out;
                 out<<"if("<<condition<<")\n";
                 out<<tstmt;
-                out<<"\nelse\n";
+                out<<"else\n";
                 out<<fstmt;
                 return out.str();
             }
