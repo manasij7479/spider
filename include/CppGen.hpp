@@ -76,7 +76,7 @@ namespace spider
             std::string str() const
             {
                 std::ostringstream out;
-                out<<"("<<lhs<<op<<rhs<<")";
+                out<<"("<<lhs << ' ' <<op<< ' ' <<rhs<<")";
                 return out.str();
             }
         private:

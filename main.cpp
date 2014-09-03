@@ -1,6 +1,5 @@
 #include <iostream>
 #include "CppGen.hpp"
-
 using namespace spider::cppgen;
 int main()
 {
