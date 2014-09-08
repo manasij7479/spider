@@ -39,15 +39,9 @@ namespace dot
                 return 0;
             else return data[position];
         }
-        int remember()
-        {
-            int result = bookmarks.size();
-            bookmarks[result]=position;
-            return result;
-        }
         void reset(int p)
         {
-            position = bookmarks[p];
+            position = p;
         }
         void skipSpace()
         {
@@ -57,7 +51,6 @@ namespace dot
     private:
         std::vector<char> data;
         int position;
-        std::map<int,int> bookmarks;
         
     };
 }
