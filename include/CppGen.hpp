@@ -85,7 +85,7 @@ namespace spider
             BinOp* op;
         };
         
-        class FunctionCallExpr : public Expr
+        class FunctionCallExpr : public Expr //Works for method calls too. eg: name is "foo.method" .
         {
         public:
             FunctionCallExpr(std::string name_, std::vector<Expr*> args_):
@@ -200,7 +200,6 @@ namespace spider
             Expr* condition;
             Stmt* stmt;
         };
-        
     }
 }
 #endif
