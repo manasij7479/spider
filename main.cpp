@@ -7,9 +7,11 @@
 
 int main()
 {
-     spider::Stream stream("\n\twhile(true)");
+     spider::Stream stream("\n\twhile\nwhilewhile while(1){}\nwhile");
      spider::MatchExact while_k("while");
-     std::cout<<while_k(stream)<<"\n";
+     spider::MatchZeroOrMore many_whiles(&while_k);
+     std::cout<<many_whiles(stream)<<"\n";
+     std::cout<<many_whiles.count()<<"\n";
      std::cout<<stream.get();
 } 
 
