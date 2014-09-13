@@ -2,9 +2,10 @@
 #define SPIDER_PARSER_STREAM_HPP
 #include <vector>
 #include <map>
+#include <iterator>
 #include <istream>
 #include <cctype>
-namespace dot
+namespace spider
 {
     class Stream
     {
@@ -21,11 +22,15 @@ namespace dot
                 data.resize(inSize);
 
                 in.seekg(0, std::ios_base::beg);
-                in.read(&data[0], inSize);
+                in.read(&data[0], inSize);//may cause segfault, preserve space in vector
             }
             position = 0;
         }
-        
+        Stream(std::string in)
+        {
+            std::copy(in.begin(), in.end(), std::back_inserter(data));
+            position=0;
+        }
         int pos(){return position;}
         char get()
         {
@@ -39,7 +44,7 @@ namespace dot
                 return 0;
             else return data[position];
         }
-        void reset(int p)
+        void reset(int p = 0)
         {
             position = p;
         }

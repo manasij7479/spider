@@ -1,18 +1,15 @@
 #include <iostream>
 #include "CppGen.hpp"
 #include "AST/AST.hpp"
-using namespace spider::cppgen;
+#include "Parser/Stream.hpp"
+#include "Parser/ParseUtils.hpp"
+// // using namespace spider::cppgen;
+
 int main()
 {
-    
-    auto stmt = 
-    new IfStmt
-        (   new BinExpr(new Literal("5"),new Literal("6"),new BinOp("<")),
-            new StmtBlock(
-                {new StandaloneExprStmt(new FunctionCallExpr("foo",{}))}),
-            new StmtBlock(
-                {new StandaloneExprStmt(new FunctionCallExpr("bar",{}))}) 
-        );
-    std::cout<< stmt;   
+     spider::Stream stream("\n\twhile(true)");
+     spider::MatchExact while_k("while");
+     std::cout<<while_k(stream)<<"\n";
+     std::cout<<stream.get();
 } 
 
