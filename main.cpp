@@ -7,11 +7,28 @@
 
 int main()
 {
-     spider::Stream stream("\n\twhile\nwhilewhile while(1){}\nwhile");
-     spider::MatchExact while_k("while");
-     spider::MatchZeroOrMore many_whiles(&while_k);
-     std::cout<<many_whiles(stream)<<"\n";
-     std::cout<<many_whiles.count()<<"\n";
-     std::cout<<stream.get();
+    spider::Stream stream("elseifwhilewhilewhilewhilewhile");
+    spider::MatchExact while_k("while");
+    spider::MatchExact if_k("if");
+    spider::MatchExact else_k("else");
+    spider::MatchZeroOrMore many_whiles(&while_k);
+     
+    spider::MatchAny wie({&many_whiles, &while_k, &if_k, &else_k});
+     
+     
+    std::cout<<wie(stream)<<"\n";
+    std::cout<<wie.which()<<"\n";
+    std::cout<<stream.peek()<<"\n"<<many_whiles.count()<<"\n\n";
+    many_whiles.reset();
+    
+    std::cout<<wie(stream)<<"\n";
+    std::cout<<wie.which()<<"\n";
+    std::cout<<stream.peek()<<"\n"<<many_whiles.count()<<"\n\n";
+    many_whiles.reset(); 
+    
+    std::cout<<wie(stream)<<"\n";
+    std::cout<<wie.which()<<"\n";
+    std::cout<<stream.peek()<<"\n"<<many_whiles.count()<<"\n\n";
+    many_whiles.reset();
 } 
 
