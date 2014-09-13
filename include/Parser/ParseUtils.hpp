@@ -36,10 +36,11 @@ namespace spider
         std::string str;
         int pos;
     };
-    class MatchZeroOrMore : public Match
+    template <int N>
+    class MatchNOrMore : public Match
     {
     public:
-        MatchZeroOrMore(Match* m):matcher(*m),pos(0),n(0){}
+        MatchNOrMore(Match* m):matcher(*m),pos(0),n(0){}
         bool operator()(Stream& in)
         {
             pos  = in.pos();
@@ -50,7 +51,7 @@ namespace spider
                 n++;
             }
             in.reset(lastgoodpos);
-            return (n > 0);
+            return (n > N);
         }
         void resetStream(Stream& stream)
         {
@@ -62,6 +63,7 @@ namespace spider
         int pos;
         int n;
     };
+    typedef MatchNOrMore<0> MatchZeroOrMore;
     
     
 }
