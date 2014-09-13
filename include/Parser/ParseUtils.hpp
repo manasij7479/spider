@@ -111,12 +111,51 @@ namespace spider
             pos = 0;
             correct = -1;
         }
+        void resetStream(Stream& stream)
+        {
+            stream.reset(pos);
+        }
     private:
         std::vector<Match*> matchers;
         int correct;
         int pos;
     };
     
+    //Have to memoize partial matches somehow
+    class MatchAll : public Match
+    {
+    public:
+        MatchAll(std::vector<Match*> matchers_):matchers(matchers_),pos(0),n(0){};
+        bool operator()(Stream& in)
+        {
+            pos = in.pos();
+            for (auto m : matchers)
+            {
+                Match& matcher = *m;
+                if (! matcher(in))
+                    return false;
+                n++;
+            }
+            return true;
+        }
+        void resetStream(Stream& stream)
+        {
+            stream.reset(pos);
+        }
+        int count()
+        {
+            return n;
+        }
+        void reset()
+        {
+            pos=0;
+            n=0;
+        }
+    private:
+        std::vector<Match*> matchers;
+        int pos;
+        int n;
+    };
     
 }
 #endif
