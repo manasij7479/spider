@@ -56,7 +56,7 @@ namespace spider
                 n++;
             }
             in.reset(lastgoodpos);
-            return (n > N);
+            return (n >= N);
         }
         void resetStream(Stream& stream)
         {
@@ -156,6 +156,47 @@ namespace spider
         int pos;
         int n;
     };
+    
+    class MatchCharClass : public Match
+    {
+    public:
+        MatchCharClass(char first_, char last_, int step_ = 1):first(first_),last(last_),step(step_), pos(0),correct(0){}
+        bool operator()(Stream& in)
+        {
+            pos=in.pos();
+            //Binary Search here
+            for(char c = first; c <= last; c+=step)
+            {
+                
+                if(in.peek() == c)
+                {
+                    correct = in.get();
+                    return true;
+                }
+            }
+            return false;
+        }
+        char which()
+        {
+            return correct;
+        }
+        void reset()
+        {
+            pos=0;
+            correct=0;
+        }
+        void resetStream(Stream& stream)
+        {
+            stream.reset(pos);
+        }
+    private:
+        char first;
+        char last;
+        int step;
+        int pos;
+        char correct;
+    };
+    
     
 }
 #endif

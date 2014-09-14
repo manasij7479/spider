@@ -7,17 +7,11 @@
 
 int main()
 {
-    spider::Stream stream("else\nif     while\twhilewhilewhilewhile");
-    spider::MatchExact while_k("while");
-    spider::MatchExact if_k("if");
-    spider::MatchExact else_k("else");
-    spider::MatchZeroOrMore many_whiles(&while_k);
-     
-    spider::MatchAll all({&else_k, &if_k, &many_whiles});
-
-    std::cout<<all(stream)<<"\n";
-    std::cout<<many_whiles.count()<<"\n";
-    std::cout<<stream.peek()<<"\n\n";
+    spider::Stream stream("bcd1");
+    spider::MatchCharClass alpha('a','z');
+    spider::MatchOneOrMore alphastar(&alpha);
+    std::cout<<alphastar(stream);
+    std::cout<<' '<<alphastar.count();
     
 } 
 
