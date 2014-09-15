@@ -1,5 +1,5 @@
-#ifndef SPIDER_PARSER_PARSEUTILS_HPP
-#define SPIDER_PARSER_PARSEUTILS_HPP
+#ifndef SPIDER_PARSER_MATCHERS_HPP
+#define SPIDER_PARSER_MATCHERS_HPP
 #include "Parser/Stream.hpp"
 // #include <iostream>
 namespace spider
@@ -16,6 +16,7 @@ namespace spider
             stream.reset();
         }
     };
+    
     class MatchExact : public Match
     {
     public:
