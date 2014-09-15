@@ -1,8 +1,5 @@
-#include <ogdf/basic/Graph.h>
-#include <ogdf/basic/graph_generators.h>
-#include <ogdf/energybased/FMMMLayout.h>
+
  
-using namespace ogdf;
  
 int main()
 {
