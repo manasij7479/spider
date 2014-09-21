@@ -34,28 +34,37 @@ namespace spider
     {
         typedef Layout<Graph> Base;
     public:
-        RandomLayout(Graph& g,Point mean={0,0},Point stddev={0.5f,.5f}):
+        RandomLayout(Graph& g, float m):
             Layout<Graph>(g),
             twister(rd()),
-            x(mean.x,stddev.x),
-            y(mean.y,stddev.y)
+            modifier(m)
             {
                 Base::hasEdgeData = false;
             };
-        virtual void generate(Rect bounds) // FIXME: Ignores bounds
+        virtual void generate(Rect bounds)
         {
+            Point center = {(bounds.max.x+bounds.min.x)/2, (bounds.max.y+bounds.min.y)/2};
+            
+            float xspan = center.x - bounds.min.x;
+            float yspan = center.y - bounds.min.y;
+            
+            Point stddev={xspan/modifier,yspan/modifier};
+            
+            std::normal_distribution<> x(center.x, stddev.x),y(center.y, stddev.y);
+            
             for(auto it=Base::g.begin();it!=Base::g.end();++it)
             {
                 float xp=x(twister);
                 float yp=y(twister);
                 Base::points.value(it->first)=Point({xp,yp});
-                //TODO: transform x,y such that the fall within bounds
             }
+
+            
         }
     private:
         std::random_device rd;
         std::mt19937 twister;
-        std::normal_distribution<> x,y;
+        float modifier; //Increasing this means the points will be spread out , but also increases the chances of lying out of bounds
         
     };
 }

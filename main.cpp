@@ -7,7 +7,7 @@ int main()
 {
     auto g = graph::gen::cycle(5);
     spider::RandomLayout<decltype(g)> layout(g);
-    layout.generate({{-2,-2},{2,2}});
+    layout.generate({{10,10},{100,100}});
     for (auto v : graph::VertexList(g))
     {
         auto p = layout.getVertex(v);
