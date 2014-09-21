@@ -1,13 +1,13 @@
 //This is to be currently used for testing pusposes
 #include <iostream>
-#include "Layout/Layout.hpp"
+#include "Layout/RandomLayout.hpp"
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/collections.hpp"
 int main()
 {
     auto g = graph::gen::cycle(5);
     spider::RandomLayout<decltype(g)> layout(g);
-    layout.generate({{10,10},{100,100}});
+    layout.generate({{0,0},{100,100}});
     for (auto v : graph::VertexList(g))
     {
         auto p = layout.getVertex(v);
