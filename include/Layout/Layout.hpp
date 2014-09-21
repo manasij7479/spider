@@ -20,7 +20,7 @@ namespace spider
         {
             if (!hasEdgeData)
                 return {getVertex(x),getVertex(y)};
-            else return curves.value({x,y});
+            else return curves.value(x,y);
         }
         Graph& getGraph(){return g;}
     protected:
