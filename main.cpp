@@ -3,14 +3,22 @@
 #include "Layout/RandomLayout.hpp"
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/collections.hpp"
+#include "Display/GraphDisplay.hpp"
 int main()
 {
     auto g = graph::gen::cycle(5);
     spider::RandomLayout<decltype(g)> layout(g);
-    layout.generate({{0,0},{100,100}});
-    for (auto v : graph::VertexList(g))
+    spider::Display<decltype(g)> disp(layout, 800, 600);
+    
+    while (true)
     {
-        auto p = layout.getVertex(v);
-        std::cout << v << '\t' << p.x << ','<< p.y <<std::endl;
+        std::string foo;
+        std::getline(std::cin, foo);
+        if (foo == ".q")
+        {
+            disp.close();
+            break;
+        }
+        else std::cout << foo << std::endl;
     }
 }

@@ -8,7 +8,7 @@ namespace spider
     {
         typedef Layout<Graph> Base;
     public:
-        RandomLayout(Graph& g, float m = 1.65f):
+        RandomLayout(Graph& g, float m = 2.0f):
             Layout<Graph>(g),
             twister(rd()),
             modifier(m)

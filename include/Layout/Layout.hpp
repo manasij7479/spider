@@ -22,6 +22,7 @@ namespace spider
                 return {getVertex(x),getVertex(y)};
             else return curves.value({x,y});
         }
+        Graph& getGraph(){return g;}
     protected:
         graph::VertexAttribute<Graph,Point> points;
         graph::EdgeAttribute<Graph,Curve> curves;
