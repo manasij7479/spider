@@ -9,8 +9,12 @@ namespace spider
     class Layout
     {
         typedef typename Graph::VertexType V;
+        typedef graph::VertexAttribute<Graph,Point> VA;
+        typedef graph::EdgeAttribute<Graph,Curve> EA;
+        
     public:
         Layout(Graph& g_):g(g_){};
+        
         virtual void generate(Rect bounds){}
         Point getVertex(V v)
         {
@@ -23,6 +27,10 @@ namespace spider
             else return curves.value(x,y);
         }
         Graph& getGraph(){return g;}
+        VA getVertexAttribute(){return points;}
+        EA getEdgeAttribute(){return curves;}
+        void setVertexAttribute(VA va){points=va;}
+        void setEdgeAttribute(EA ea){curves = ea;}
     protected:
         graph::VertexAttribute<Graph,Point> points;
         graph::EdgeAttribute<Graph,Curve> curves;
