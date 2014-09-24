@@ -31,6 +31,10 @@ namespace spider
     {
         return std::sqrt(distsquare(a,b));
     }
+    bool Within(Rect bounds, Point p) // move this to Geometry
+    {
+        return  p.x > bounds.min.x && p.x < bounds.max.x && p.y > bounds.min.y && p.y < bounds.max.y;;
+    }
     
 }
 #endif

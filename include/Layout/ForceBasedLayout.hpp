@@ -3,6 +3,7 @@
 #include "Layout/Layout.hpp"
 #include "Layout/RandomLayout.hpp"
 #include "graph/algorithm/predicates.hpp"
+#include "graph/algorithm/collections.hpp"
 #include <iostream>
 namespace spider
 {
@@ -13,11 +14,9 @@ namespace spider
     public:
         ForceBasedLayout(Graph& g, float gc_ = 3000, float kc_ = 1.0/1000, float errf_ = 0.1)
         :Base(g), gc(gc_), kc(kc_), errf(errf_){};
-        void generate(Rect bounds)
+        void generate(Rect bounds, graph::VertexAttribute<Graph,Point> basis)
         {
-            RandomLayout<Graph> rl(Base::g);
-            rl.generate(bounds);
-            auto va = rl.getVertexAttribute();
+            auto& va = basis;
             int iter = 10000;
             while(iter--)
             {
@@ -74,8 +73,14 @@ namespace spider
             }
             Base::setVertexAttribute(va);
         }
+        void generate(Rect bounds)
+        {
+            RandomLayout<Graph> rl(Base::g);
+            rl.generate(bounds);
+            generate(bounds, rl.getVertexAttribute());
+            
+        }
     private:
-        
         float gc;
         float kc;
         float errf;

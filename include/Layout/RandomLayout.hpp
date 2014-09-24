@@ -1,6 +1,7 @@
 #ifndef SPIDER_RANDOM_LAYOUT_HPP
 #define SPIDER_RANDOM_LAYOUT_HPP
 #include "Layout/Layout.hpp"
+#include <iostream>
 namespace spider
 {
     template <typename Graph>
@@ -8,7 +9,7 @@ namespace spider
     {
         typedef Layout<Graph> Base;
     public:
-        RandomLayout(Graph& g, float m = 2.5f):
+        RandomLayout(Graph& g, float m = 1.5f):
             Layout<Graph>(g),
             twister(rd()),
             modifier(m)
@@ -25,11 +26,15 @@ namespace spider
             Point stddev={xspan/modifier,yspan/modifier};
             
             std::normal_distribution<> x(center.x, stddev.x),y(center.y, stddev.y);
-            
+//             std::uniform_real_distribution<> x(bounds.min.x, bounds.max.x),y(bounds.min.y, bounds.max.y);  
+
             for(auto it=Base::g.begin();it!=Base::g.end();++it)
             {
-                float xp=x(twister);
-                float yp=y(twister);
+                float xp,yp;
+                do {
+                    xp=x(twister);
+                    yp=y(twister);
+                }while (!Within(bounds,{xp,yp}));
                 Base::points.value(it->first)=Point({xp,yp});
             }
 
