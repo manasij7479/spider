@@ -12,4 +12,4 @@ add_subdirectory(lib)
 # add_subdirectory(test)
 
 add_executable(spider main.cpp)
-target_link_libraries(spider spiderMain sfml-system sfml-window sfml-graphics)
+target_link_libraries(spider spiderMain OGDF pthread sfml-system sfml-window sfml-graphics)
