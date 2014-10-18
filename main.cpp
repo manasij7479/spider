@@ -13,7 +13,7 @@ int main()
     spider::CircularLayout<decltype(g)> layout(g);
     spider::Display<decltype(g)> disp(layout, 800, 600);
     
-    while (true)
+    while (disp.isOpen())
     {
         std::string foo;
         std::getline(std::cin, foo);

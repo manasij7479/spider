@@ -4,6 +4,7 @@
 #include "graph/algorithm/collections.hpp"
 #include <thread>
 #include <SFML/Graphics.hpp>
+#include <atomic>
 namespace spider
 {
     template<typename Graph>
@@ -29,7 +30,10 @@ namespace spider
                     {
                         // "close requested" event: we close the window
                         if (event.type == sf::Event::Closed)
+                        {
                             window.close();
+                            keepOpen = false;
+                        }
                     }
                     window.clear(sf::Color::White);
                     for(auto v : graph::VertexList(g))
@@ -64,10 +68,19 @@ namespace spider
             keepOpen = false;
             thread->join();
         }
+        bool isOpen()
+        {
+            bool ret = keepOpen;
+            return ret;
+        }
+        bool wait()
+        {
+            thread->join();
+        }
     private:
         Layout<Graph>& layout;
         Graph& g;
-        bool keepOpen;
+        std::atomic<bool> keepOpen;
         std::thread *thread;
     };
 }
