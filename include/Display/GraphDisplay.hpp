@@ -20,8 +20,7 @@ namespace spider
             auto winThread = [&](int sx, int sy)
             {
                 sf::RenderWindow window(sf::VideoMode(sx, sy), "Display");
-                sf::CircleShape c(3,10);
-                c.setFillColor(sf::Color::Blue);
+                sf::Sprite sp=getSprite(sx,sy);
                 
                 while (window.isOpen())
                 {
@@ -36,13 +35,37 @@ namespace spider
                         }
                     }
                     window.clear(sf::Color::White);
-                    for(auto v : graph::VertexList(g))
-                    {
-                        Point p = layout.getVertex(v);
-                        c.setPosition(p.x,p.y);
-                        window.draw(c);
-                    }
-                    for (auto e : graph::EdgeList(g, false))
+                    
+                    window.draw(sp);
+                    
+                    window.display();
+                    if (!keepOpen)
+                        window.close();
+                }
+            };
+            thread = new std::thread(winThread, sizex, sizey);
+            
+        }
+        void initializeRenderTexture(int sizex=200,int sizey=200)
+        {
+            rendertexture.create(sizex,sizey);
+            rendertexture.clear(sf::Color::White);
+            rendertexture.setSmooth(true);
+        }
+        void drawVertices()
+        {
+            sf::CircleShape vertex(10,1000000);
+            vertex.setFillColor(sf::Color::Blue);
+            for(auto v : graph::VertexList(g))
+            {
+                Point p=layout.getVertex(v);
+                vertex.setPosition(p.x,p.y);
+                rendertexture.draw(vertex);
+            }
+        }
+        void drawEdges()
+        {
+            for (auto e : graph::EdgeList(g, false))
                     {
                         Curve c=layout.getEdge(std::get<0>(e),std::get<1>(e));
                         
@@ -53,15 +76,17 @@ namespace spider
                         };
                         line[0].color=sf::Color::Black;
                         line[1].color=sf::Color::Black;
-                        window.draw(line, 2, sf::Lines);
+                        rendertexture.draw(line, 2, sf::Lines);
                     }
-                    window.display();
-                    if (!keepOpen)
-                        window.close();
-                }
-            };
-            thread = new std::thread(winThread, sizex, sizey);
-            
+        }
+        sf::Sprite getSprite(int sizex,int sizey)
+        {
+            initializeRenderTexture(sizex,sizey);
+            drawVertices();
+            drawEdges();
+            sf::Sprite sp;
+            sp.setTexture(rendertexture.getTexture());
+            return sp;
         }
         void close()
         {
@@ -80,6 +105,7 @@ namespace spider
     private:
         Layout<Graph>& layout;
         Graph& g;
+        sf::RenderTexture rendertexture;
         std::atomic<bool> keepOpen;
         std::thread *thread;
     };
