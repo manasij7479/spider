@@ -11,19 +11,23 @@ namespace spider
     class Display
     {
     public:
-        Display(Layout<Graph>& l, int sizex, int sizey ):layout(l), g(l.getGraph())
-        {
-            Rect bounds = {{0,0},{sizex * 1.0f,sizey * 1.0f}};
-            layout.generate(bounds);
+        Display(Layout<Graph>* l, int sizex_, int sizey_ ) 
+        {    
             keepOpen = true;
-                        
+            sizex = sizex_;
+            sizey = sizey_;
+            setLayout(l);
+            
             auto winThread = [&](int sx, int sy)
             {
                 sf::RenderWindow window(sf::VideoMode(sx, sy), "Display");
-                sf::Sprite sp=getSprite(sx,sy);
+                sf::Sprite  sp = getSprite(sx,sy);
                 
                 while (window.isOpen())
                 {
+                    
+                    if (layoutChanged)
+                        sp=getSprite(sx,sy);
                     sf::Event event;
                     while (window.pollEvent(event))
                     {
@@ -56,18 +60,18 @@ namespace spider
         {
             sf::CircleShape vertex(10,1000000);
             vertex.setFillColor(sf::Color::Blue);
-            for(auto v : graph::VertexList(g))
+            for(auto v : graph::VertexList(layout->getGraph()))
             {
-                Point p=layout.getVertex(v);
+                Point p=layout->getVertex(v);
                 vertex.setPosition(p.x,p.y);
                 rendertexture.draw(vertex);
             }
         }
         void drawEdges()
         {
-            for (auto e : graph::EdgeList(g, false))
+            for (auto e : graph::EdgeList(layout->getGraph(), false))
                     {
-                        Curve c=layout.getEdge(std::get<0>(e),std::get<1>(e));
+                        Curve c=layout->getEdge(std::get<0>(e),std::get<1>(e));
                         
                         sf::Vertex line[] =
                         {
@@ -86,7 +90,15 @@ namespace spider
             drawEdges();
             sf::Sprite sp;
             sp.setTexture(rendertexture.getTexture());
+            layoutChanged = false;
             return sp;
+        }
+        void setLayout(Layout<Graph>* newLayout)
+        {
+            layout = newLayout;
+            Rect bounds = {{0,0},{sizex * 1.0f,sizey * 1.0f}};
+            layout->generate(bounds);
+            layoutChanged = true;
         }
         void close()
         {
@@ -103,11 +115,12 @@ namespace spider
             thread->join();
         }
     private:
-        Layout<Graph>& layout;
-        Graph& g;
+        Layout<Graph>* layout;
         sf::RenderTexture rendertexture;
         std::atomic<bool> keepOpen;
+        bool layoutChanged;
         std::thread *thread;
+        int sizex, sizey;
     };
 }
 #endif

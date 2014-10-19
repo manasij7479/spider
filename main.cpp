@@ -11,7 +11,8 @@ int main()
 {
     auto g = graph::gen::complete(10);
     spider::CircularLayout<decltype(g)> layout(g);
-    spider::Display<decltype(g)> disp(layout, 800, 600);
+    spider::ForceBasedLayout<decltype(g)> layout2(g);
+    spider::Display<decltype(g)> disp(&layout, 800, 600);
     
     while (disp.isOpen())
     {
@@ -21,6 +22,10 @@ int main()
         {
             disp.close();
             break;
+        }
+        if (foo == "change")
+        {
+            disp.setLayout(&layout2);
         }
         else std::cout << foo << std::endl;
     }
