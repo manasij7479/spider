@@ -23,6 +23,10 @@ namespace spider
                 sf::RenderWindow window(sf::VideoMode(sx, sy), "Display");
                 sf::Sprite  sp = getSprite(sx,sy);
                 
+                int flag=0;
+                sf::Vector2f diff;
+                sf::Vector2i initial;
+                
                 while (window.isOpen())
                 {
                     
@@ -37,10 +41,26 @@ namespace spider
                             window.close();
                             keepOpen = false;
                         }
+                        if(event.type == sf::Event::MouseButtonPressed)
+                        {
+                            initial=sf::Mouse::getPosition(window);
+                            if(sp.getGlobalBounds().contains(sf::Vector2f(initial)))
+                                flag=1;
+                            diff=sf::Vector2f(initial)-sp.getPosition();
+                        }
+                        if(event.type == sf::Event::MouseButtonReleased)
+                            flag=0;
                     }
                     window.clear(sf::Color::White);
                     
-                    window.draw(sp);
+                    if(flag == 0)
+                        window.draw(sp);
+                    if(flag == 1)
+                    {
+                        if(sf::Mouse::getPosition(window).x>0&&sf::Mouse::getPosition(window).y>0&&sf::Mouse::getPosition(window).x<sx&&sf::Mouse::getPosition(window).y<sy)
+                            sp.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))-diff);
+                        window.draw(sp);
+                    }
                     
                     window.display();
                     if (!keepOpen)
