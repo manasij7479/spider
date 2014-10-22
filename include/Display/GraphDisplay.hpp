@@ -16,7 +16,7 @@ namespace spider
             keepOpen = true;
             sizex = sizex_;
             sizey = sizey_;
-            setLayout(l);
+            layout = l;
             thread = new std::thread(std::bind (&Display<Graph>::winThread, this));
             
         }
@@ -36,6 +36,8 @@ namespace spider
             sf::Vector2f diff;
             sf::Vector2i initial;
             
+            setLayout(layout);
+            
             while (window.isOpen())
             {
                 sf::Event event;
@@ -47,13 +49,13 @@ namespace spider
                         window.close();
                         keepOpen = false;
                     }
-                    if (event.type == sf::Event::Resized)
-                    {
-                        std::cout << event.size.height << ' '<<event.size.width <<std::endl;
-                        sizex = event.size.width;
-                        sizey = event.size.height;
-                        setLayout(layout);
-                    }
+//                     if (event.type == sf::Event::Resized)
+//                     {
+//                         std::cout << event.size.height << ' '<<event.size.width <<std::endl;
+//                         sizex = event.size.width;
+//                         sizey = event.size.height;
+//                         setLayout(layout);
+//                     }
                     if(event.type == sf::Event::MouseButtonPressed)
                     {
                         initial=sf::Mouse::getPosition(window);
@@ -155,7 +157,6 @@ namespace spider
         sf::RenderTexture rendertexture;
         sf::Sprite sprite;
         std::atomic<bool> keepOpen;
-        bool layoutChanged;
         std::thread *thread;
         int sizex, sizey;
     };
