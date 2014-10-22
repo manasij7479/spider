@@ -30,9 +30,7 @@ namespace spider
         }
         void winThread()
         {
-            int sx = sizex, sy = sizey;
-            sf::RenderWindow window(sf::VideoMode(sx, sy), "Display");
-            sf::Sprite sp;
+            sf::RenderWindow window(sf::VideoMode(sizex, sizey), "Display");
             
             int moveFlag=0;
             sf::Vector2f diff;
@@ -49,35 +47,38 @@ namespace spider
                         window.close();
                         keepOpen = false;
                     }
+                    if (event.type == sf::Event::Resized)
+                    {
+                        std::cout << event.size.height << ' '<<event.size.width <<std::endl;
+                        sizex = event.size.width;
+                        sizey = event.size.height;
+                        setLayout(layout);
+                    }
                     if(event.type == sf::Event::MouseButtonPressed)
                     {
                         initial=sf::Mouse::getPosition(window);
-                        if(sp.getGlobalBounds().contains(sf::Vector2f(initial)))
+                        if(sprite.getGlobalBounds().contains(sf::Vector2f(initial)))
                             moveFlag=1;
-                        diff=sf::Vector2f(initial)-sp.getPosition();
+                        diff=sf::Vector2f(initial)-sprite.getPosition();
                     }
                     if(event.type == sf::Event::MouseButtonReleased)
                         moveFlag=0;
                 }
                 
-
                 
                 window.clear(sf::Color::White);
                 
                 if (layout == nullptr)
                     continue;
                 
-                if (layoutChanged)
-                    sp=getSprite(sx,sy);
-                
                 if(moveFlag == 0)
-                    window.draw(sp);
+                    window.draw(sprite);
 
                 if(moveFlag == 1)
                 {
-                    if(sf::Mouse::getPosition(window).x>0&&sf::Mouse::getPosition(window).y>0&&sf::Mouse::getPosition(window).x<sx&&sf::Mouse::getPosition(window).y<sy)
-                        sp.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))-diff);
-                    window.draw(sp);
+                    if(sf::Mouse::getPosition(window).x>0&&sf::Mouse::getPosition(window).y>0&&sf::Mouse::getPosition(window).x<sizex&&sf::Mouse::getPosition(window).y<sizey)
+                        sprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))-diff);
+                    window.draw(sprite);
                 }
                 
                 window.display();
@@ -93,7 +94,7 @@ namespace spider
         }
         void drawVertices()
         {
-            sf::CircleShape vertex(10,1000000);
+            sf::CircleShape vertex(10,10);
             vertex.setFillColor(sf::Color::Blue);
             for(auto v : graph::VertexList(layout->getGraph()))
             {
@@ -125,7 +126,6 @@ namespace spider
             drawEdges();
             sf::Sprite sp;
             sp.setTexture(rendertexture.getTexture());
-            layoutChanged = false;
             return sp;
         }
         void setLayout(Layout<Graph>* newLayout)
@@ -134,7 +134,7 @@ namespace spider
             layout = newLayout;
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
-            layoutChanged = true;
+            sprite = getSprite(sizex,sizey);
         }
         void close()
         {
@@ -153,6 +153,7 @@ namespace spider
     private:
         Layout<Graph>* layout;
         sf::RenderTexture rendertexture;
+        sf::Sprite sprite;
         std::atomic<bool> keepOpen;
         bool layoutChanged;
         std::thread *thread;

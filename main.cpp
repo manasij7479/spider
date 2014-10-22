@@ -9,7 +9,7 @@
 #include "External/OGDFAdapter.hpp"
 int main()
 {
-    auto g = graph::gen::complete(10);
+    auto g = graph::gen::complete(6);
     spider::CircularLayout<decltype(g)> layout(g);
     spider::ForceBasedLayout<decltype(g)> layout2(g);
     spider::Display<decltype(g)> disp(&layout, 800, 600);
