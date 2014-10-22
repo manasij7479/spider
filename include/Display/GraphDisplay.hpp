@@ -32,7 +32,7 @@ namespace spider
         {
             sf::RenderWindow window(sf::VideoMode(sizex, sizey), "Display");
             
-            int moveFlag=0;
+            int moveFlag=0,noTicks;
             sf::Vector2f diff;
             sf::Vector2i initial;
             
@@ -65,6 +65,11 @@ namespace spider
                     }
                     if(event.type == sf::Event::MouseButtonReleased)
                         moveFlag=0;
+                    if(event.type == sf::Event::MouseWheelMoved)
+                    {
+                        noTicks=event.mouseWheel.delta;
+                        moveFlag=2;
+                    }
                 }
                 
                 
@@ -81,6 +86,16 @@ namespace spider
                     if(sf::Mouse::getPosition(window).x>0&&sf::Mouse::getPosition(window).y>0&&sf::Mouse::getPosition(window).x<sizex&&sf::Mouse::getPosition(window).y<sizey)
                         sprite.setPosition(sf::Vector2f(sf::Mouse::getPosition(window))-diff);
                     window.draw(sprite);
+                }
+                if(moveFlag == 2)                      //Zoom in for upward scroll & vice-versa at mouse position
+                {
+                    sprite.setOrigin((sf::Vector2f)sf::Mouse::getPosition(window));
+                    if(noTicks<0)
+                        sprite.scale(0.5,0.5);
+                    if(noTicks>0)
+                        sprite.scale(2.0,2.0);
+                    window.draw(sprite);
+                    moveFlag=0;
                 }
                 
                 window.display();
