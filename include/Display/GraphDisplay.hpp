@@ -18,6 +18,7 @@ namespace spider
             sizey = sizey_;
             layout = l;
             thread = new std::thread(std::bind (&Display<Graph>::winThread, this));
+            layoutChanged = true;
             
         }
         Display(int sizex_, int sizey_)
@@ -40,6 +41,11 @@ namespace spider
             
             while (window.isOpen())
             {
+                if (layoutChanged)
+                {
+                    layoutChanged = false;
+                    sprite = getSprite(sizex, sizey);
+                }
                 sf::Event event;
                 while (window.pollEvent(event))
                 {
@@ -169,7 +175,7 @@ namespace spider
             layout = newLayout;
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
-            sprite = getSprite(sizex,sizey);
+            layoutChanged = true;
         }
         void close()
         {
@@ -192,6 +198,7 @@ namespace spider
         std::atomic<bool> keepOpen;
         std::thread *thread;
         int sizex, sizey;
+        bool layoutChanged;
     };
 }
 #endif
