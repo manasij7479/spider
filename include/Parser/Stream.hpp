@@ -53,6 +53,13 @@ namespace spider
             while(std::isspace(data[position]))
                 position++;
         }
+        std::string range(int start, int end) // end as in iterators
+        {
+            std::string result;
+            for(int i = start; i < end && i < data.size(); ++i)
+                result += data[i];
+            return result;
+        }
     private:
         std::vector<char> data;
         int position;

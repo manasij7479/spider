@@ -6,9 +6,24 @@
 
 namespace spider
 {
-    class MatchSpiderIdentifier
+    class MatchSpiderIdentifier : public Match
     {
-        
+    public:
+        bool operator()(Stream& in)
+        {
+            Match& matcher = *Cat(Alpha(), Star(Alnum()));
+            int prev = in.pos();
+            bool result = matcher(in);
+            if (result)
+                identifier = in.range(prev, in.pos());
+            return result;
+        }
+        std::string get()
+        {
+            return identifier;
+        }
+    private:
+        std::string identifier;
     };
 }
 #endif

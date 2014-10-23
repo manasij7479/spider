@@ -43,7 +43,7 @@ namespace spider
     
     Match* Alpha()
     {
-        return Any(CharClass('a','b'),CharClass('A','B'));
+        return Any(CharClass('a','z'),CharClass('A','Z'));
     }
     Match* Digit()
     {
