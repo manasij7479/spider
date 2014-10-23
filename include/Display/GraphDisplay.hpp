@@ -70,6 +70,8 @@ namespace spider
                         noTicks=event.mouseWheel.delta;
                         moveFlag=2;
                     }
+                    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                        moveFlag=3;
                 }
                 
                 
@@ -89,13 +91,29 @@ namespace spider
                 }
                 if(moveFlag == 2)                      //Zoom in for upward scroll & vice-versa at mouse position
                 {
-                    sprite.setOrigin((sf::Vector2f)sf::Mouse::getPosition(window));
-                    if(noTicks<0)
-                        sprite.scale(0.5,0.5);
-                    if(noTicks>0)
-                        sprite.scale(2.0,2.0);
-                    window.draw(sprite);
                     moveFlag=0;
+                    sf::Vector2f finalPos;
+                    sf::Vector2i initialPos=sf::Mouse::getPosition(window);
+                    if(noTicks>0)
+                    {
+                        sprite.scale(1.2,1.2);
+                        finalPos.x=1.2*(float)initialPos.x;
+                        finalPos.y=1.2*(float)initialPos.y;
+                    }
+                    if(noTicks<0)
+                    {
+                        sprite.scale(0.8,0.8);
+                        finalPos.x=0.8*(float)initialPos.x;
+                        finalPos.y=0.8*(float)initialPos.y;
+                    }
+                    sprite.move((sf::Vector2f)initialPos-finalPos);
+                    window.draw(sprite);
+                }
+                if(moveFlag == 3)                           //Fit-to-Page with Esc 
+                {
+                    sprite.setScale(1,1);
+                    sprite.setPosition(0.0,0.0);
+                    window.draw(sprite);
                 }
                 
                 window.display();
