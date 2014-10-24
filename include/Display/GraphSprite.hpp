@@ -26,8 +26,8 @@ namespace spider
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
             initializeRenderTexture(sizex,sizey);
-            drawVertices();
             drawEdges();
+            drawVertices();
             sp.setTexture(rendertexture.getTexture());
         }
         bool within(float x, float y)
@@ -46,8 +46,9 @@ namespace spider
         }
         void drawVertices()
         {
-            sf::CircleShape vertex(10,10);
+            sf::CircleShape vertex(5,10);
             vertex.setFillColor(sf::Color::Blue);
+            vertex.setOrigin(vertex.getOrigin().x+vertex.getRadius(),vertex.getOrigin().y+vertex.getRadius());
             for(auto v : graph::VertexList(layout->getGraph()))
             {
                 Point p=layout->getVertex(v);
