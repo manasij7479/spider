@@ -6,13 +6,16 @@
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/collections.hpp"
 #include "Display/GraphDisplay.hpp"
+#include "Display/GraphSprite.hpp"
 #include "External/OGDFAdapter.hpp"
 int main()
 {
     auto g = graph::gen::complete(6);
     spider::CircularLayout<decltype(g)> layout(g);
     spider::ForceBasedLayout<decltype(g)> layout2(g);
-    spider::Display<decltype(g)> disp(&layout, 800, 600);
+    
+    spider::GraphSprite<decltype(g)> gs(&layout);
+    spider::Display<decltype(g)> disp(&gs, 800, 600);
     
     while (disp.isOpen())
     {
@@ -25,7 +28,7 @@ int main()
         }
         if (foo == "change")
         {
-            disp.setLayout(&layout2);
+            gs.setLayout(&layout2);
         }
         else std::cout << foo << std::endl;
     }
