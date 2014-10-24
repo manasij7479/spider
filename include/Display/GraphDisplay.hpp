@@ -33,7 +33,7 @@ namespace spider
 //         }
         void winThread()
         {
-            sf::RenderWindow window(sf::VideoMode(sizex, sizey), "Display");
+            sf::RenderWindow window(sf::VideoMode(sizex, sizey), "Display",sf::Style::None|sf::Style::Titlebar|sf::Style::Close);
             
             int moveFlag=0,noTicks;
             sf::Vector2f diff;
@@ -49,7 +49,6 @@ namespace spider
 //                     layoutChanged = false;
 //                     sprite = getSprite(sizex, sizey);
 //                 }
-                sf::Sprite& sprite = gsprite->get();
                 sf::Event event;
                 while (window.pollEvent(event))
                 {
@@ -69,9 +68,9 @@ namespace spider
                     if(event.type == sf::Event::MouseButtonPressed)
                     {
                         initial=sf::Mouse::getPosition(window);
-                        if(sprite.getGlobalBounds().contains(sf::Vector2f(initial)))
+                        if(gsprite->within(sf::Vector2f(initial)))
                             moveFlag=1;
-                        diff=sf::Vector2f(initial)-sprite.getPosition();
+                        diff=sf::Vector2f(initial)-gsprite->getPosition();
                     }
                     if(event.type == sf::Event::MouseButtonReleased)
                         moveFlag=0;
@@ -86,6 +85,7 @@ namespace spider
                 
                 
                 window.clear(sf::Color::White);
+                sf::Sprite& sprite = gsprite->get();
                 
 //                 if (layout == nullptr)
 //                     continue;
@@ -124,6 +124,7 @@ namespace spider
                     sprite.setScale(1,1);
                     sprite.setPosition(0.0,0.0);
                     window.draw(sprite);
+                    moveFlag=0;
                 }
                 
                 window.display();

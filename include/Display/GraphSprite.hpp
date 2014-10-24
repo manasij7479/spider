@@ -34,6 +34,14 @@ namespace spider
         {
             return sp.getGlobalBounds().contains(x,y);
         }
+        bool within(sf::Vector2f p)
+        {
+            return sp.getGlobalBounds().contains(p);
+        }
+        sf::Vector2f getPosition()
+        {
+            return sp.getPosition();
+        }
         sf::Sprite& get() // set up locks
         {
             return sp;
