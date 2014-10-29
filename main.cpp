@@ -7,6 +7,7 @@
 #include "graph/algorithm/collections.hpp"
 #include "Display/GraphDisplay.hpp"
 #include "Display/GraphSprite.hpp"
+#include "Display/SceneGraph.hpp"
 #include "External/OGDFAdapter.hpp"
 int main()
 {
@@ -38,5 +39,13 @@ int main()
 //     g.insertEdge(1,2,true);
 //     auto gnew = spider::ConvertToOGDF(g);
 //     gnew.writeGML("test.gml");
-    
+//     auto g = graph::gen::complete(6);
+//     sf::RenderWindow window(sf::VideoMode(800,600), "Display");
+//     spider::GraphSpriteObject<decltype(g)> test;
+//     
+//     while(window.isOpen())
+//     {
+//         test.draw(&window, {0,0});
+//         window.display();
+//     }
 }

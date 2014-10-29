@@ -9,8 +9,17 @@ namespace spider
     {
         float x;
         float y;
+
     };
     typedef vec2 Point;
+    
+    vec2 operator+(vec2 x, vec2 y)
+    {
+        vec2 z;
+        z.x = x.x + y.x;
+        z.y = x.y + y.y;
+        return z;
+    }
     
     typedef std::vector<Point> Curve;
     

@@ -1,6 +1,7 @@
 #ifndef SPIDER_GRAPH_SPRITE
 #define SPIDER_GRAPH_SPRITE
 #include "SpiderSprite.hpp"
+#include "SceneGraph.hpp"
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
@@ -92,6 +93,19 @@ namespace spider
         bool layoutChanged;
         Layout<Graph>* layout;
         
+    };
+
+    template<typename Graph>
+    class GraphSpriteObject // Will be renamed after the above class is discarded
+    : public Drawable
+    {
+    public:
+        void draw(sf::RenderWindow* win, vec2 offset)
+        {
+            sf::CircleShape vertex(5,10);
+            vertex.setFillColor(sf::Color::Blue);
+            win->draw(vertex);
+        }
     };
 }
 #endif
