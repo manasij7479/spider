@@ -100,12 +100,85 @@ namespace spider
     : public Drawable
     {
     public:
-        void draw(sf::RenderWindow* win, vec2 offset)
+        GraphSpriteObject(Layout<Graph>* l, int x, int y) // x,y are no longer window sizes. local bounds are {(0,0),(x,y)}
+        {
+            layout = l ;
+            init(x,y);
+        }
+        void init(int x, int y)
+        {
+            sizex = x;
+            sizey = y;
+            float border = 0;
+            Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
+            layout->generate(bounds);
+            generateEdgeArray();
+        }
+        void drawVertices(sf::RenderWindow* win, vec2 offset)
         {
             sf::CircleShape vertex(5,10);
             vertex.setFillColor(sf::Color::Blue);
-            win->draw(vertex);
+            vertex.setOrigin(vertex.getOrigin().x+vertex.getRadius(),vertex.getOrigin().y+vertex.getRadius());
+            for(auto v : graph::VertexList(layout->getGraph()))
+            {
+                Point p=layout->getVertex(v);
+                vertex.setPosition(p.x,p.y);
+                win->draw(vertex);
+            }
         }
+//         void drawEdges(sf::RenderWindow* win, vec2 offset)
+//         {
+//             for (auto e : graph::EdgeList(layout->getGraph(), false))
+//             {
+//                 Curve c=layout->getEdge(std::get<0>(e),std::get<1>(e));
+//                 
+//                 sf::Vertex line[] =
+//                 {
+//                     sf::Vertex(sf::Vector2f(c[0].x, c[0].y)),
+//                     sf::Vertex(sf::Vector2f(c[1].x, c[1].y))
+//                 };
+//                 line[0].color=sf::Color::Black;
+//                 line[1].color=sf::Color::Black;
+//                 win->draw(line, 2, sf::Lines);
+//             }
+//         }
+//         
+        void draw(sf::RenderWindow* win, vec2 offset)
+        {
+//             drawEdges(win,offset);
+            drawVertices(win,offset);
+            sf::Transform translate;
+            translate.translate(offset.x,offset.y);
+            win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, sf::RenderStates(translate));
+        }
+//     void generateVertexArray()
+//     {
+//         vertexArray.clear();
+//         
+//     }
+    void generateEdgeArray()
+    {
+        for (auto e : graph::EdgeList(layout->getGraph(), false))
+        {
+            Curve c=layout->getEdge(std::get<0>(e),std::get<1>(e));
+            
+            sf::Vertex line[] =
+            {
+                sf::Vertex(sf::Vector2f(c[0].x, c[0].y)),
+                sf::Vertex(sf::Vector2f(c[1].x, c[1].y))
+            };
+            line[0].color=sf::Color::Black;
+            line[1].color=sf::Color::Black;
+            edgeArray.push_back(line[0]);
+            edgeArray.push_back(line[1]);
+        }
+    }
+    private:
+        Layout<Graph>* layout;
+        int sizex, sizey;
+//         std::vector<sf::Vertex> vertexArray;
+        std::vector<sf::Vertex> edgeArray;
+        
     };
 }
 #endif

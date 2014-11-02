@@ -11,41 +11,43 @@
 #include "External/OGDFAdapter.hpp"
 int main()
 {
-    auto g = graph::gen::complete(6);
-    spider::CircularLayout<decltype(g)> layout(g);
-    spider::ForceBasedLayout<decltype(g)> layout2(g);
-    
-    spider::GraphSprite<decltype(g)> gs(&layout);
-    spider::Display<decltype(g)> disp(&gs, 800, 600);
-    
-    while (disp.isOpen())
-    {
-        std::string foo;
-        std::getline(std::cin, foo);
-        if (foo == ".q")
-        {
-            disp.close();
-            break;
-        }
-        if (foo == "change")
-        {
-            gs.setLayout(&layout2);
-        }
-        else std::cout << foo << std::endl;
-    }
+//     auto g = graph::gen::complete(6);
+//     spider::CircularLayout<decltype(g)> layout(g);
+//     spider::ForceBasedLayout<decltype(g)> layout2(g);
+//     
+//     spider::GraphSprite<decltype(g)> gs(&layout);
+//     spider::Display<decltype(g)> disp(&gs, 800, 600);
+//     
+//     while (disp.isOpen())
+//     {
+//         std::string foo;
+//         std::getline(std::cin, foo);
+//         if (foo == ".q")
+//         {
+//             disp.close();
+//             break;
+//         }
+//         if (foo == "change")
+//         {
+//             gs.setLayout(&layout2);
+//         }
+//         else std::cout << foo << std::endl;
+//     }
 //     graph::Graph<int,bool> g;
 //     g.insertVertex(1);
 //     g.insertVertex(2);
 //     g.insertEdge(1,2,true);
 //     auto gnew = spider::ConvertToOGDF(g);
 //     gnew.writeGML("test.gml");
-//     auto g = graph::gen::complete(6);
-//     sf::RenderWindow window(sf::VideoMode(800,600), "Display");
-//     spider::GraphSpriteObject<decltype(g)> test;
-//     
-//     while(window.isOpen())
-//     {
-//         test.draw(&window, {0,0});
-//         window.display();
-//     }
+    auto g = graph::gen::complete(6);
+    spider::CircularLayout<decltype(g)> layout(g);
+    sf::RenderWindow window(sf::VideoMode(800,600), "Display");
+    spider::GraphSpriteObject<decltype(g)> test(&layout, 800, 600);
+    
+    while(window.isOpen())
+    {   
+        window.clear(sf::Color::White);
+        test.draw(&window, {0,0});
+        window.display();
+    }
 }
