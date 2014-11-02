@@ -13,3 +13,5 @@ add_subdirectory(lib)
 
 add_executable(spider main.cpp)
 target_link_libraries(spider spiderMain OGDF pthread sfml-system sfml-window sfml-graphics)
+
+file(COPY resource DESTINATION .)
