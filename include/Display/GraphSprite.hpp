@@ -113,51 +113,49 @@ namespace spider
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
             generateEdgeArray();
+            generateVertexArray();
         }
-        void drawVertices(sf::RenderWindow* win, vec2 offset)
+    void draw(sf::RenderWindow* win, vec2 offset)
+    {
+        sf::Transform translate;
+        translate.translate(offset.x,offset.y);
+        sf::RenderStates state(translate);
+        win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, state);
+        sf::Texture tex;
+        tex.loadFromFile("resource/vertex.png");
+        state.texture = &tex;
+        win->draw(vertexArray.data(), vertexArray.size(), sf::Quads, state);
+        
+        
+    }
+    void generateVertexArray()
+    {
+        vertexArray.clear();
+        for(auto v : graph::VertexList(layout->getGraph()))
         {
-            sf::CircleShape vertex(5,10);
-            vertex.setFillColor(sf::Color::Blue);
-            vertex.setOrigin(vertex.getOrigin().x+vertex.getRadius(),vertex.getOrigin().y+vertex.getRadius());
-            for(auto v : graph::VertexList(layout->getGraph()))
-            {
-                Point p=layout->getVertex(v);
-                vertex.setPosition(p.x,p.y);
-                win->draw(vertex);
-            }
+            Point p=layout->getVertex(v);
+            sf::Vertex quad[4];
+            
+            quad[0]= sf::Vertex(sf::Vector2f(p.x - 10, p.y - 10));
+            quad[1]= sf::Vertex(sf::Vector2f(p.x - 10, p.y + 10));
+            quad[2]= sf::Vertex(sf::Vector2f(p.x + 10, p.y + 10));
+            quad[3]= sf::Vertex(sf::Vector2f(p.x + 10, p.y - 10));
+            
+            quad[0].texCoords = sf::Vector2f(0, 0);
+            quad[1].texCoords = sf::Vector2f(20, 0);
+            quad[2].texCoords = sf::Vector2f(20, 20);
+            quad[3].texCoords = sf::Vector2f(0, 20);
+            
+            vertexArray.push_back(quad[0]);
+            vertexArray.push_back(quad[1]);
+            vertexArray.push_back(quad[2]);
+            vertexArray.push_back(quad[3]);
         }
-//         void drawEdges(sf::RenderWindow* win, vec2 offset)
-//         {
-//             for (auto e : graph::EdgeList(layout->getGraph(), false))
-//             {
-//                 Curve c=layout->getEdge(std::get<0>(e),std::get<1>(e));
-//                 
-//                 sf::Vertex line[] =
-//                 {
-//                     sf::Vertex(sf::Vector2f(c[0].x, c[0].y)),
-//                     sf::Vertex(sf::Vector2f(c[1].x, c[1].y))
-//                 };
-//                 line[0].color=sf::Color::Black;
-//                 line[1].color=sf::Color::Black;
-//                 win->draw(line, 2, sf::Lines);
-//             }
-//         }
-//         
-        void draw(sf::RenderWindow* win, vec2 offset)
-        {
-//             drawEdges(win,offset);
-            drawVertices(win,offset);
-            sf::Transform translate;
-            translate.translate(offset.x,offset.y);
-            win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, sf::RenderStates(translate));
-        }
-//     void generateVertexArray()
-//     {
-//         vertexArray.clear();
-//         
-//     }
+        
+    }
     void generateEdgeArray()
     {
+        edgeArray.clear();
         for (auto e : graph::EdgeList(layout->getGraph(), false))
         {
             Curve c=layout->getEdge(std::get<0>(e),std::get<1>(e));
@@ -176,7 +174,7 @@ namespace spider
     private:
         Layout<Graph>* layout;
         int sizex, sizey;
-//         std::vector<sf::Vertex> vertexArray;
+        std::vector<sf::Vertex> vertexArray;
         std::vector<sf::Vertex> edgeArray;
         
     };
