@@ -120,10 +120,16 @@ namespace spider
         sf::Transform translate;
         translate.translate(offset.x,offset.y);
         sf::RenderStates state(translate);
+        
         win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, state);
+        
         sf::Texture tex;
-        tex.loadFromFile("resource/vertex.png");
-        state.texture = &tex;
+        
+        if (!tex.loadFromFile("resource/vertex.png")) 
+            ; // do nothing..or maybe a log entry later
+        else
+            state.texture = &tex;
+        
         win->draw(vertexArray.data(), vertexArray.size(), sf::Quads, state);
         
         
