@@ -9,6 +9,7 @@
 #include "Display/GraphSprite.hpp"
 #include "Display/SceneGraph.hpp"
 #include "External/OGDFAdapter.hpp"
+#include "Event/Event.hpp"
 int main()
 {
 //     auto g = graph::gen::complete(6);
@@ -43,11 +44,18 @@ int main()
     spider::CircularLayout<decltype(g)> layout(g);
     sf::RenderWindow window(sf::VideoMode(800,600), "Display");
     spider::GraphSpriteObject<decltype(g)> test(&layout, 800, 600);
-    
+    spider::EventManager mgr;
+    mgr.registerMouseClickHandler([](float x, float y){std::cout<<x<<' '<<y<<std::endl;});
     while(window.isOpen())
     {   
         window.clear(sf::Color::White);
         test.draw(&window, {0,0});
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::MouseButtonPressed)
+                mgr.reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
+        }
         window.display();
     }
 }
