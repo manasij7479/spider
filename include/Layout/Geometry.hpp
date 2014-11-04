@@ -7,6 +7,8 @@ namespace spider
 {
     struct vec2
     {
+        vec2(){};
+        vec2(float x_, float y_):x(x_),y(y_){};
         float x;
         float y;
 
@@ -25,10 +27,11 @@ namespace spider
     
     struct Rect
     {
+        Rect(){};
+        Rect(Point a, Point b): min(a), max(b){};
         Point min;
         Point max;    
     };
-    
     float distsquare(Point a, Point b)
     {
         float dx = a.x - b.x;

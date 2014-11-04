@@ -4,6 +4,7 @@
 #include <vector>
 namespace spider
 {
+    //May need locks later, not sure
     class EventManager
     {
     private:

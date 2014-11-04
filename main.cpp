@@ -40,22 +40,41 @@ int main()
 //     g.insertEdge(1,2,true);
 //     auto gnew = spider::ConvertToOGDF(g);
 //     gnew.writeGML("test.gml");
+    
+//     auto g = graph::gen::complete(6);
+//     spider::CircularLayout<decltype(g)> layout(g);
+//     sf::RenderWindow window(sf::VideoMode(800,600), "Display");
+//     spider::GraphSpriteObject<decltype(g)> test(&layout, 800, 600);
+//     spider::EventManager mgr;
+//     mgr.registerMouseClickHandler([](float x, float y){std::cout<<x<<' '<<y<<std::endl;});
+//     while(window.isOpen())
+//     {   
+//         window.clear(sf::Color::White);
+//         test.draw(&window, {0,0});
+//         sf::Event event;
+//         while (window.pollEvent(event))
+//         {
+//             if (event.type == sf::Event::MouseButtonPressed)
+//                 mgr.reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
+//         }
+//         window.display();
+//     }
+
+    int sizex = 800, sizey = 600;
     auto g = graph::gen::complete(6);
     spider::CircularLayout<decltype(g)> layout(g);
-    sf::RenderWindow window(sf::VideoMode(800,600), "Display");
-    spider::GraphSpriteObject<decltype(g)> test(&layout, 800, 600);
-    spider::EventManager mgr;
-    mgr.registerMouseClickHandler([](float x, float y){std::cout<<x<<' '<<y<<std::endl;});
-    while(window.isOpen())
-    {   
-        window.clear(sf::Color::White);
-        test.draw(&window, {0,0});
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::MouseButtonPressed)
-                mgr.reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
-        }
-        window.display();
+    spider::GraphSpriteObject<decltype(g)> gObj(&layout, sizex, sizey);
+
+    spider::SceneNode node(spider::Rect(spider::vec2(0,0),spider::vec2(sizex, sizey)));
+    node.setObject(&gObj);
+    
+    spider::EventManager eMgr;
+    
+    spider::SceneDisplay disp(&node, &eMgr, sizex, sizey);
+    while(true)
+    {
+        std::string foo;
+        std::cin>>foo;
+        std::cout<<foo;
     }
 }

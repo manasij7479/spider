@@ -5,7 +5,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 namespace spider
 {
-    class Drawable
+    class Drawable // offset could be changed to a more general renderstate, maybe borrow sf::RenderStates
     {
     public:
         virtual void draw(sf::RenderWindow* win, vec2 offset){}
@@ -14,6 +14,20 @@ namespace spider
     class SceneNode
     {
     public:
+        SceneNode(Rect bounds_, vec2 offset = {0,0}, SceneNode* p = nullptr){}
+        void setObject(Drawable* obj)
+        {
+            object = obj;
+        }
+        void addChild(SceneNode* n)
+        {
+            n->setParent(this);
+            children.push_back(n);
+        }
+        void setParent(SceneNode* p)
+        {
+            parent = p;
+        }
         void draw(sf::RenderWindow* win, vec2 offset)
         {
             if(object!=nullptr)
@@ -21,7 +35,6 @@ namespace spider
             for(auto& child : children)
                 child->draw(win, offset + translation);
         }
-        
     private:
         std::string name;
         Rect bounds;

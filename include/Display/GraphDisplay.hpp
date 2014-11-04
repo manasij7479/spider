@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <atomic>
 #include "Display/GraphSprite.hpp"
+#include <Event/Event.hpp>
 namespace spider
 {
     template<typename Graph>
@@ -206,5 +207,37 @@ namespace spider
         int sizex, sizey;
 //         bool layoutChanged;
     };
+    class SceneDisplay
+    {
+    public:
+        SceneDisplay(SceneNode* r, EventManager* em, int x, int y ): root(r),eventMgr(em), sizex(x),sizey(y)
+        {
+            thread = new std::thread(std::bind (&SceneDisplay::winThread, this));
+        }
+        void winThread()
+        {
+            sf::RenderWindow window(sf::VideoMode(sizex, sizey), "Display", sf::Style::None|sf::Style::Titlebar|sf::Style::Close);
+            while (window.isOpen())
+            {
+                window.clear(sf::Color::White);
+                sf::Event event;
+                while (window.pollEvent(event))
+                {
+                    if (event.type == sf::Event::MouseButtonPressed)
+                        eventMgr->reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
+                }
+                root->draw(&window, vec2(0,0));
+                window.display();
+            }
+        }
+    private:
+        SceneNode* root;
+        EventManager* eventMgr;
+        int sizex;
+        int sizey;
+        std::thread* thread;
+    };
+    
+    
 }
 #endif
