@@ -1,20 +1,13 @@
 #ifndef SPIDER_SCENE_GRAPH_HPP
 #define SPIDER_SCENE_GRAPH_HPP
 #include "Layout/Geometry.hpp"
-#include "Event/Event.hpp"
+#include "Event/EventManager.hpp"
+#include "Display/Sprite.hpp"
 #include <vector>
-
-#include <SFML/Graphics/RenderWindow.hpp>
-
 namespace spider
 {
-    class Drawable // offset could be changed to a more general renderstate, maybe borrow sf::RenderStates
-    {
-    public:
-        virtual void draw(sf::RenderWindow* win, vec2 offset){}
-    };
     
-    class SceneNode
+    class SceneNode : public Drawable
     {
     public:
         SceneNode(Rect bounds_, vec2 offset = {0,0}, SceneNode* p = nullptr)
