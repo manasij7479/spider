@@ -65,10 +65,26 @@ int main()
     spider::CircularLayout<decltype(g)> layout(g);
     spider::GraphSpriteObject<decltype(g)> gObj(&layout, sizex, sizey);
 
-    spider::SceneNode node(spider::Rect(spider::vec2(0,0),spider::vec2(sizex, sizey)));
-    node.setObject(&gObj);
+    spider::SceneNode node(spider::Rect(0,0,sizex, sizey));
+    spider::SceneNode graph(spider::Rect(0,0,sizex,sizey));
+    node.addChild(&graph);
+    graph.setObject(&gObj);
     
     spider::EventManager eMgr;
+//     eMgr.registerMouseClickHandler([](float x, float y){std::cout<<x<<' '<<y<<std::endl;});
+    
+    auto clicked = [&](float x, float y){gObj.handleClick(x,y);};
+    eMgr.registerMouseClickHandler(clicked);
+    
+    auto moved = [&](float x, float y){gObj.handleMoved(x,y);};
+    eMgr.registerMovedHandler(moved);
+    
+    auto scrolled = [&](int t, float x, float y){gObj.handleScroll(t,x,y);};
+    eMgr.registerScrollHandler(scrolled);
+    
+    eMgr.registerReleasededHandler(std::bind(&spider::GraphSpriteObject<decltype(g)>::handleReleased, &gObj));
+    eMgr.registerEscapeHandler(std::bind(&spider::GraphSpriteObject<decltype(g)>::handleEscape, &gObj));
+    
     
     spider::SceneDisplay disp(&node, &eMgr, sizex, sizey);
     while(disp.isOpen())

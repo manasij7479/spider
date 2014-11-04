@@ -2,6 +2,7 @@
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>
 #include <cmath>
+#include <SFML/System/Vector2.hpp>
 //switch to glm if this proves insufficient and inextensible
 namespace spider
 {
@@ -29,8 +30,13 @@ namespace spider
     {
         Rect(){};
         Rect(Point a, Point b): min(a), max(b){};
+        Rect(float minx, float miny, float maxx, float maxy){min.x = minx; min.y = miny; max.x = maxx; max.y = maxy;};
         Point min;
-        Point max;    
+        Point max;
+        bool within(float x, float y)
+        {
+            return x >= min.x && x <=max.x && y >= min.y && y <= max.y; 
+        }
     };
     float distsquare(Point a, Point b)
     {
@@ -44,5 +50,9 @@ namespace spider
         return std::sqrt(distsquare(a,b));
     }
     
+    sf::Vector2f sfvec2(float x, float y)
+    {
+        return sf::Vector2f(x,y);
+    }
 }
 #endif

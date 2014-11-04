@@ -103,10 +103,14 @@ namespace spider
         GraphSpriteObject(Layout<Graph>* l, int x, int y) // x,y are no longer window sizes. local bounds are {(0,0),(x,y)}
         {
             layout = l ;
+            pressed = false;
             init(x,y);
         }
         void init(int x, int y)
         {
+            transform = sf::Transform::Identity;
+//             trans = {0,0};
+//             scale = {1.0f,1.0f};
             sizex = x;
             sizey = y;
             float border = 0;
@@ -117,14 +121,16 @@ namespace spider
         }
     void draw(sf::RenderWindow* win, vec2 offset)
     {
-        sf::Transform translate;
-        translate.translate(offset.x,offset.y);
-        sf::RenderStates state(translate);
+        sf::Transform finalt = transform;
+//         finalt.translate(offset.x, offset.y);
+//         translate.translate(offset.x + trans.x ,offset.y + trans.y).scale(scale.x,scale.y, (float)sf::Mouse::getPosition(*win).x, (float)sf::Mouse::getPosition(*win).y);
+//         translate.combine(transform);
+        sf::RenderStates state(finalt);
         
         win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, state);
         
         sf::Texture tex;
-        
+        tex.setSmooth(true);
         if (!tex.loadFromFile("resource/vertex.png")) 
             ; // do nothing..or maybe a log entry later
         else
@@ -177,12 +183,62 @@ namespace spider
             edgeArray.push_back(line[1]);
         }
     }
+    void handleClick(float x,float y)
+    {
+        std::cout <<"PRESSED: "<< x<<' '<< y<<std::endl; 
+        if(x<=sizex && y<=sizey)
+        {
+            pressed=true;
+            initial = {x,y};
+        }
+    }
+    void handleMoved(float x, float y)
+    {
+        std::cout <<"MOVED: "<< x<<' '<< y<<std::endl;
+        if (pressed == true && x<=sizex && x>=0 && y<=sizey && y>=0)
+        {
+//             trans = { trans.x + x - initial.x, trans.y + y - initial.y };
+            transform.translate(x - initial.x, y-initial.y);
+            initial = {x,y};
+        }
+    }
+    void handleReleased()
+    {
+        std::cout<<"RELEASED\n";
+        pressed = false;
+    }
+    
+    void handleEscape()
+    {
+        std::cout<<"ESC\n";
+        pressed = false;
+//         trans  = {0,0};
+        initial = {0,0};
+//         scale = {1,1};
+        transform = sf::Transform::Identity;
+    }
+    void handleScroll(int ticks, float x, float y)
+    {
+        std::cout<<"SCROLL:"<<ticks<<"\n";
+        if(ticks>0)
+//             scale = {scale.x * 1.2f, scale.y * 1.2f};
+            transform.scale(1.2f, 1.2f, x, y);
+        if(ticks<0)
+//             scale = {scale.x * 0.8f, scale.y * 0.8f};
+            transform.scale(0.8f, 0.8f, x, y);
+        if(ticks != 0)
+            ;
+    }
     private:
         Layout<Graph>* layout;
         int sizex, sizey;
         std::vector<sf::Vertex> vertexArray;
         std::vector<sf::Vertex> edgeArray;
-        
+        bool pressed;
+//         vec2 trans;
+        vec2 initial;
+//         vec2 scale;
+        sf::Transform transform;
     };
 }
 #endif

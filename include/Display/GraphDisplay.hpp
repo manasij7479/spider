@@ -227,6 +227,14 @@ namespace spider
                 {
                     if (event.type == sf::Event::MouseButtonPressed)
                         eventMgr->reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
+                    if (event.type == sf::Event::MouseMoved)
+                        eventMgr->reportMovedEvent(sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y);
+                    if (event.type == sf::Event::MouseButtonReleased)
+                        eventMgr->reportReleaseedEvent();
+                    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                        eventMgr->reportEscapeEvent();
+                    if (event.type == sf::Event::MouseWheelMoved)
+                        eventMgr->reportScrollEvent(event.mouseWheel.delta, event.mouseWheel.x, event.mouseWheel.y);
                     if (event.type == sf::Event::Closed)
                     {
                         window.close();

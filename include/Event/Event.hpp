@@ -10,6 +10,7 @@ namespace spider
     private:
         typedef std::function<void(float,float)> vff;
         typedef std::function<void(void)> vv;
+        typedef std::function<void(int, float, float)> viff;
         
         typedef vff MouseClickFunction;
         typedef vv CloseFunction;
@@ -33,9 +34,53 @@ namespace spider
             for(auto& f: closeHandlers)
                 f();
         }
+        
+        void registerMovedHandler(vff f)
+        {
+            movedHandlers.push_back(f);
+        }
+        void reportMovedEvent(float x,float y)
+        {
+            for(auto& f: movedHandlers)
+                f(x,y);
+        }
+        
+        void registerReleasededHandler(vv f)
+        {
+            releasedHandlers.push_back(f);
+        }
+        void reportReleaseedEvent()
+        {
+            for(auto& f: releasedHandlers)
+                f();
+        }
+        
+        void registerEscapeHandler(vv f)
+        {
+            escapeHandlers.push_back(f);
+        }
+        void reportEscapeEvent()
+        {
+            for(auto& f: escapeHandlers)
+                f();
+        }
+        
+        void registerScrollHandler(viff f)
+        {
+            scrollHandlers.push_back(f);
+        }
+        void reportScrollEvent( int ticks, float x, float y)
+        {
+            for(auto& f: scrollHandlers)
+                f(ticks,x,y);
+        }
     private:
         std::vector<MouseClickFunction> mouseClickHandlers;
         std::vector<CloseFunction> closeHandlers;
+        std::vector<vff> movedHandlers;
+        std::vector<vv> releasedHandlers;
+        std::vector<vv> escapeHandlers;
+        std::vector<viff> scrollHandlers;
     };
 }
 #endif

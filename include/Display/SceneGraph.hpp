@@ -1,8 +1,11 @@
 #ifndef SPIDER_SCENE_GRAPH_HPP
 #define SPIDER_SCENE_GRAPH_HPP
 #include "Layout/Geometry.hpp"
+#include "Event/Event.hpp"
 #include <vector>
+
 #include <SFML/Graphics/RenderWindow.hpp>
+
 namespace spider
 {
     class Drawable // offset could be changed to a more general renderstate, maybe borrow sf::RenderStates
@@ -14,7 +17,12 @@ namespace spider
     class SceneNode
     {
     public:
-        SceneNode(Rect bounds_, vec2 offset = {0,0}, SceneNode* p = nullptr){}
+        SceneNode(Rect bounds_, vec2 offset = {0,0}, SceneNode* p = nullptr)
+        {
+            bounds = bounds_;
+            object = nullptr;
+            
+        }
         void setObject(Drawable* obj)
         {
             object = obj;
@@ -42,6 +50,7 @@ namespace spider
         std::vector<SceneNode*> children;
         SceneNode* parent;
         Drawable* object; // may be null
+
     };
 }
 #endif
