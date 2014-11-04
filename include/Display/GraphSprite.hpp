@@ -1,7 +1,6 @@
 #ifndef SPIDER_GRAPH_SPRITE
 #define SPIDER_GRAPH_SPRITE
 #include "Display/Sprite.hpp"
-#include "Display/SceneNode.hpp"
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
@@ -23,7 +22,7 @@ namespace spider
 //             scale = {1.0f,1.0f};
             sizex = x;
             sizey = y;
-            float border = 0;
+            float border = 20;
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
             generateEdgeArray();
