@@ -212,6 +212,8 @@ namespace spider
     public:
         SceneDisplay(SceneNode* r, EventManager* em, int x, int y ): root(r),eventMgr(em), sizex(x),sizey(y)
         {
+            keepOpen = true;
+            eventMgr->registerCloseHandler(std::bind(&SceneDisplay::close, this));
             thread = new std::thread(std::bind (&SceneDisplay::winThread, this));
         }
         void winThread()
@@ -225,10 +227,27 @@ namespace spider
                 {
                     if (event.type == sf::Event::MouseButtonPressed)
                         eventMgr->reportMouseClickEvent(event.mouseButton.x,event.mouseButton.y);
+                    if (event.type == sf::Event::Closed)
+                    {
+                        window.close();
+                        keepOpen = false;
+                    }
                 }
                 root->draw(&window, vec2(0,0));
                 window.display();
+                if (!keepOpen)
+                    window.close();
             }
+        }
+        void close()
+        {
+            keepOpen = false;
+            thread->join();
+        }
+        bool isOpen()
+        {
+            bool ret = keepOpen;
+            return ret;
         }
     private:
         SceneNode* root;
@@ -236,6 +255,7 @@ namespace spider
         int sizex;
         int sizey;
         std::thread* thread;
+        std::atomic<bool> keepOpen;
     };
     
     

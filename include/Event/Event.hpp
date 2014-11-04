@@ -8,7 +8,11 @@ namespace spider
     class EventManager
     {
     private:
-        typedef std::function<void(float,float)> MouseClickFunction;
+        typedef std::function<void(float,float)> vff;
+        typedef std::function<void(void)> vv;
+        
+        typedef vff MouseClickFunction;
+        typedef vv CloseFunction;
     public:
         void registerMouseClickHandler(MouseClickFunction f)
         {
@@ -19,8 +23,19 @@ namespace spider
             for(auto& f: mouseClickHandlers)
                 f(x,y);
         }
+        
+        void registerCloseHandler(CloseFunction f)
+        {
+            closeHandlers.push_back(f);
+        }
+        void reportCloseEvent()
+        {
+            for(auto& f: closeHandlers)
+                f();
+        }
     private:
-        std::vector<std::function<void(float,float)>> mouseClickHandlers;
+        std::vector<MouseClickFunction> mouseClickHandlers;
+        std::vector<CloseFunction> closeHandlers;
     };
 }
 #endif

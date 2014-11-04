@@ -71,10 +71,12 @@ int main()
     spider::EventManager eMgr;
     
     spider::SceneDisplay disp(&node, &eMgr, sizex, sizey);
-    while(true)
+    while(disp.isOpen())
     {
         std::string foo;
-        std::cin>>foo;
+        std::getline(std::cin, foo);
+        if (foo == ".q")
+            eMgr.reportCloseEvent();
         std::cout<<foo;
     }
 }
