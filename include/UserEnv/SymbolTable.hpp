@@ -8,10 +8,13 @@
 
 namespace spider
 {
-    class 
+    class SymbolTable
     {
     public:
-        std::map<std::string,user::Graph> GraphMap;
+        std::map<std::string, user::Graph>      GraphMap;
+        std::map<std::string, user::Integer>    IntegerMap;
+        std::map<std::string, user::Real>       RealMap;
+        std::map<std::string, user::String>     StringMap;
     };
 }
 #endif

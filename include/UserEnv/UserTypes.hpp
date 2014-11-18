@@ -6,6 +6,9 @@ namespace spider
     namespace user
     {
         typedef graph::Graph<int,int> Graph;
+        typedef int Integer;
+        typedef float Real;
+        typedef std::string String;
     }
 }
 #endif
