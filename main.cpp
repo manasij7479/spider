@@ -7,7 +7,7 @@
 #include "graph/algorithm/collections.hpp"
 #include "Display/SceneDisplay.hpp"
 #include "Display/GraphSprite.hpp"
-#include "Display/MenuSprite.hpp"
+#include "Display/TexRectangle.hpp"
 #include "Display/SceneNode.hpp"
 #include "External/OGDFAdapter.hpp"
 #include "Event/EventManager.hpp"
@@ -18,15 +18,16 @@ int main()
     spider::CircularLayout<decltype(g)> layout(g);
     spider::GraphSprite<decltype(g)> gObj(&layout, sizex - 200, sizey);
 
-    spider::SceneNode node(spider::Rect(0,0,sizex, sizey));
-    spider::SceneNode graph(spider::Rect(0,0,sizex - 200 , sizey));
-    spider::SceneNode menu(spider::Rect(sizex - 200 , 0 , sizex , sizey));
+    spider::SceneNode node(sizex, sizey);
+    spider::SceneNode graph(sizex - 200, sizey);
+    spider::SceneNode menu(200, sizey);
     
-    node.addChild(&graph);
+    node.addChild(&graph, {0,0});
     graph.setObject(&gObj);
     
-    spider::MenuSprite mObj(spider::Rect(sizex - 200 ,0 , sizex , sizey));
-    node.addChild(&menu);
+//     spider::MenuSprite mObj(spider::Rect(sizex - 200 ,0 , sizex , sizey));
+    spider::TexRectangle mObj(200, sizey, "resource/menubar.png");
+    node.addChild(&menu, {1.0f*sizex - 200, 0});
     menu.setObject(&mObj);
     
     

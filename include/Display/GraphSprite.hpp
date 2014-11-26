@@ -93,7 +93,7 @@ namespace spider
     }
     void handleClick(float x,float y)
     {
-        std::cout <<"PRESSED: "<< x<<' '<< y<<std::endl; 
+//         std::cout <<"PRESSED: "<< x<<' '<< y<<std::endl; 
         if(x<=sizex && y<=sizey)
         {
             pressed=true;
@@ -102,7 +102,7 @@ namespace spider
     }
     void handleMoved(float x, float y)
     {
-        std::cout <<"MOVED: "<< x<<' '<< y<<std::endl;
+//         std::cout <<"MOVED: "<< x<<' '<< y<<std::endl;
         if (pressed == true && x<=sizex && x>=0 && y<=sizey && y>=0)
         {
 //             trans = { trans.x + x - initial.x, trans.y + y - initial.y };
@@ -112,13 +112,13 @@ namespace spider
     }
     void handleReleased()
     {
-        std::cout<<"RELEASED\n";
+//         std::cout<<"RELEASED\n";
         pressed = false;
     }
     
     void handleEscape()
     {
-        std::cout<<"ESC\n";
+//         std::cout<<"ESC\n";
         pressed = false;
 //         trans  = {0,0};
         initial = {0,0};
@@ -127,7 +127,7 @@ namespace spider
     }
     void handleScroll(int ticks, float x, float y)
     {
-        std::cout<<"SCROLL:"<<ticks<<"\n";
+//         std::cout<<"SCROLL:"<<ticks<<"\n";
         if(ticks>0)
 //             scale = {scale.x * 1.2f, scale.y * 1.2f};
             transform.scale(1.2f, 1.2f, x, y);

@@ -10,20 +10,20 @@ namespace spider
     class SceneNode : public Drawable
     {
     public:
-        SceneNode(Rect bounds_, vec2 offset = {0,0}, SceneNode* p = nullptr)
+        SceneNode(int x, int y)
         {
-            bounds = bounds_;
+            sizex = x;
+            sizey = y;
             object = nullptr;
-            
         }
         void setObject(Drawable* obj)
         {
             object = obj;
         }
-        void addChild(SceneNode* n)
+        void addChild(SceneNode* n, vec2 offset)
         {
             n->setParent(this);
-            children.push_back(n);
+            children.push_back({n,offset});
         }
         void setParent(SceneNode* p)
         {
@@ -32,15 +32,14 @@ namespace spider
         void draw(sf::RenderWindow* win, vec2 offset)
         {
             if(object!=nullptr)
-                object->draw(win, offset + translation);
+                object->draw(win, offset);
             for(auto& child : children)
-                child->draw(win, offset + translation);
+                child.first->draw(win, offset + child.second);
         }
     private:
         std::string name;
-        Rect bounds;
-        vec2 translation;
-        std::vector<SceneNode*> children;
+        int sizex, sizey;
+        std::vector<std::pair<SceneNode*, vec2>> children;
         SceneNode* parent;
         Drawable* object; // may be null
 
