@@ -2,6 +2,8 @@
 #define SPIDER_GRAPH_SPRITE
 #include "Display/Sprite.hpp"
 #include "graph/algorithm/collections.hpp"
+#include <Layout/Geometry.hpp>
+#include <Layout/Layout.hpp>
 namespace spider
 {
     template<typename Graph>
@@ -12,7 +14,9 @@ namespace spider
         GraphSprite(Layout<Graph>* l, int x, int y) // x,y are no longer window sizes. local bounds are {(0,0),(x,y)}
         {
             pressed = false;
+            displayNames = true;
             setLayout(l, x, y);
+            
         }
         void setLayout(Layout<Graph>* layout, int x, int y)
         {
@@ -26,10 +30,12 @@ namespace spider
             layout->generate(bounds);
             generateEdgeArray(layout);
             generateVertexArray(layout);
+            g = &layout->getGraph();
         }
     void draw(sf::RenderWindow* win, vec2 offset)
-    {
+    {       
         sf::Transform finalt = transform;
+        finalt.translate(offset.x, offset.y);
 //         finalt.translate(offset.x, offset.y);
 //         translate.translate(offset.x + trans.x ,offset.y + trans.y).scale(scale.x,scale.y, (float)sf::Mouse::getPosition(*win).x, (float)sf::Mouse::getPosition(*win).y);
 //         translate.combine(transform);
@@ -46,7 +52,25 @@ namespace spider
         
         win->draw(vertexArray.data(), vertexArray.size(), sf::Quads, state);
         
-        
+        if (displayNames)
+        {
+            sf::Font font;
+            if(!font.loadFromFile("resource/courier.ttf"))
+                throw std::runtime_error("Font loading failed");
+            sf::Text t;
+            t.setFont(font);
+            t.setCharacterSize(20);
+            t.setColor(sf::Color::Black);
+            auto it = g->begin();
+            for (int i=1; i< vertexArray.size(); i+=4)
+            {
+                t.setString((it)->first);
+                t.setPosition(vertexArray[i].position.x,vertexArray[i].position.y);
+                win->draw(t, state);
+                ++it;
+            }
+        }
+
     }
     void generateVertexArray(Layout<Graph>* layout)
     {
@@ -137,6 +161,10 @@ namespace spider
         if(ticks != 0)
             ;
     }
+    void toggleTextDisplay()
+    {
+        displayNames = ! displayNames;
+    }
     private:
         int sizex, sizey;
         std::vector<sf::Vertex> vertexArray;
@@ -146,6 +174,10 @@ namespace spider
         vec2 initial;
 //         vec2 scale;
         sf::Transform transform;
+//         sf::Text t;
+        bool displayNames;
+        Graph* g;
+        
     };
 }
 #endif

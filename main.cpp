@@ -57,6 +57,8 @@ int main()
             eMgr.reportCloseEvent();
         else if (foo == "change")
             gObj.setLayout(&l, sizex - 200, sizey);
+        else if(foo == "toggle")
+            gObj.toggleTextDisplay();
         else std::cout<<foo;
     }
 }

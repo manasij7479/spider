@@ -2,7 +2,7 @@
 #define SPIDER_EVENT_EVENT_HPP
 #include <functional>
 #include <vector>
-#include <Layout/Layout.hpp>
+
 namespace spider
 {
     //May need locks later, not sure
@@ -12,10 +12,11 @@ namespace spider
         typedef std::function<void(float,float)> vff;
         typedef std::function<void(void)> vv;
         typedef std::function<void(int, float, float)> viff;
-        
+        typedef std::function<void(void*)> vvp; // DANGER
         typedef vff MouseClickFunction;
         typedef vv CloseFunction;
     public:
+        std::vector<MouseClickFunction> mouseClickHandlers;
         void registerMouseClickHandler(MouseClickFunction f)
         {
             mouseClickHandlers.push_back(f);
@@ -26,6 +27,7 @@ namespace spider
                 f(x,y);
         }
         
+        std::vector<CloseFunction> closeHandlers;
         void registerCloseHandler(CloseFunction f)
         {
             closeHandlers.push_back(f);
@@ -36,6 +38,7 @@ namespace spider
                 f();
         }
         
+        std::vector<vff> movedHandlers;
         void registerMovedHandler(vff f)
         {
             movedHandlers.push_back(f);
@@ -46,6 +49,7 @@ namespace spider
                 f(x,y);
         }
         
+        std::vector<vv> releasedHandlers;
         void registerReleasededHandler(vv f)
         {
             releasedHandlers.push_back(f);
@@ -56,6 +60,7 @@ namespace spider
                 f();
         }
         
+        std::vector<vv> escapeHandlers;
         void registerEscapeHandler(vv f)
         {
             escapeHandlers.push_back(f);
@@ -66,6 +71,7 @@ namespace spider
                 f();
         }
         
+        std::vector<viff> scrollHandlers;
         void registerScrollHandler(viff f)
         {
             scrollHandlers.push_back(f);
@@ -75,13 +81,7 @@ namespace spider
             for(auto& f: scrollHandlers)
                 f(ticks,x,y);
         }
-    private:
-        std::vector<MouseClickFunction> mouseClickHandlers;
-        std::vector<CloseFunction> closeHandlers;
-        std::vector<vff> movedHandlers;
-        std::vector<vv> releasedHandlers;
-        std::vector<vv> escapeHandlers;
-        std::vector<viff> scrollHandlers;
+
     };
 }
 #endif
