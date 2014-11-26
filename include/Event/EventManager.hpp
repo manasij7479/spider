@@ -2,6 +2,7 @@
 #define SPIDER_EVENT_EVENT_HPP
 #include <functional>
 #include <vector>
+#include <Layout/Layout.hpp>
 namespace spider
 {
     //May need locks later, not sure

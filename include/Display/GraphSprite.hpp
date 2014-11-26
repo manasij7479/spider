@@ -11,11 +11,10 @@ namespace spider
     public:
         GraphSprite(Layout<Graph>* l, int x, int y) // x,y are no longer window sizes. local bounds are {(0,0),(x,y)}
         {
-            layout = l ;
             pressed = false;
-            init(x,y);
+            setLayout(l, x, y);
         }
-        void init(int x, int y)
+        void setLayout(Layout<Graph>* layout, int x, int y)
         {
             transform = sf::Transform::Identity;
 //             trans = {0,0};
@@ -25,8 +24,8 @@ namespace spider
             float border = 20;
             Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
             layout->generate(bounds);
-            generateEdgeArray();
-            generateVertexArray();
+            generateEdgeArray(layout);
+            generateVertexArray(layout);
         }
     void draw(sf::RenderWindow* win, vec2 offset)
     {
@@ -49,7 +48,7 @@ namespace spider
         
         
     }
-    void generateVertexArray()
+    void generateVertexArray(Layout<Graph>* layout)
     {
         vertexArray.clear();
         for(auto v : graph::VertexList(layout->getGraph()))
@@ -74,7 +73,7 @@ namespace spider
         }
         
     }
-    void generateEdgeArray()
+    void generateEdgeArray(Layout<Graph>* layout)
     {
         edgeArray.clear();
         for (auto e : graph::EdgeList(layout->getGraph(), false))
@@ -139,7 +138,6 @@ namespace spider
             ;
     }
     private:
-        Layout<Graph>* layout;
         int sizex, sizey;
         std::vector<sf::Vertex> vertexArray;
         std::vector<sf::Vertex> edgeArray;

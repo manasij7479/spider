@@ -50,9 +50,12 @@ int main()
     while(disp.isOpen())
     {
         std::string foo;
+        spider::ForceBasedLayout<decltype(g)> l(g);
         std::getline(std::cin, foo);
         if (foo == ".q")
             eMgr.reportCloseEvent();
-        std::cout<<foo;
+        else if (foo == "change")
+            gObj.setLayout(&l, sizex - 200, sizey);
+        else std::cout<<foo;
     }
 }
