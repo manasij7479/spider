@@ -17,7 +17,7 @@ int main()
     int sizex = 800, sizey = 600;
     auto g = graph::gen::complete(6);
     spider::CircularLayout<decltype(g)> layout(g);
-    spider::GraphSprite<decltype(g)> gObj(&layout, sizex - 200, sizey);
+    spider::GraphSprite gObj(&layout, sizex - 200, sizey);
 
     spider::SceneNode node(sizex, sizey);
     spider::SceneNode graph(sizex - 200, sizey);
