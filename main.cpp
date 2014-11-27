@@ -58,7 +58,7 @@ int main()
             eMgr.reportCloseEvent();
         else if(foo == "toggleText")
             gObj.toggleTextDisplay();
-        else
+        else if(foo!="")
         {
             std::istringstream in(foo);
             std::vector<std::string> args;
@@ -67,5 +67,6 @@ int main()
                 args.push_back(temp);
             gWrap.evalCommand(args);
         }
+        
     }
 }
