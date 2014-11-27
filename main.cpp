@@ -10,6 +10,7 @@
 #include "Display/SceneNode.hpp"
 #include "External/OGDFAdapter.hpp"
 #include "Event/EventManager.hpp"
+#include "UserEnv/UserGraph.hpp"
 int main()
 {
     int sizex = 800, sizey = 600;

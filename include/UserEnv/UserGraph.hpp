@@ -9,6 +9,7 @@ namespace spider
 {
     class UserGraph
     {
+        typedef graph::AdjacencyList<std::string,int> Native;
         typedef std::vector<std::string> Args;
         void assert_arg_size(const Args& args, int size)
         {
@@ -19,41 +20,41 @@ namespace spider
                 + " got "+std::to_string(args.size()));
         }
     public:
-        UserGraph(bool directed = false):obj(directed){setCallback();};
-        
-        UserGraph(Args opts){setCallback();}//TODO 
+        UserGraph(bool directed = false):obj(new Native(directed)){setCallback();};
+        UserGraph(Native *g):obj(g){setCallback();}
+        UserGraph(Args opts){setCallback();assert_arg_size(opts,-1);}//TODO
         
         void insertVertex(Args args)
         {
             assert_arg_size(args, 1);
-            obj.insertVertex(args[0]);
+            obj->insertVertex(args[0]);
             changeCallback();
         }
         void removeVertex(Args args)
         {
             assert_arg_size(args, 1);
-            obj.removeVertex(args[0]);
+            obj->removeVertex(args[0]);
             changeCallback();
         }
         void insertEdge(Args args)
         {
             assert_arg_size(args, 3);
-            obj.insertEdge(args[0], args[1], std::stoi(args[2]));
+            obj->insertEdge(args[0], args[1], std::stoi(args[2]));
             changeCallback();
         }
         void removeEdge(Args args)
         {
             assert_arg_size(args, 2);
-            obj.removeEdge(args[0], args[1]);
+            obj->removeEdge(args[0], args[1]);
             changeCallback();
         }
         
-        graph::AdjacencyList<std::string, int>* getNativeObj(){return &obj;} //DANGER: Callbacks won't work
-        void setNativeObj(graph::AdjacencyList<std::string, int>* obj_){obj = *obj_; changeCallback();}
+        Native* getNativeObj(){return obj;} //DANGER: Callbacks won't work
+        void setNativeObj(Native* obj_){obj = obj_; changeCallback();}
         void setCallback(std::function<void(void)> f = [](){}){changeCallback = f;}
         
     private:
-        graph::AdjacencyList<std::string,int> obj;
+        Native* obj;
         std::function<void(void)> changeCallback;
     };
 }
