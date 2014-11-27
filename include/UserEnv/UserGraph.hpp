@@ -24,6 +24,31 @@ namespace spider
         UserGraph(Native *g):obj(g){setCallback();}
         UserGraph(Args opts){setCallback();assert_arg_size(opts,-1);}//TODO
         
+        void evalCommand(Args args)
+        {
+            if (args[0] == "insertVertex")
+            {
+                args.erase(args.begin());
+                insertVertex(args);
+            }
+            else if (args[0] == "insertEdge")
+            {
+                args.erase(args.begin());
+                insertEdge(args);
+            }
+            else if (args[0] == "removeVertex")
+            {
+                args.erase(args.begin());
+                removeVertex(args);
+            }
+            else if (args[0] == "removeEdge")
+            {
+                args.erase(args.begin());
+                removeEdge(args);
+            }
+            else throw std::runtime_error("Unsupported Operation.\n");
+        }
+        
         void insertVertex(Args args)
         {
             assert_arg_size(args, 1);

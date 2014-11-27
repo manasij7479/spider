@@ -81,6 +81,17 @@ namespace spider
             for(auto& f: scrollHandlers)
                 f(ticks,x,y);
         }
+        
+        std::vector<vv> redrawHandlers;
+        void registerRedrawHandler(vv f)
+        {
+            redrawHandlers.push_back(f);
+        }
+        void reportRedrawEvent()
+        {
+            for(auto& f: redrawHandlers)
+                f();
+        }
 
     };
 }

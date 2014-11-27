@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "Layout/RandomLayout.hpp"
 #include "Layout/ForceBasedLayout.hpp"
 #include "Layout/CircularLayout.hpp"
@@ -46,8 +47,13 @@ int main()
     eMgr.registerReleasededHandler(std::bind(&spider::GraphSprite<decltype(g)>::handleReleased, &gObj));
     eMgr.registerEscapeHandler(std::bind(&spider::GraphSprite<decltype(g)>::handleEscape, &gObj));
     
+    eMgr.registerRedrawHandler([&](){gObj.setLayout(&layout, sizex - 200, sizey);});
+    eMgr.registerRedrawHandler([&](){gObj.refreshVertexNames(&g);});
     
     spider::SceneDisplay disp(&node, &eMgr, sizex, sizey);
+    spider::UserGraph gWrap(&g);
+    gWrap.setCallback([&](){eMgr.reportRedrawEvent();});
+    
     while(disp.isOpen())
     {
         std::string foo;
@@ -55,10 +61,16 @@ int main()
         std::getline(std::cin, foo);
         if (foo == ".q")
             eMgr.reportCloseEvent();
-        else if (foo == "change")
-            gObj.setLayout(&l, sizex - 200, sizey);
         else if(foo == "toggle")
             gObj.toggleTextDisplay();
-        else std::cout<<foo;
+        else
+        {
+            std::istringstream in(foo);
+            std::vector<std::string> args;
+            std::string temp;
+            while(in >> temp)
+                args.push_back(temp);
+            gWrap.evalCommand(args);
+        }
     }
 }

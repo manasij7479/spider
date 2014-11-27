@@ -30,7 +30,7 @@ namespace spider
             layout->generate(bounds);
             generateEdgeArray(layout);
             generateVertexArray(layout);
-            g = &layout->getGraph();
+            refreshVertexNames(&layout->getGraph());
         }
     void draw(sf::RenderWindow* win, vec2 offset)
     {       
@@ -61,13 +61,11 @@ namespace spider
             t.setFont(font);
             t.setCharacterSize(20);
             t.setColor(sf::Color::Black);
-            auto it = g->begin();
-            for (int i=1; i< vertexArray.size(); i+=4)
+            for (int i=1, j = 0; i< vertexArray.size(); i+=4, ++j)
             {
-                t.setString((it)->first);
+                t.setString(VertexNames[j]);
                 t.setPosition(vertexArray[i].position.x,vertexArray[i].position.y);
                 win->draw(t, state);
-                ++it;
             }
         }
 
@@ -165,6 +163,10 @@ namespace spider
     {
         displayNames = ! displayNames;
     }
+    void refreshVertexNames(Graph* g)
+    {
+        VertexNames = graph::VertexList(*g);
+    }
     private:
         int sizex, sizey;
         std::vector<sf::Vertex> vertexArray;
@@ -176,7 +178,7 @@ namespace spider
         sf::Transform transform;
 //         sf::Text t;
         bool displayNames;
-        Graph* g;
+        std::vector<std::string> VertexNames;
         
     };
 }
