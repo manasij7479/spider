@@ -1,4 +1,3 @@
-//This is to be currently used for testing pusposes
 #include <iostream>
 #include "Layout/RandomLayout.hpp"
 #include "Layout/ForceBasedLayout.hpp"
