@@ -10,6 +10,7 @@ namespace spider
     public:
         TexRectangle(int sizex, int sizey, std::string filename):texfilename(filename), texloaded(true)
         {
+            setCallback();
             tex.setSmooth(true);
             if (!tex.loadFromFile(texfilename)) 
                 texloaded = false;
@@ -20,9 +21,9 @@ namespace spider
             quad[3]= sf::Vertex(sf::Vector2f(sizex, 0));
             
             quad[0].texCoords = sf::Vector2f(0, 0);
-            quad[1].texCoords = sf::Vector2f(tex.getSize().x, 0);
+            quad[1].texCoords = sf::Vector2f(0, tex.getSize().y);
             quad[2].texCoords = sf::Vector2f(tex.getSize().x, tex.getSize().y);
-            quad[3].texCoords = sf::Vector2f(0, tex.getSize().y);
+            quad[3].texCoords = sf::Vector2f(tex.getSize().x, 0);
         };
         void draw(sf::RenderWindow* win, vec2 offset)
         {
@@ -32,11 +33,18 @@ namespace spider
             state.texture = &tex;
             win->draw(quad, 4, sf::Quads, state);
         }
+        void handleClick(float x, float y)
+        {
+//             std::cout<<"T:"<<x<<' '<<y<<std::endl;
+            callback();
+        }
+        void setCallback(std::function<void(void)> f = [](){}){callback = f;}
     private:
         sf::Vertex quad[4];
         std::string texfilename;
         sf::Texture tex;
         bool texloaded;
+        std::function<void(void)> callback;
     };
 }
 #endif

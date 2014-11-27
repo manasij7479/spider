@@ -4,6 +4,7 @@
 #include "Event/EventManager.hpp"
 #include "Display/Sprite.hpp"
 #include <vector>
+#include <iostream>
 namespace spider
 {
     
@@ -35,6 +36,19 @@ namespace spider
                 object->draw(win, offset);
             for(auto& child : children)
                 child.first->draw(win, offset + child.second);
+        }
+        void handleClick(float x, float y)
+        {
+//             std::cout<<x <<' '<<y <<std::endl;
+            if (object)
+                object->handleClick(x,y);
+            for(auto pair : children)
+            {
+                if (x >= pair.second.x && x <= pair.second.x + pair.first->sizex 
+                    && y >= pair.second.y && y <= pair.second.y + pair.first->sizey)
+                        pair.first->handleClick(x-pair.second.x, y-pair.second.y);
+            }
+            
         }
     private:
         std::string name;

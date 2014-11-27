@@ -50,7 +50,7 @@ namespace spider
         }
         
         std::vector<vv> releasedHandlers;
-        void registerReleasededHandler(vv f)
+        void registerReleasedHandler(vv f)
         {
             releasedHandlers.push_back(f);
         }

@@ -8,6 +8,7 @@ namespace spider
     {
     public:
         virtual void draw(sf::RenderWindow* win, vec2 offset){}
+        virtual void handleClick(float x, float y){}
     };
     typedef Drawable Sprite;
 }

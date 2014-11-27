@@ -63,10 +63,7 @@ namespace spider
     {       
         sf::Transform finalt = transform;
         finalt.translate(offset.x, offset.y);
-//         finalt.translate(offset.x, offset.y);
-//         translate.translate(offset.x + trans.x ,offset.y + trans.y).scale(scale.x,scale.y, (float)sf::Mouse::getPosition(*win).x, (float)sf::Mouse::getPosition(*win).y);
-//         translate.combine(transform);
-        sf::RenderStates state(finalt);
+        sf::RenderStates state(transform);
         
         win->draw(edgeArray.data(),edgeArray.size(), sf::Lines, state);
         
@@ -101,6 +98,7 @@ namespace spider
     void GraphSprite::handleClick(float x,float y)
     {
 //         std::cout <<"PRESSED: "<< x<<' '<< y<<std::endl; 
+        fixInput(x,y);
         if(x<=sizex && y<=sizey)
         {
             pressed=true;
@@ -110,13 +108,18 @@ namespace spider
     void GraphSprite::handleMoved(float x, float y)
     {
 //         std::cout <<"MOVED: "<< x<<' '<< y<<std::endl;
+        fixInput(x,y);
         if (pressed == true && x<=sizex && x>=0 && y<=sizey && y>=0)
         {
-//             trans = { trans.x + x - initial.x, trans.y + y - initial.y };
             transform.translate(x - initial.x, y-initial.y);
             initial = {x,y};
         }
     }
+    void GraphSprite::handleRotate(int dir)
+    {
+        transform.rotate(90, 300, 300);
+    }
+
     void GraphSprite::handleReleased()
     {
 //         std::cout<<"RELEASED\n";
@@ -134,13 +137,18 @@ namespace spider
     }
     void GraphSprite::handleScroll(int ticks, float x, float y)
     {
+        fixInput(x,y);
 //         std::cout<<"SCROLL:"<<ticks<<"\n";
         if(ticks>0)
 //             scale = {scale.x * 1.2f, scale.y * 1.2f};
+        {
             transform.scale(1.2f, 1.2f, x, y);
+        }
         if(ticks<0)
 //             scale = {scale.x * 0.8f, scale.y * 0.8f};
+        {
             transform.scale(0.8f, 0.8f, x, y);
+        }
         if(ticks != 0)
             ;
     }

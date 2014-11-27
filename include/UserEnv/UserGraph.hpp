@@ -1,6 +1,7 @@
 #ifndef SPIDER_USER_GRAPH
 #define SPIDER_USER_GRAPH
 #include <graph/graph.hpp>
+#include <graph/util/generate.hpp>
 #include <vector>
 #include <string>
 #include <functional>
@@ -22,7 +23,20 @@ namespace spider
     public:
         UserGraph(bool directed = false):obj(new Native(directed)){setCallback();};
         UserGraph(Native *g):obj(g){setCallback();}
-        UserGraph(Args opts){setCallback();assert_arg_size(opts,-1);}//TODO
+        UserGraph(Args args)
+        {
+            setCallback();
+            if (args[0] == "cycle")
+            {
+                assert_arg_size(args, 2);
+                int n = std::stoi(args[1]);
+                obj = new Native(graph::gen::cycle(n));
+            }
+            else
+            {
+                
+            }
+        }//TODO
         
         void evalCommand(Args args)
         {

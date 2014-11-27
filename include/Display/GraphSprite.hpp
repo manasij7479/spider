@@ -26,6 +26,7 @@ namespace spider
         
         void handleClick(float x,float y);
         void handleMoved(float x, float y);
+        void handleRotate(int dir);
         void handleReleased();
         
         void handleEscape();
@@ -42,6 +43,16 @@ namespace spider
         sf::Transform transform;
         bool displayNames;
         std::vector<std::string> VertexNames;
+        
+        void fixInput(float& x, float& y)
+        {
+//             std::cout <<"ORI:"<<x<<' '<<y<<std::endl;
+//             sf::Transform inv = transform.getInverse();
+//             auto result = inv.transformPoint(x,y);
+//             x = result.x;
+//             y = result.y;
+//             std::cout <<"NEW:"<<x<<' '<<y<<std::endl;
+        }
         
     };
 }
