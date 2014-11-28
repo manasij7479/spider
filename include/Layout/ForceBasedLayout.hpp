@@ -1,3 +1,7 @@
+/**
+ * \brief ForceBasedLayout.hpp - Header file that contains functions to generate
+ * Force Based Layout for drawing a graph
+ * **/
 #ifndef SPIDER_FORCE_BASED_LAYOUT_HPP
 #define SPIDER_FORCE_BASED_LAYOUT_HPP
 #include "Layout/Layout.hpp"
@@ -13,6 +17,12 @@ namespace spider
     public:
         ForceBasedLayout(Graph& g, float gc_ = 3000, float kc_ = 1.0/1000, float errf_ = 0.1)
         :Base(g), gc(gc_), kc(kc_), errf(errf_){};
+        /**
+         * \brief - generates Vertex Attributes of each vertex
+         * 
+         * Rect bounds - Parameter, contains the x and y coordinates of 
+         * the boundary of the drawing area
+         * **/
         void generate(Rect bounds)
         {
             RandomLayout<Graph> rl(Base::g);

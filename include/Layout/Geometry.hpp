@@ -1,3 +1,7 @@
+/**	\brief Geometry.hpp - Header file that has collection of functions related to 2dimensional
+ * ccordinate geometry for drawing graphs
+ * **/
+
 #ifndef SPIDER_LAYOUT_GEOMETRY_HPP
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>
@@ -6,6 +10,9 @@
 //switch to glm if this proves insufficient and inextensible
 namespace spider
 {
+    /**
+     * \brief - structure to define a point with x and y cordinates
+     * **/
     struct vec2
     {
         vec2(){};
@@ -16,6 +23,10 @@ namespace spider
     };
     typedef vec2 Point;
     
+    /**
+     * \brief - overloading operator '+' to add x and y coordinates of two points
+     * **/
+    
     vec2 operator+(vec2 x, vec2 y)
     {
         vec2 z;
@@ -25,6 +36,13 @@ namespace spider
     }
     
     typedef std::vector<Point> Curve;
+    
+     /**
+     * \brief - a structure defining a rectangle
+     * 
+     * bool within(float x, float y) - determines whether the point signified by coordinates
+     * x and y is inside a rectangle or not
+     * **/
     
     struct Rect
     {
@@ -38,6 +56,15 @@ namespace spider
             return x >= min.x && x <=max.x && y >= min.y && y <= max.y; 
         }
     };
+    
+    /**
+     * \brief - Returns the square of distance between two points 'a' and 'b'
+     * 
+     * Point a - First parameter, the first point
+     * 
+     * Point b - Second parameter, the second point
+     * **/
+    
     float distsquare(Point a, Point b)
     {
         float dx = a.x - b.x;
@@ -45,10 +72,26 @@ namespace spider
         return dx*dx + dy*dy;
     }
     
+     /**
+     * \brief - Returns the distance between two points 'a' and 'b'
+     * 
+     * Point a - First parameter, the first point
+     * 
+     * Point b - Second parameter, the second point
+     * **/
+    
     float Distance(Point a, Point b)
     {
         return std::sqrt(distsquare(a,b));
     }
+    
+    /**
+     * \brief - Returns a vector which is a pair of the two coordinates 'x' and 'y'
+     * 
+     * float x - First parameter, x coordinate of point
+     * 
+     * float y - Second parameter, ty coordinate of point
+     * **/
     
     sf::Vector2f sfvec2(float x, float y)
     {

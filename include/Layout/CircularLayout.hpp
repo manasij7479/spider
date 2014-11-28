@@ -1,3 +1,7 @@
+/**
+ * \brief ForceBasedLayout.hpp - Header file that contains functions to generate
+ * non centered Circular Layout for drawing a graph
+ * **/
 #ifndef SPIDER_CIRCULAR_LAYOUT_HPP
 #define SPIDER_CIRCULAR_LAYOUT_HPP
 #include "Layout/Layout.hpp"
@@ -15,6 +19,12 @@ namespace spider
             {
                 Base::hasEdgeData = false;
             };
+        /**
+         * \brief - generates x and y coordinates of each vertex
+         * 
+         * Rect bounds - Parameter, contains the x and y coordinates of 
+         * the boundary of the drawing area
+         * **/
         virtual void generate(Rect bounds)
         {
             Point center = {(bounds.max.x+bounds.min.x)/2, (bounds.max.y+bounds.min.y)/2};
