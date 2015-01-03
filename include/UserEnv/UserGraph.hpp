@@ -10,7 +10,6 @@ namespace spider
 {
     class UserGraph
     {
-        typedef graph::AdjacencyList<std::string,int> Native;
         typedef std::vector<std::string> Args;
         void assert_arg_size(const Args& args, int size)
         {
@@ -21,6 +20,7 @@ namespace spider
                 + " got "+std::to_string(args.size()));
         }
     public:
+        typedef graph::AdjacencyList<std::string,int> Native;
         UserGraph(bool directed = false):obj(new Native(directed)){setCallback();};
         UserGraph(Native *g):obj(g){setCallback();}
         UserGraph(Args args)
