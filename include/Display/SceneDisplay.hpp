@@ -5,7 +5,7 @@
 #include <thread>
 #include <SFML/Graphics.hpp>
 #include <atomic>
-#include "Display/GraphSprite.hpp"
+#include "Display/SceneNode.hpp"
 #include <Event/EventManager.hpp>
 namespace spider
 {

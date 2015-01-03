@@ -1,0 +1,1 @@
+add_library(Display SHARED GraphSprite.cpp)
