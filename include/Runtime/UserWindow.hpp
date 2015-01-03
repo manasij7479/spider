@@ -4,6 +4,7 @@
 #include "Display/SceneNode.hpp"
 #include "Display/SceneDisplay.hpp"
 #include "Display/GraphSprite.hpp"
+#include "Display/TexRectangle.hpp"
 #include "Runtime/UserGraph.hpp"
 #include "Event/EventManager.hpp"
 #include "graph/graph.hpp"
@@ -75,10 +76,11 @@ namespace spider
             eventManager->registerRedrawHandler([&](){gObj->refreshVertexNames(&gref);});
             
             disp = new spider::SceneDisplay(node, eventManager, sizex, sizey);
+            gWrap->setCallback([&](){eventManager->reportRedrawEvent();});
         }
         bool isOpen(){return disp->isOpen();}
     private:
-        const int sizex = 800, sizey = 600;
+        static const int sizex = 800, sizey = 600;
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
         spider::SceneDisplay* disp;
         spider::TexRectangle* mObj, *b1obj, *b2obj, *b3obj;

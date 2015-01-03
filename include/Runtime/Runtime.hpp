@@ -11,6 +11,7 @@ namespace spider
     class Runtime
     {
     public:
+        Runtime(spider::EventManager* eMgr):eventManager(eMgr){};
         void eval(std::vector<std::string> args)
         {
             if (args[0] == "create")
@@ -27,8 +28,22 @@ namespace spider
                 {
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    graphMap[name] = UserGraph(args);
-                } 
+                    args.erase(args.begin());
+                    graphMap[name] = new UserGraph(args);
+//                     std::cout << "Graph " << name << " created."<<std::endl;
+                }
+                else if (type == "window")
+                {
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    UserGraph* g = graphMap[args[0]];
+                    //TODO: Handle errors
+                    args.erase(args.begin());
+                    UserWindow* win = new UserWindow(g,eventManager, args);
+                    windowMap[name] = win;
+                }
+               
             }
             
         }
@@ -45,11 +60,17 @@ namespace spider
         UserGraph& getGraph(std::string name)
         {
             //TODO handle `not found` error
-            return graphMap[name];
+            return *graphMap[name];
+        }
+        UserWindow& getWindow(std::string name)
+        {            
+            //TODO handle `not found` error
+            return *windowMap[name];
         }
     private:
-        std::map<std::string, spider::UserGraph> graphMap;
-        std::map<std::string, spider::UserWindow> windowMap;
+        std::map<std::string, spider::UserGraph*> graphMap;
+        std::map<std::string, spider::UserWindow*> windowMap;
+        spider::EventManager* eventManager;
     };
 }
 #endif

@@ -26,6 +26,7 @@ namespace spider
         UserGraph(Args args)
         {
             setCallback();
+            for (auto x: args)std::cout<<x<<'\t';
             if (args.empty())
             {
                 obj = new Native(false);//undirected
@@ -39,6 +40,7 @@ namespace spider
             else
             {
                 //TODO:More generators, maybe set up a table?
+                std::cout<<"NOT IMPLEMENTED"<<std::endl;
             }
         }
         
