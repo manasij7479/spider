@@ -15,9 +15,10 @@ namespace spider
         /*
          * Args[0] will have layout, we ignore that for now
          */
-        UserWindow(graph::AdjacencyList<std::string, int>& g, spider::EventManager* eMgr, std::vector<std::string> Args = {}) : eventManager(eMgr)
+        UserWindow(spider::UserGraph* gWrap, spider::EventManager* eMgr, std::vector<std::string> Args = {}) : eventManager(eMgr)
         {
-            layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(g);
+            graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
+            layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);
@@ -71,7 +72,7 @@ namespace spider
             eventManager->registerEscapeHandler([&](){gObj->handleEscape();});
             
             eventManager->registerRedrawHandler([&](){gObj->setLayout(layout, sizex - 200, sizey);});
-            eventManager->registerRedrawHandler([&](){gObj->refreshVertexNames(&g);});
+            eventManager->registerRedrawHandler([&](){gObj->refreshVertexNames(&gref);});
             
             disp = new spider::SceneDisplay(node, eventManager, sizex, sizey);
         }

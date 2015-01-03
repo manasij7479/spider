@@ -20,7 +20,7 @@ int main()
     
     spider::EventManager eMgr;
     spider::UserGraph gWrap(&g);
-    spider::UserWindow disp(g, &eMgr);
+    spider::UserWindow disp(&gWrap, &eMgr);
     gWrap.setCallback([&](){eMgr.reportRedrawEvent();});
     
     while(disp.isOpen())
