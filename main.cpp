@@ -9,9 +9,8 @@ int main()
     {
         std::cerr<<"Threading not fully supported, do not open more than one window.\n";
     }
-    spider::EventManager eMgr;
 
-    spider::Runtime rt(&eMgr);
+    spider::Runtime rt;
 
     while(true)
     {

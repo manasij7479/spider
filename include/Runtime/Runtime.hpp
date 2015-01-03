@@ -11,7 +11,6 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime(spider::EventManager* eMgr):eventManager(eMgr){};
         void eval(std::vector<std::string> args)
         {
             if (args[0] == "create")
@@ -40,7 +39,7 @@ namespace spider
                     UserGraph* g = graphMap[args[0]];
                     //TODO: Handle errors
                     args.erase(args.begin());
-                    UserWindow* win = new UserWindow(g,eventManager, args);
+                    UserWindow* win = new UserWindow(g, args);
                     windowMap[name] = win;
                 }
                
@@ -87,7 +86,6 @@ namespace spider
     private:
         std::map<std::string, spider::UserGraph*> graphMap;
         std::map<std::string, spider::UserWindow*> windowMap;
-        spider::EventManager* eventManager;
     };
 }
 #endif

@@ -16,8 +16,9 @@ namespace spider
         /*
          * Args[0] will have layout, we ignore that for now
          */
-        UserWindow(spider::UserGraph* gWrap, spider::EventManager* eMgr, std::vector<std::string> Args = {}) : eventManager(eMgr)
+        UserWindow(spider::UserGraph* gWrap, std::vector<std::string> Args = {})
         {
+            eventManager = new EventManager();
             graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
             layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
