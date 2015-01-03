@@ -79,6 +79,10 @@ namespace spider
             gWrap->setCallback([&](){eventManager->reportRedrawEvent();});
         }
         bool isOpen(){return disp->isOpen();}
+        void eval(std::vector<std::string> args)
+        {
+            //TODO: save image, change layout..things like that
+        }
     private:
         static const int sizex = 800, sizey = 600;
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;

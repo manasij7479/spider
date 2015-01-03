@@ -45,6 +45,23 @@ namespace spider
                 }
                
             }
+            //other keywords go here in else if blocks
+            else
+            {
+                std::string type = getType(args[0]);
+                if (type == "graph")
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    graphMap[name]->eval(args);
+                }
+                else if (type == "window")
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    windowMap[name]->eval(args);
+                }
+            }
             
         }
         std::string getType(std::string name) //TODO: Maybe use enums instead of strings if this ever becomes a bottleneck

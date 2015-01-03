@@ -21,12 +21,12 @@ namespace spider
         }
     public:
         typedef graph::AdjacencyList<std::string,int> Native;
-        UserGraph(bool directed = false):obj(new Native(directed)){setCallback();};
-        UserGraph(Native *g):obj(g){setCallback();}
+        UserGraph(bool directed = false):obj(new Native(directed)){};
+        UserGraph(Native *g):obj(g){}
         UserGraph(Args args)
         {
-            setCallback();
-            for (auto x: args)std::cout<<x<<'\t';
+//             setCallback();
+//             for (auto x: args)std::cout<<x<<'\t';
             if (args.empty())
             {
                 obj = new Native(false);//undirected
@@ -44,7 +44,7 @@ namespace spider
             }
         }
         
-        void evalCommand(Args args)
+        void eval(Args args)
         {
             if (args[0] == "insertVertex")
             {
@@ -96,7 +96,7 @@ namespace spider
         
         Native* getNativeObj(){return obj;} //DANGER: Callbacks won't work
         void setNativeObj(Native* obj_){obj = obj_; changeCallback();}
-        void setCallback(std::function<void(void)> f = [](){}){changeCallback = f;}
+        void setCallback(std::function<void(void)> f){changeCallback = f;}
         
     private:
         Native* obj;
