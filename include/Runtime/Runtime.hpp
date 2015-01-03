@@ -1,0 +1,55 @@
+#ifndef SPIDER_RUNTIME_HPP
+#define SPIDER_RUNTIME_HPP
+#include "Runtime/UserGraph.hpp"
+#include "Runtime/UserWindow.hpp"
+#include <map>
+#include <vector>
+#include <string>
+#include <stdexcept>
+namespace spider
+{
+    class Runtime
+    {
+    public:
+        void eval(std::vector<std::string> args)
+        {
+            if (args[0] == "create")
+            {
+                if (args.size() < 3)
+                    throw std::runtime_error("Expected more arguments");
+                std::string type = args[1];
+                std::string name = args[2];
+                std::string exists = getType(name);
+                if (exists != "none")
+                    throw std::runtime_error("Name" + name + 
+                                            "exists as" + exists);
+                if (type == "graph")
+                {
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    graphMap[name] = UserGraph(args);
+                } 
+            }
+            
+        }
+        std::string getType(std::string name) //TODO: Maybe use enums instead of strings if this ever becomes a bottleneck
+        {
+            if (name == "create")
+                return "keyword";
+            if (graphMap.find(name)!=graphMap.end())
+                return "graph";
+            if (windowMap.find(name)!=windowMap.end())
+                return "window";
+            return "none";
+        }
+        UserGraph& getGraph(std::string name)
+        {
+            //TODO handle `not found` error
+            return graphMap[name];
+        }
+    private:
+        std::map<std::string, spider::UserGraph> graphMap;
+        std::map<std::string, spider::UserWindow> windowMap;
+    };
+}
+#endif

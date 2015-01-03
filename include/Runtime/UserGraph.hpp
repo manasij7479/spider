@@ -26,7 +26,11 @@ namespace spider
         UserGraph(Args args)
         {
             setCallback();
-            if (args[0] == "cycle")
+            if (args.empty())
+            {
+                obj = new Native(false);//undirected
+            }
+            else if (args[0] == "cycle")
             {
                 assert_arg_size(args, 2);
                 int n = std::stoi(args[1]);
@@ -34,9 +38,9 @@ namespace spider
             }
             else
             {
-                
+                //TODO:More generators, maybe set up a table?
             }
-        }//TODO
+        }
         
         void evalCommand(Args args)
         {
