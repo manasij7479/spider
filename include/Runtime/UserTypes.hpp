@@ -1,7 +1,7 @@
 #ifndef SPIDER_USER_TYPES_HPP
 #define SPIDER_USER_TYPES_HPP
 #include <graph/graph.hpp>
-#include "UserEnv/UserGraph.hpp"
+#include "Runtime//UserGraph.hpp"
 namespace spider
 {
     namespace user

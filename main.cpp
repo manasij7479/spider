@@ -11,8 +11,8 @@
 #include "Display/SceneNode.hpp"
 #include "External/OGDFAdapter.hpp"
 #include "Event/EventManager.hpp"
-#include "UserEnv/UserGraph.hpp"
-#include "UserEnv/UserWindow.hpp"
+#include "Runtime/UserGraph.hpp"
+#include "Runtime/UserWindow.hpp"
 int main()
 {
     
