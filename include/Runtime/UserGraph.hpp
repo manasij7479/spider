@@ -127,11 +127,12 @@ namespace spider
         
         Native* getNativeObj(){return obj;} //DANGER: Callbacks won't work
         void setNativeObj(Native* obj_){obj = obj_; changeCallback();}
-        void setCallback(std::function<void(void)> f){changeCallback = f;}
+        void setCallback(std::function<void(void)> f){changeCallbacks.push_back(f);}
         
     private:
         Native* obj;
-        std::function<void(void)> changeCallback;
+        void changeCallback(){for(auto&& f: changeCallbacks)f();}
+        std::vector<std::function<void(void)>> changeCallbacks;
     };
 }
 #endif
