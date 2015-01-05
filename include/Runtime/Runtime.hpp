@@ -2,10 +2,12 @@
 #define SPIDER_RUNTIME_HPP
 #include "Runtime/UserGraph.hpp"
 #include "Runtime/UserWindow.hpp"
+#include "Runtime/Context.hpp"
 #include <map>
 #include <vector>
 #include <string>
 #include <stdexcept>
+
 namespace spider
 {
     class Runtime
@@ -19,7 +21,7 @@ namespace spider
                     throw std::runtime_error("Expected more arguments");
                 std::string type = args[1];
                 std::string name = args[2];
-                std::string exists = getType(name);
+                std::string exists = context.getType(name);
                 if (exists != "none")
                     throw std::runtime_error("Name" + name + 
                                             "exists as" + exists);
@@ -28,7 +30,7 @@ namespace spider
                     args.erase(args.begin());
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    graphMap[name] = new UserGraph(args);
+                    context.insertGraph(name, new UserGraph(args));
 //                     std::cout << "Graph " << name << " created."<<std::endl;
                 }
                 else if (type == "window")
@@ -36,56 +38,36 @@ namespace spider
                     args.erase(args.begin());
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    UserGraph* g = graphMap[args[0]];
+                    UserGraph* g = context.getGraph(args[0]);
                     //TODO: Handle errors
                     args.erase(args.begin());
                     UserWindow* win = new UserWindow(g, args);
-                    windowMap[name] = win;
+                    context.insertWindow(name,win);
                 }
                
             }
             //other keywords go here in else if blocks
             else
             {
-                std::string type = getType(args[0]);
+                std::string type = context.getType(args[0]);
                 if (type == "graph")
                 {
                     std::string name = args[0];
                     args.erase(args.begin());
-                    graphMap[name]->eval(args);
+                    context.getGraph(name)->eval(args);
                 }
                 else if (type == "window")
                 {
                     std::string name = args[0];
                     args.erase(args.begin());
-                    windowMap[name]->eval(args);
+                    context.getWindow(name)->eval(args);
                 }
             }
             
         }
-        std::string getType(std::string name) //TODO: Maybe use enums instead of strings if this ever becomes a bottleneck
-        {
-            if (name == "create")
-                return "keyword";
-            if (graphMap.find(name)!=graphMap.end())
-                return "graph";
-            if (windowMap.find(name)!=windowMap.end())
-                return "window";
-            return "none";
-        }
-        UserGraph& getGraph(std::string name)
-        {
-            //TODO handle `not found` error
-            return *graphMap[name];
-        }
-        UserWindow& getWindow(std::string name)
-        {            
-            //TODO handle `not found` error
-            return *windowMap[name];
-        }
+
     private:
-        std::map<std::string, spider::UserGraph*> graphMap;
-        std::map<std::string, spider::UserWindow*> windowMap;
+        Context context;
     };
 }
 #endif

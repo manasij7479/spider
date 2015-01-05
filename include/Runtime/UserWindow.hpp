@@ -84,6 +84,24 @@ namespace spider
         {
             //TODO: save image, change layout..things like that
         }
+        ~UserWindow()
+        {
+            //maybe tell node to delete its children instead ?
+//             delete node;
+//             delete graph;
+//             delete menu; 
+//             delete b1;
+//             delete b2;
+//             delete b3;
+//             delete disp;
+//             delete mObj;
+//             delete b1obj;
+//             delete b2obj;
+//             delete b3obj;
+//             delete layout;
+//             delete gObj;
+//             delete eventManager;
+        }
     private:
         static const int sizex = 800, sizey = 600;
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
