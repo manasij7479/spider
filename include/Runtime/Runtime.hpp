@@ -21,10 +21,7 @@ namespace spider
                     throw std::runtime_error("Expected more arguments");
                 std::string type = args[1];
                 std::string name = args[2];
-                std::string exists = context.getType(name);
-                if (exists != "none")
-                    throw std::runtime_error("Name" + name + 
-                                            "exists as" + exists);
+                
                 if (type == "graph")
                 {
                     args.erase(args.begin());
