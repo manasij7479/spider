@@ -6,8 +6,32 @@
 #include <string>
 #include <functional>
 #include <stdexcept>
+#include <map>
 namespace spider
 {
+    typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
+    std::map<std::string, F> GraphNameMap = 
+    {
+        {"path", graph::gen::path},
+        {"cycle", graph::gen::cycle},
+        {"complete", graph::gen::complete},
+        {"wheel", graph::gen::wheel},
+        {"complete_bipartite", graph::gen::complete_bipartite},
+        {"star", graph::gen::star},
+        {"star_polygon", graph::gen::star_polygon},
+        {"friendship", graph::gen::friendship},
+        {"mobius_ladder", graph::gen::mobius_ladder},
+        {"grid", graph::gen::grid},
+        {"generalized_petersen", graph::gen::generalized_petersen},
+        {"wagner", graph::gen::wagner},
+        {"butterfly", graph::gen::butterfly},
+        {"petersen", graph::gen::petersen},
+        {"durer", graph::gen::durer},
+        {"desargues", graph::gen::desargues},
+        {"mobius_kantor", graph::gen::mobius_kantor},
+        {"dodecahedron", graph::gen::dodecahedron},
+        {"nauru", graph::gen::nauru}
+    };
     class UserGraph
     {
         typedef std::vector<std::string> Args;
@@ -31,17 +55,24 @@ namespace spider
             {
                 obj = new Native(false);//undirected
             }
-            else if (args[0] == "cycle")
-            {
-                assert_arg_size(args, 2);
-                int n = std::stoi(args[1]);
-                obj = new Native(graph::gen::cycle(n));
-            }
             else
             {
-                //TODO:More generators, maybe set up a table?
-                std::cout<<"NOT IMPLEMENTED"<<std::endl;
+                std::vector<int> int_args;
+                for (int i=1; i< args.size(); ++i)
+                    int_args.push_back(std::stoi(args[i]));
+                obj = new Native(GraphNameMap[args[0]](int_args, 1));
             }
+//             else if (args[0] == "cycle")
+//             {
+//                 assert_arg_size(args, 2);
+//                 int n = std::stoi(args[1]);
+//                 obj = new Native(graph::gen::cycle({n}));
+//             }
+//             else
+//             {
+//                 //TODO:More generators, maybe set up a table?
+//                 std::cout<<"NOT IMPLEMENTED"<<std::endl;
+//             }
         }
         
         void eval(Args args)
