@@ -2,7 +2,7 @@
 #define SPIDER_RUNTIME_HPP
 #include "Runtime/UserGraph.hpp"
 #include "Runtime/UserWindow.hpp"
-#include "Runtime/Context.hpp"
+#include "Runtime/ContextStack.hpp"
 #include <map>
 #include <vector>
 #include <string>
@@ -13,6 +13,10 @@ namespace spider
     class Runtime
     {
     public:
+        Runtime()
+        {
+            context.push();
+        }
         void eval(std::vector<std::string> args)
         {
             if (args[0] == "create")
@@ -64,7 +68,7 @@ namespace spider
         }
 
     private:
-        Context context;
+        ContextStack context;
     };
 }
 #endif

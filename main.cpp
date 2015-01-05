@@ -10,6 +10,7 @@
  * Needs manually editable graph on screen.
  * Proper Error messages
  * Language Implementation (At this moment, the IR is taken as input and directly executed)
+ * If same graph is open in multiple windows, operation results only reflect in the latest opened one
  */
 int main()
 {
