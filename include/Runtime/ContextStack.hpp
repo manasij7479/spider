@@ -29,6 +29,10 @@ namespace spider
         {
             top().insertWindow(name, win);
         }
+        void insertInt(std::string name, UserInt* i)
+        {
+            top().insertInt(name, i);
+        }
         
         std::pair<std::string,int> locate(std::string name)
         {
@@ -57,6 +61,13 @@ namespace spider
             if (location.first == "none")
                 return nullptr;
             else return stack[location.second]->getWindow(name);
+        }
+        UserInt* getInt(std::string name)
+        {            
+            auto location = locate(name);
+            if (location.first == "none")
+                return nullptr;
+            else return stack[location.second]->getInt(name);
         }
     private:
         std::vector<spider::Context*> stack;

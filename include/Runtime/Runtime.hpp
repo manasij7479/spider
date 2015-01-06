@@ -42,8 +42,15 @@ namespace spider
                     UserGraph* g = context.getGraph(args[0]);
                     //TODO: Handle errors
                     args.erase(args.begin());
-                    UserWindow* win = new UserWindow(g, args);
+                    UserWindow* win = new UserWindow(g, args); //TODO: Give a ContextStack ptr to the objects to look values up on its own
                     context.insertWindow(name,win);
+                }
+                else if (type == "int")
+                {
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    context.insertInt(name, new UserInt(args));
                 }
                
             }
@@ -62,6 +69,21 @@ namespace spider
                     std::string name = args[0];
                     args.erase(args.begin());
                     context.getWindow(name)->eval(args);
+                }
+                else if (type == "int")
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    context.getInt(name)->eval(args);
+                }
+                else if (type == "none")
+                {
+                    throw std::runtime_error("Non Existent Identifier: " + args[0]);
+                }
+                else
+                {
+                    std::cerr<<"UNSUPPORTED TYPE: "<< type <<std::endl;
+                    
                 }
             }
             
