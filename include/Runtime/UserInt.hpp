@@ -1,14 +1,18 @@
 #ifndef SPIDER_USER_INT_HPP
 #define SPIDER_USER_INT_HPP
+#include <Runtime/UserType.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
 namespace spider
 {
-    class UserInt
+    class UserInt : public UserType
     {
     public:
-        UserInt(std::vector<std::string> args){data = std::stoi(args[0]);}
+        UserInt(std::vector<std::string> args) : UserType(UserType::Type::Int)
+        {
+            data = std::stoi(args[0]);
+        }
         int get(){return data;}
         void eval(std::vector<std::string> args)
         {

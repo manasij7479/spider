@@ -31,7 +31,7 @@ namespace spider
                     args.erase(args.begin());
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    context.insertGraph(name, new UserGraph(args));
+                    context.insert(name, new UserGraph(args));
 //                     std::cout << "Graph " << name << " created."<<std::endl;
                 }
                 else if (type == "window")
@@ -39,50 +39,48 @@ namespace spider
                     args.erase(args.begin());
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    UserGraph* g = context.getGraph(args[0]);
+                    auto g = static_cast<UserGraph*>(context.get(args[0]));
                     //TODO: Handle errors
                     args.erase(args.begin());
                     UserWindow* win = new UserWindow(g, args); //TODO: Give a ContextStack ptr to the objects to look values up on its own
-                    context.insertWindow(name,win);
+                    context.insert(name,win);
                 }
                 else if (type == "int")
                 {
                     args.erase(args.begin());
                     args.erase(args.begin());
                     args.erase(args.begin());
-                    context.insertInt(name, new UserInt(args));
+                    context.insert(name, new UserInt(args));
                 }
                
             }
             //other keywords go here in else if blocks
             else
             {
-                std::string type = context.getType(args[0]);
-                if (type == "graph")
-                {
-                    std::string name = args[0];
-                    args.erase(args.begin());
-                    context.getGraph(name)->eval(args);
-                }
-                else if (type == "window")
-                {
-                    std::string name = args[0];
-                    args.erase(args.begin());
-                    context.getWindow(name)->eval(args);
-                }
-                else if (type == "int")
-                {
-                    std::string name = args[0];
-                    args.erase(args.begin());
-                    context.getInt(name)->eval(args);
-                }
-                else if (type == "none")
-                {
+                UserType* obj = context.get(args[0]);
+                if (obj == nullptr)
                     throw std::runtime_error("Non Existent Identifier: " + args[0]);
+                if (obj->type == UserType::Type::Graph)
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    static_cast<UserGraph*>(obj)->eval(args);
+                }
+                else if (obj->type == UserType::Type::Window)
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    static_cast<UserWindow*>(obj)->eval(args);
+                }
+                else if (obj->type == UserType::Type::Int)
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    static_cast<UserInt*>(obj)->eval(args);
                 }
                 else
                 {
-                    std::cerr<<"UNSUPPORTED TYPE: "<< type <<std::endl;
+                    std::cerr<<"UNSUPPORTED TYPE"<<std::endl;
                     
                 }
             }

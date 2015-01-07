@@ -6,17 +6,18 @@
 #include "Display/GraphSprite.hpp"
 #include "Display/TexRectangle.hpp"
 #include "Runtime/UserGraph.hpp"
+#include "Runtime/UserType.hpp"
 #include "Event/EventManager.hpp"
 #include "graph/graph.hpp"
 namespace spider
 {
-    class UserWindow // size and most chacteristics are fixed for now
+    class UserWindow : public UserType // size and most chacteristics are fixed for now
     {
     public:
         /*
          * Args[0] will have layout, we ignore that for now
          */
-        UserWindow(spider::UserGraph* gWrap, std::vector<std::string> Args = {})
+        UserWindow(spider::UserGraph* gWrap, std::vector<std::string> Args = {}) : UserType(UserType::Type::Window)
         {
             eventManager = new EventManager();
             graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();

@@ -21,53 +21,26 @@ namespace spider
             return *stack.back();
         }
         
-        void insertGraph(std::string name, UserGraph* g)
+        void insert(std::string name, UserType* obj)
         {
-            top().insertGraph(name, g);
-        }
-        void insertWindow(std::string name, UserWindow* win)
-        {
-            top().insertWindow(name, win);
-        }
-        void insertInt(std::string name, UserInt* i)
-        {
-            top().insertInt(name, i);
+            top().insert(name, obj);
         }
         
-        std::pair<std::string,int> locate(std::string name)
+        int locate(std::string name)
         {
-            for(int i = stack.size()-1; i >=0; --i)
+            for(int i = stack.size()-1; i >= 0 ; --i)
             {
-                std::string type = stack[i]->getType(name);
-                if(type != "none")
-                    return {type, i};
+                if(stack[i]->exists(name))
+                    return i;
             }
-            return {"none", -1};
+            return -1;
         }
-        std::string getType(std::string name)
-        {
-            return locate(name).first;
-        }
-        UserGraph* getGraph(std::string name)
+        UserType* get(std::string name)
         {
             auto location = locate(name);
-            if (location.first == "none")
+            if (location == -1)
                 return nullptr;
-            else return stack[location.second]->getGraph(name);
-        }
-        UserWindow* getWindow(std::string name)
-        {            
-            auto location = locate(name);
-            if (location.first == "none")
-                return nullptr;
-            else return stack[location.second]->getWindow(name);
-        }
-        UserInt* getInt(std::string name)
-        {            
-            auto location = locate(name);
-            if (location.first == "none")
-                return nullptr;
-            else return stack[location.second]->getInt(name);
+            else return stack[location]->get(name);
         }
     private:
         std::vector<spider::Context*> stack;

@@ -7,6 +7,7 @@
 #include <functional>
 #include <stdexcept>
 #include <map>
+#include <Runtime/UserType.hpp>
 namespace spider
 {
     typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
@@ -32,7 +33,7 @@ namespace spider
         {"dodecahedron", graph::gen::dodecahedron},
         {"nauru", graph::gen::nauru}
     };
-    class UserGraph
+    class UserGraph : public UserType
     {
         typedef std::vector<std::string> Args;
         void assert_arg_size(const Args& args, int size)
@@ -45,9 +46,9 @@ namespace spider
         }
     public:
         typedef graph::AdjacencyList<std::string,int> Native;
-        UserGraph(bool directed = false):obj(new Native(directed)){};
-        UserGraph(Native *g):obj(g){}
-        UserGraph(Args args)
+//         UserGraph(bool directed = false):obj(new Native(directed)){};
+//         UserGraph(Native *g):obj(g){}
+        UserGraph(Args args) : UserType(UserType::Type::Graph)
         {
 //             setCallback();
 //             for (auto x: args)std::cout<<x<<'\t';
