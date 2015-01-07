@@ -2,6 +2,8 @@
 #define SPIDER_RUNTIME_HPP
 #include "Runtime/UserGraph.hpp"
 #include "Runtime/UserWindow.hpp"
+#include "Runtime/UserInt.hpp"
+#include "Runtime/UserString.hpp"
 #include "Runtime/ContextStack.hpp"
 #include <map>
 #include <vector>
@@ -52,6 +54,13 @@ namespace spider
                     args.erase(args.begin());
                     context.insert(name, new UserInt(args));
                 }
+                else if (type == "string")
+                {
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    args.erase(args.begin());
+                    context.insert(name, new UserString(args));
+                }
                
             }
             //other keywords go here in else if blocks
@@ -77,6 +86,12 @@ namespace spider
                     std::string name = args[0];
                     args.erase(args.begin());
                     static_cast<UserInt*>(obj)->eval(args);
+                }
+                else if (obj->type == UserType::Type::String)
+                {
+                    std::string name = args[0];
+                    args.erase(args.begin());
+                    static_cast<UserString*>(obj)->eval(args);
                 }
                 else
                 {
