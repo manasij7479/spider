@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <map>
 #include <Runtime/UserType.hpp>
+#include <graph/util/io.hpp>
 namespace spider
 {
     typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
@@ -97,6 +98,10 @@ namespace spider
             {
                 args.erase(args.begin());
                 removeEdge(args);
+            }
+            else if (args[0] == "show")
+            {
+                graph::displayGraph(*obj);
             }
             else throw std::runtime_error("Unsupported Operation.\n");
         }
