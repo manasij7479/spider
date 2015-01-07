@@ -52,7 +52,7 @@ namespace spider
 //             scale = {1.0f,1.0f};
         sizex = x;
         sizey = y;
-        float border = 20;
+        float border = 30;
         Rect bounds = {{0 + border,0 + border},{sizex * 1.0f - border , sizey * 1.0f - border}};
         layout->generate(bounds);
         generateEdgeArray(layout);
