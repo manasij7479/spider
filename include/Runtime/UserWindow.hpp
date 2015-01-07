@@ -1,6 +1,7 @@
 #ifndef SPIDER_USER_WINDOW
 #define SPIDER_USER_WINDOW
 #include "Layout/CircularLayout.hpp"
+#include "Layout/BiCircularLayout.hpp"
 #include "Display/SceneNode.hpp"
 #include "Display/SceneDisplay.hpp"
 #include "Display/GraphSprite.hpp"
@@ -20,7 +21,7 @@ namespace spider
         {
             eventManager = new EventManager();
             graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
-            layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
+            layout = new spider::BiCircularLayout<graph::AdjacencyList<std::string, int>>(gref/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);
@@ -107,7 +108,7 @@ namespace spider
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
         spider::SceneDisplay* disp;
         spider::TexRectangle* mObj, *b1obj, *b2obj, *b3obj;
-        spider::CircularLayout<UserGraph::Native>* layout;
+        spider::Layout<UserGraph::Native>* layout;
         spider::GraphSprite* gObj;
         spider::EventManager* eventManager;
     };
