@@ -23,7 +23,7 @@ namespace spider
             int vcount = Base::g.order()/n;
             int start = 0, end;
             float rinc = std::min(xspan,yspan)/n;
-            int radius = rinc;
+            float radius = rinc;
             
             auto vlist = graph::VertexList(Base::g);
             for(int i=1;i<=n;++i)
