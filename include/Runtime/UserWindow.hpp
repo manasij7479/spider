@@ -3,6 +3,7 @@
 #include "Layout/CircularLayout.hpp"
 #include "Layout/BiCircularLayout.hpp"
 #include "Layout/NCircularLayout.hpp"
+#include "Layout/LinearLayout.hpp"
 #include "Layout/GridLayout.hpp"
 #include "Display/SceneNode.hpp"
 #include "Display/SceneDisplay.hpp"
@@ -23,7 +24,7 @@ namespace spider
         {
             eventManager = new EventManager();
             graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
-            layout = new spider::NCircularLayout<graph::AdjacencyList<std::string, int>>(gref,3/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
+            layout = new spider::LinearLayout<graph::AdjacencyList<std::string, int>>(gref,true/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);
