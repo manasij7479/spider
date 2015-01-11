@@ -5,6 +5,7 @@
 #include "Layout/BipartiteLayout.hpp"
 #include "Layout/NCircularLayout.hpp"
 #include "Layout/LinearLayout.hpp"
+#include "Layout/TreeLayout.hpp"
 #include "Layout/GridLayout.hpp"
 #include "Display/SceneNode.hpp"
 #include "Display/SceneDisplay.hpp"
@@ -25,7 +26,7 @@ namespace spider
         {
             eventManager = new EventManager();
             graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
-            layout = new spider::BipartiteLayout<graph::AdjacencyList<std::string, int>>(gref,4.0/7/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
+            layout = new spider::TreeLayout<graph::AdjacencyList<std::string, int>>(gref,"1"/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);
