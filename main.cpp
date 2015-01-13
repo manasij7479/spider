@@ -22,8 +22,13 @@ int main()
 
     while(true)
     {
-        std::string line;
-        std::getline(std::cin, line);
-        rt.eval(line);
+        std::string foo;
+        std::getline(std::cin, foo);
+        std::istringstream in(foo);
+        std::vector<std::string> args;
+        std::string temp;
+        while(in >> temp)
+            args.push_back(temp);
+        rt.eval(args);
     }
 }

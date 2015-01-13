@@ -1,6 +1,7 @@
 #ifndef SPIDER_RUNTIME_TYPE_HPP
 #define SPIDER_RUNTIME_TYPE_HPP
 #include <string>
+#include <map>
 namespace spider
 {
     class Value
@@ -17,6 +18,13 @@ namespace spider
         Type type;
     };
     using VType = Value::Type;
+    std::map<std::string, VType> NameToTypeMap = 
+    {
+        {"int", VType::Integer},
+        {"string", VType::String}
+        //Add the rest as needed
+    };
+    
     
     class IntegerValue : public Value
     {
@@ -45,5 +53,6 @@ namespace spider
     public:
         VoidType():Value(VType::Void){};
     };
+    
 }
 #endif
