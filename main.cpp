@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "Event/EventManager.hpp"
-#include "Runtime/Runtime.hpp"
+#include "NewRuntime/Runtime.hpp"
 #include "X11/Xlib.h"
 /*ISSUES and TODO:
  * Closed window names remain in symbol table.
@@ -22,13 +22,8 @@ int main()
 
     while(true)
     {
-        std::string foo;
-        std::getline(std::cin, foo);
-        std::istringstream in(foo);
-        std::vector<std::string> args;
-        std::string temp;
-        while(in >> temp)
-            args.push_back(temp);
-        rt.eval(args);
+        std::string line;
+        std::getline(std::cin, line);
+        rt.eval(line);
     }
 }
