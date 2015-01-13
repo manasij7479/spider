@@ -23,7 +23,7 @@ namespace spider
         {"mobius_ladder", graph::gen::mobius_ladder},
         {"grid", graph::gen::grid},
         {"generalized_petersen", graph::gen::generalized_petersen},
-//         {"k_ary_tree", graph::gen::k_ary_tree},
+        {"k_ary_tree", graph::gen::k_ary_tree},
         {"wagner", graph::gen::wagner},
         {"butterfly", graph::gen::butterfly},
         {"petersen", graph::gen::petersen},
