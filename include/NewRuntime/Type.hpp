@@ -1,11 +1,17 @@
 #ifndef SPIDER_RUNTIME_TYPE_HPP
 #define SPIDER_RUNTIME_TYPE_HPP
+#include <string>
 namespace spider
 {
     class Value
     {
     public:
-        enum class Type {Integer, String, Bool, Real, Graph, Window};
+        enum class Type 
+        {
+            Void,
+            Integer, String, Bool, Real,
+            Graph, Window
+        };
         Value(Type t):type(t){};
         virtual std::string show() {return "<Empty Value>";};
         Type type;
@@ -16,6 +22,10 @@ namespace spider
     {
     public:
         IntegerValue(int i):data(i),Value(VType::Integer){}
+        std::string show()
+        {
+            return std::to_string(data);
+        }
         int data;
     };
     
@@ -23,10 +33,17 @@ namespace spider
     {
     public:
         StringValue(std::string s):data(s),Value(VType::String){}
+        std::string show()
+        {
+            return data;
+        }
         std::string data;
     };
     
-    
-    
+    class VoidType: public Value
+    {
+    public:
+        VoidType():Value(VType::Void){};
+    };
 }
 #endif
