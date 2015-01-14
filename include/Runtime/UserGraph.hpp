@@ -2,6 +2,7 @@
 #define SPIDER_USER_GRAPH
 #include <graph/graph.hpp>
 #include <graph/util/generate.hpp>
+#include <graph/util/io.hpp>
 #include <vector>
 #include <string>
 #include <functional>
@@ -23,6 +24,7 @@ namespace spider
         {"mobius_ladder", graph::gen::mobius_ladder},
         {"grid", graph::gen::grid},
         {"generalized_petersen", graph::gen::generalized_petersen},
+        {"k_ary_tree", graph::gen::k_ary_tree},
         {"wagner", graph::gen::wagner},
         {"butterfly", graph::gen::butterfly},
         {"petersen", graph::gen::petersen},
@@ -61,6 +63,7 @@ namespace spider
                 for (int i=1; i< args.size(); ++i)
                     int_args.push_back(std::stoi(args[i]));
                 obj = new Native(GraphNameMap[args[0]](int_args, 1));
+                graph::displayGraph(*obj);
             }
 //             else if (args[0] == "cycle")
 //             {
