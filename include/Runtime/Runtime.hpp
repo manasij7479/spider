@@ -14,7 +14,7 @@ namespace spider
     public:
         Runtime()
         {
-            prev = new VoidValue();
+            prev_to_prev = prev = new VoidValue();
         }
         void eval(std::vector<std::string> args)
         {
@@ -105,6 +105,7 @@ namespace spider
         
         void assignPrev(Value* x)
         {
+            prev_to_prev = prev;
             prev = x;
         }
         Value* constructValue(VType type, std::string value)
@@ -112,6 +113,8 @@ namespace spider
             Value* result;
             if(value == "_")
                 result = prev;
+            else if (value == "__")
+                result = prev_to_prev;
             else
                 result = table.get(value);
             if (result == nullptr)
@@ -154,6 +157,8 @@ namespace spider
                 Value* x;
                 if (arg == "_")
                     result.push_back(prev);
+                else if (arg == "__")
+                    result.push_back(prev_to_prev);
                 else if ((x=table.get(arg)) != nullptr)
                     result.push_back(x);
                 else 
@@ -162,6 +167,7 @@ namespace spider
             return result;
         }
         Value* prev;
+        Value* prev_to_prev;
         SymbolTable table;
     };
 }
