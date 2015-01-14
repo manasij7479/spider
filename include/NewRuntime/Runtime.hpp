@@ -12,7 +12,7 @@ namespace spider
     public:
         Runtime()
         {
-            prev = new VoidType();
+            prev = new VoidValue();
         }
         void eval(std::vector<std::string> args)
         {
@@ -109,17 +109,21 @@ namespace spider
             switch(type)
             {
                 case VType::Integer : return new IntegerValue(std::stoi(value));
-                case VType::String : return new StringValue(value);
+                case VType::String : return new StringValue(value.substr(1, value.length()-2));
+                case VType::Bool : return new BoolValue(((value == "true")? true: false));
                 default: return nullptr;
             }
         }
         Value* constructLiteral(std::string str)
         {
-            std::istringstream in(str);
-            int i;
-            if(in >> i)
-                return new IntegerValue(i);
-            else return new StringValue(str);
+            if (str[0] == '"' && str[str.length()-1]=='"')
+                return new StringValue(str.substr(1, str.length()-2));
+            if (str == "true")
+                return new BoolValue(true);
+            if (str == "false")
+                return new BoolValue(false);
+            else return new IntegerValue(std::stoi(str));
+            //TODO float support
         }
         std::vector<Value*> substituteArgs(std::vector<std::string> args)
         {
