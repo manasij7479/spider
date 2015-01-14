@@ -25,7 +25,7 @@ namespace spider
     }
     Value* bool_and(std::vector<Value*> args)
     {
-        bool result = false;
+        bool result = true;
         for (auto i : args)
         {
             assert_type(i, VType::Bool);
