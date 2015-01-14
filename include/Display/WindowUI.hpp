@@ -11,22 +11,21 @@
 #include "Display/SceneDisplay.hpp"
 #include "Display/GraphSprite.hpp"
 #include "Display/TexRectangle.hpp"
-#include "Runtime/UserGraph.hpp"
 #include "Event/EventManager.hpp"
 #include "graph/graph.hpp"
+#include "Runtime/GraphValue.hpp"
 namespace spider
 {
-    class UserWindow // size and most chacteristics are fixed for now
+    class UserWindowUI
     {
     public:
-        /*
-         * Args[0] will have layout, we ignore that for now
-         */
-        UserWindow(spider::UserGraph* gWrap, std::vector<std::string> Args = {})
+        UserWindowUI(GraphValue* gWrap) 
         {
+            g = gWrap;
             eventManager = new EventManager();
-            graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
-            layout = new spider::TreeLayout<graph::AdjacencyList<std::string, int>>(gref,"1"/*, 1.0/gWrap->getNativeObj()->order(), 0*/);
+
+            graph::AdjacencyList<std::string, int>& gref = * gWrap->data;
+            layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);
@@ -90,7 +89,11 @@ namespace spider
         {
             //TODO: save image, change layout..things like that
         }
-        ~UserWindow()
+        void setLayout(Layout<GraphSprite::Graph>* newLayout)
+        {
+            gObj->setLayout(newLayout, sizex - 200, sizey);
+        }
+        ~UserWindowUI()
         {
             //maybe tell node to delete its children instead ?
 //             delete node;
@@ -108,12 +111,18 @@ namespace spider
 //             delete gObj;
 //             delete eventManager;
         }
+        GraphValue* getGraph()
+        {
+            return g;
+        }
     private:
         static const int sizex = 800, sizey = 600;
+        GraphValue* g;
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
         spider::SceneDisplay* disp;
         spider::TexRectangle* mObj, *b1obj, *b2obj, *b3obj;
-        spider::Layout<UserGraph::Native>* layout;
+
+        spider::Layout<GraphValue::Graph>* layout;
         spider::GraphSprite* gObj;
         spider::EventManager* eventManager;
     };

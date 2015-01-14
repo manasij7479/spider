@@ -9,8 +9,8 @@ namespace spider
     class GraphSprite // Will be renamed after the above class is discarded
     : public Drawable
     {
-        typedef graph::AdjacencyList<std::string, int> Graph;
     public:
+        typedef graph::AdjacencyList<std::string, int> Graph;
         GraphSprite(Layout<Graph>* l, int x, int y) // x,y are no longer window sizes. local bounds are {(0,0),(x,y)}
         {
             pressed = false;
