@@ -24,7 +24,9 @@ namespace spider
     {
         {"int", VType::Integer},
         {"string", VType::String},
-        {"bool", VType::Bool}
+        {"bool", VType::Bool},
+        {"graph", VType::Graph},
+        {"window", VType::Window}
         //Add the rest as needed
     };
     void assert_type(Value* x, VType t)

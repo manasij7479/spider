@@ -5,22 +5,19 @@
 #include "Display/SceneDisplay.hpp"
 #include "Display/GraphSprite.hpp"
 #include "Display/TexRectangle.hpp"
-#include "Runtime/UserGraph.hpp"
-#include "Runtime/UserType.hpp"
 #include "Event/EventManager.hpp"
 #include "graph/graph.hpp"
+#include "NewRuntime/GraphValue.hpp"
 namespace spider
 {
-    class UserWindow : public UserType // size and most chacteristics are fixed for now
+    class UserWindowUI
     {
     public:
-        /*
-         * Args[0] will have layout, we ignore that for now
-         */
-        UserWindow(spider::UserGraph* gWrap, std::vector<std::string> Args = {}) : UserType(UserType::Type::Window)
+        UserWindowUI(GraphValue* gWrap) 
         {
             eventManager = new EventManager();
-            graph::AdjacencyList<std::string, int>& gref = * gWrap->getNativeObj();
+
+            graph::AdjacencyList<std::string, int>& gref = * gWrap->data;
             layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
@@ -85,7 +82,7 @@ namespace spider
         {
             //TODO: save image, change layout..things like that
         }
-        ~UserWindow()
+        ~UserWindowUI()
         {
             //maybe tell node to delete its children instead ?
 //             delete node;
@@ -108,7 +105,7 @@ namespace spider
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
         spider::SceneDisplay* disp;
         spider::TexRectangle* mObj, *b1obj, *b2obj, *b3obj;
-        spider::CircularLayout<UserGraph::Native>* layout;
+        spider::CircularLayout<GraphValue::Graph>* layout;
         spider::GraphSprite* gObj;
         spider::EventManager* eventManager;
     };

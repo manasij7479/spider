@@ -14,6 +14,12 @@ namespace spider
         g->data->insertVertex(v->data);
         return g;
     }
+    Value* order(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new IntegerValue(static_cast<GraphValue*>(args[0])->data->order());
+    }
     typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
     std::map<std::string, F> GraphNameMap = 
     {
@@ -51,4 +57,6 @@ namespace spider
             GraphNameMap[static_cast<StringValue*>(args[0])->data](newArgs, 1));
         return new GraphValue(g);
     }
+    
+    
 }

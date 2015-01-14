@@ -20,6 +20,11 @@ namespace spider
             return out.str();
         }
         Graph* data;
+        
+        void setCallback(std::function<void(void)> f){changeCallbacks.push_back(f);}
+        void changeCallback(){for(auto&& f: changeCallbacks)f();}
+    private:
+        std::vector<std::function<void(void)>> changeCallbacks;
     };
     
 }

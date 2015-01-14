@@ -5,6 +5,8 @@
 #include "Functions.hpp"
 #include <iostream>
 #include <sstream>
+#include "GraphValue.hpp"
+#include "WindowValue.hpp"
 namespace spider
 {
     class Runtime
@@ -54,6 +56,7 @@ namespace spider
         }
         bool tryDeclare(std::string idf, std::string type, std::string value)
         {
+            //TODO Handle type-value mismatch
             Value* x = table.get(idf);
             if (x != nullptr)
                 return false;
@@ -97,10 +100,13 @@ namespace spider
         {
             Value* result;
             if(value == "_")
-                return prev;
-            else if ((result = table.get(value))!=nullptr)
-                return result;
-            else return constructLiteral(type, value);
+                result = prev;
+            else
+                result = table.get(value);
+            if (result == nullptr)
+                return constructLiteral(type, value);
+            assert_type(result, type);
+            return result;
         }
         
         //TODO: Add other builtins here
@@ -132,7 +138,16 @@ namespace spider
             {
                 Value* x;
                 if (arg == "_")
+                {
+//                     if (prev->type == VType::Graph)
+//                     {
+//                         GraphValue* g = static_cast<GraphValue*>(prev);
+//                         std::cerr<<"FOO:"<<(g->data == nullptr)<<"\n";
+//                         std::cerr << g->data->order();
+//                         std::cerr<<"\nBAR\n";
+//                     }
                     result.push_back(prev);
+                }
                 else if ((x=table.get(arg)) != nullptr)
                     result.push_back(x);
                 else 
