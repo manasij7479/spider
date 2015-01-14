@@ -165,7 +165,7 @@ namespace spider
         return new GraphValue(g);
     }
     
-    Value* graph_edgedeletionsubgraph(std::vector<Value*> args)
+    Value* graph_edge_deletion_subgraph(std::vector<Value*> args)
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
@@ -179,7 +179,7 @@ namespace spider
         return new GraphValue(g);
     }
     
-    Value* graph_vertexdeletionsubgraph(std::vector<Value*> args)
+    Value* graph_vertex_deletion_subgraph(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
@@ -191,7 +191,7 @@ namespace spider
         return new GraphValue(g);
     }
     
-    Value* graph_edgecontractionminor(std::vector<Value*> args)
+    Value* graph_edge_contraction_minor(std::vector<Value*> args)
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);

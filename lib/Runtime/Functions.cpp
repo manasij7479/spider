@@ -2,27 +2,22 @@
 #include "BuiltinTypeOperations.hpp"
 #include "GraphOperations.hpp"
 #include "WindowOperations.hpp"
+#define MAP(x) {#x, x}
+#define GMAP(x) {#x, graph_##x}
+#define BMAP(x) {#x, bool_##x}
+#define WMAP(x) {#x, win_##x}
 namespace spider
 {
     std::map<std::string, Function> FunctionMap = 
     {
-        {"add_int", add_int},
-        {"insert_vertex", graph_insert_vertex},
-        {"insert_edge", graph_insert_edge},
-        {"remove_vertex", graph_remove_vertex},
-        {"remove_edge", graph_remove_edge},
-        {"order", graph_order},
-        {"generate", graph_generate},
-        {"union",graph_union},
-        {"intersection",graph_intersection},
-        {"join",graph_join},
-        {"symmetric_difference",graph_symmetric_difference},
-        {"cartesian_product",graph_cartesian_product},
-        {"complement",graph_complement},
-        {"edge_deletion_subgraph",graph_edgedeletionsubgraph},
-        {"vertex_deletion_subgraph",graph_vertexdeletionsubgraph},
-        {"edge_contractionminor",graph_edgecontractionminor},
-        {"make_win", make_win},
-        {"change_layout", change_layout}
+        MAP(int_add),
+        
+        GMAP(insert_vertex), GMAP(insert_edge), GMAP(remove_vertex),GMAP(remove_edge),
+        GMAP(order), GMAP(generate),GMAP(union), GMAP(intersection), GMAP(join),
+        GMAP(symmetric_difference),GMAP(cartesian_product),GMAP(complement),
+        GMAP(edge_deletion_subgraph),GMAP(vertex_deletion_subgraph),
+        GMAP(edge_contraction_minor),
+        
+        WMAP(display), WMAP(change_layout)
     };
 }

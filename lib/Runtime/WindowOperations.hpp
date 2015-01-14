@@ -6,7 +6,7 @@
 namespace spider
 {
     typedef GraphValue::Graph GT;
-    Value* make_win(std::vector<Value*> args)
+    Value* win_display(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
@@ -14,7 +14,7 @@ namespace spider
         return new WindowValue(g, new CircularLayout<GT>(*(g->data)));
     }
     
-    Value* change_layout(std::vector<Value*> args)
+    Value* win_change_layout(std::vector<Value*> args)
     {
         assert_size(args, greater_eq(2));
         assert_type(args[0], VType::Window);
