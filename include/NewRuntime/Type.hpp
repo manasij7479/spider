@@ -34,12 +34,14 @@ namespace spider
         if (x->type != t)
             throw std::runtime_error("Type Mismatch.\n");
     }
-    void assert_size(std::vector<Value*> args, int size)
+    template <typename T>
+    void assert_size(std::vector<T> args, int size)
     {
         if (args.size() != size)
             throw std::runtime_error("Size Mismatch.\n");
     }
-    void assert_size(std::vector<Value*> args, std::function<bool(int)> predicate)
+    template <typename T>
+    void assert_size(std::vector<T> args, std::function<bool(int)> predicate)
     {
         if (predicate(args.size()) == false)
             throw std::runtime_error("Size Mismatch.\n");

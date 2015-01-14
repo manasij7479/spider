@@ -20,21 +20,25 @@ namespace spider
         {
             if (args[0] == "show")
             {
+                assert_size(args, 2);
                 if(tryShow(args[1]) == false)
                     throw std::runtime_error("Object : '"+args[1]+"' does not exist.\n");
             }
             else if (args[0] == "let")
             {
+                assert_size(args, 4);
                 if (tryDeclare(args[1], args[2], args[3]) == false)
                     throw std::runtime_error("Declaration Failed.\n");
             }
             else if (args[0] == "assign")
             {
+                assert_size(args, 3);
                 if (tryAssign(args[1], args[2]) == false)
                     throw std::runtime_error("Assignment Failed.\n");
             }
             else if (args[0] == "call")
             {
+                assert_size(args, greater_eq(2));
                 args.erase(args.begin());
                 if(tryCall(args) == false)
                     throw std::runtime_error("Function Call Failed.\n");
