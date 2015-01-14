@@ -1,7 +1,7 @@
 #ifndef SPIDER_WINDOW_VALUE_HPP
 #define SPIDER_WINDOW_VALUE_HPP
 #include "Display/WindowUI.hpp"
-#include "Type.hpp"
+#include "Runtime/Type.hpp"
 namespace spider
 {
     class WindowValue : public Value

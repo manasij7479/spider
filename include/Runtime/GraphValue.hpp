@@ -2,7 +2,7 @@
 #define SPIDER_RUNTIME_GRAPH_VALUE_HPP
 #include "graph/graph.hpp"
 #include "graph/util/io.hpp"
-#include "Type.hpp"
+#include "Runtime/Type.hpp"
 namespace spider
 {
     class GraphValue : public Value

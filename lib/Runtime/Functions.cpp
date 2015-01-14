@@ -1,4 +1,4 @@
-#include "NewRuntime/Functions.hpp"
+#include "Runtime/Functions.hpp"
 #include "BuiltinTypeOperations.hpp"
 #include "GraphOperations.hpp"
 #include "WindowOperations.hpp"

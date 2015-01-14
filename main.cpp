@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "Event/EventManager.hpp"
-#include "NewRuntime/Runtime.hpp"
+#include "Runtime/Runtime.hpp"
 #include "X11/Xlib.h"
 /*ISSUES and TODO:
  * Closed window names remain in symbol table.

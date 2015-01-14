@@ -2,7 +2,7 @@
 #define SPIDER_RUNTIME_SYMBOL_TABLE_HPP
 #include <map>
 #include <vector>
-#include "Type.hpp"
+#include "Runtime/Type.hpp"
 namespace spider
 {
     class SymbolTable

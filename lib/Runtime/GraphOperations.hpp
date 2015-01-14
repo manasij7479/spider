@@ -1,7 +1,7 @@
 #include "graph/graph.hpp"
 #include "graph/util/generate.hpp"
-#include "NewRuntime/Type.hpp"
-#include "NewRuntime/GraphValue.hpp"
+#include "Runtime/Type.hpp"
+#include "Runtime/GraphValue.hpp"
 namespace spider
 {
     Value* insert_vertex(std::vector<Value*> args)
