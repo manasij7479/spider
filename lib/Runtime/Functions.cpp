@@ -22,6 +22,7 @@ namespace spider
         {"edge_deletion_subgraph",graph_edgedeletionsubgraph},
         {"vertex_deletion_subgraph",graph_vertexdeletionsubgraph},
         {"edge_contractionminor",graph_edgecontractionminor},
-        {"make_win", make_win}
+        {"make_win", make_win},
+        {"change_layout", change_layout}
     };
 }

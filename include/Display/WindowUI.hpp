@@ -15,8 +15,8 @@ namespace spider
     public:
         UserWindowUI(GraphValue* gWrap) 
         {
+            g = gWrap;
             eventManager = new EventManager();
-
             graph::AdjacencyList<std::string, int>& gref = * gWrap->data;
             layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
@@ -82,6 +82,10 @@ namespace spider
         {
             //TODO: save image, change layout..things like that
         }
+        void setLayout(Layout<GraphSprite::Graph>* newLayout)
+        {
+            gObj->setLayout(newLayout, sizex - 200, sizey);
+        }
         ~UserWindowUI()
         {
             //maybe tell node to delete its children instead ?
@@ -100,8 +104,13 @@ namespace spider
 //             delete gObj;
 //             delete eventManager;
         }
+        GraphValue* getGraph()
+        {
+            return g;
+        }
     private:
         static const int sizex = 800, sizey = 600;
+        GraphValue* g;
         spider::SceneNode* node, *graph, *menu, *b1, *b2, *b3;
         spider::SceneDisplay* disp;
         spider::TexRectangle* mObj, *b1obj, *b2obj, *b3obj;

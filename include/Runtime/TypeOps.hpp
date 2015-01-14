@@ -57,5 +57,9 @@ namespace spider
     {
         return static_cast<BoolValue*>(v);
     }
+    WindowValue* getw(Value* v)
+    {
+        return static_cast<WindowValue*>(v);
+    }
 }
 #endif
