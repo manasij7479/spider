@@ -1,39 +1,44 @@
 #include "graph/graph.hpp"
 #include "graph/util/generate.hpp"
+#include "graph/algorithm/operations.hpp"
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 namespace spider
 {
-    Value* insert_vertex(std::vector<Value*> args)
+    GraphValue* getg(Value* v)
+    {
+        return static_cast<GraphValue*>(v);
+    }
+    Value* graph_insert_vertex(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
-        auto g = static_cast<GraphValue*>(args[0]);
+        auto g = getg(args[0]);
         auto v = static_cast<StringValue*>(args[1]);
         g->data->insertVertex(v->data);
         g->changeCallback();
         return g;
     }
-    Value* remove_vertex(std::vector<Value*> args)
+    Value* graph_remove_vertex(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
-        auto g = static_cast<GraphValue*>(args[0]);
+        auto g = getg(args[0]);
         auto v = static_cast<StringValue*>(args[1]);
         g->data->removeVertex(v->data);
         g->changeCallback();
         return g;
     }
-    Value* insert_edge(std::vector<Value*> args)
+    Value* graph_insert_edge(std::vector<Value*> args)
     {
         assert_size(args, 4);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::String);
         assert_type(args[3], VType::Integer);
-        auto g = static_cast<GraphValue*>(args[0]);
+        auto g = getg(args[0]);
         auto x = static_cast<StringValue*>(args[1]);
         auto y = static_cast<StringValue*>(args[2]);
         auto e = static_cast<IntegerValue*>(args[3]);
@@ -43,13 +48,13 @@ namespace spider
         return g;
     }
     
-    Value* remove_edge(std::vector<Value*> args)
+    Value* graph_remove_edge(std::vector<Value*> args)
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::String);
-        auto g = static_cast<GraphValue*>(args[0]);
+        auto g = getg(args[0]);
         auto x = static_cast<StringValue*>(args[1]);
         auto y = static_cast<StringValue*>(args[2]);
         
@@ -59,11 +64,11 @@ namespace spider
     }
     
     
-    Value* order(std::vector<Value*> args)
+    Value* graph_order(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
-        return new IntegerValue(static_cast<GraphValue*>(args[0])->data->order());
+        return new IntegerValue(getg(args[0])->data->order());
     }
     typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
     std::map<std::string, F> GraphNameMap = 
@@ -88,7 +93,7 @@ namespace spider
         {"dodecahedron", graph::gen::dodecahedron},
         {"nauru", graph::gen::nauru}
     };
-    Value* generate(std::vector<Value*> args)
+    Value* graph_generate(std::vector<Value*> args)
     {
         assert_size(args, greater_eq(1));
         assert_type(args[0], VType::String);
@@ -103,5 +108,104 @@ namespace spider
         return new GraphValue(g);
     }
     
+    Value* graph_union(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::Union(*(getg(args[0])->data), *(getg(args[1])->data)));
+        return new GraphValue(g);
+    }
     
+    
+    Value* graph_intersection(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::intersection(*(getg(args[0])->data), *(getg(args[1])->data)));
+        return new GraphValue(g);
+    }
+    
+    
+    Value* graph_join(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::join(*(getg(args[0])->data), *(getg(args[1])->data)));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_symmetric_difference(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::symmetric_difference(*(getg(args[0])->data), *(getg(args[1])->data)));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_cartesian_product(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::cartesian_product(*(getg(args[0])->data), *(getg(args[1])->data)));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_complement(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        
+        auto g = new GraphValue::Graph(graph::complement(*(getg(args[0])->data)));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_edgedeletionsubgraph(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        
+        auto x = static_cast<StringValue*>(args[1]);
+        auto y = static_cast<StringValue*>(args[2]);
+        
+        auto g = new GraphValue::Graph(graph::EdgeDeletionSubgraph(*(getg(args[0])->data), x->data, y->data));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_vertexdeletionsubgraph(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        
+        auto x = static_cast<StringValue*>(args[1]);
+        
+        auto g = new GraphValue::Graph(graph::VertexDeletionSubgraph(*(getg(args[0])->data), x->data));
+        return new GraphValue(g);
+    }
+    
+    Value* graph_edgecontractionminor(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        
+        auto x = static_cast<StringValue*>(args[1]);
+        auto y = static_cast<StringValue*>(args[2]);
+        
+        auto g = new GraphValue::Graph(graph::EdgeContractionMinor(*(getg(args[0])->data), x->data, y->data));
+        return new GraphValue(g);
+    }
 }
