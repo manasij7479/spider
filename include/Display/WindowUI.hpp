@@ -19,13 +19,13 @@ namespace spider
     class UserWindowUI
     {
     public:
-        UserWindowUI(GraphValue* gWrap) 
+        UserWindowUI(GraphValue* gWrap, Layout<graph::AdjacencyList<std::string, int>>* l) 
         {
             g = gWrap;
             eventManager = new EventManager();
 
             graph::AdjacencyList<std::string, int>& gref = * gWrap->data;
-            layout = new spider::CircularLayout<graph::AdjacencyList<std::string, int>>(gref);
+            layout = l;
             gObj = new spider::GraphSprite(layout, sizex - 200, sizey);
                 
             node = new spider::SceneNode(sizex, sizey);

@@ -12,7 +12,7 @@ namespace spider
         enum class Type 
         {
             Void,
-            Integer, String, Bool, Real,
+            Integer, String, Bool, Float,
             Graph, Window
         };
         Value(Type t):type(t){};
@@ -20,15 +20,6 @@ namespace spider
         Type type;
     };
     using VType = Value::Type;
-    std::map<std::string, VType> NameToTypeMap = 
-    {
-        {"int", VType::Integer},
-        {"string", VType::String},
-        {"bool", VType::Bool},
-        {"graph", VType::Graph},
-        {"window", VType::Window}
-        //Add the rest as needed
-    };
     class IntegerValue : public Value
     {
     public:
@@ -63,7 +54,16 @@ namespace spider
         }
         std::string data;
     };
-    
+    class FloatValue : public Value
+    {
+    public:
+        FloatValue(float f):data(f), Value(VType::Float){}
+        std::string show()
+        {
+            return std::to_string(data);
+        }
+        float data;
+    };
     class VoidValue: public Value //contains nothing
     {
     public:

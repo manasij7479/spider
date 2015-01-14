@@ -125,9 +125,10 @@ namespace spider
         {
             switch(type)
             {
-                case VType::Integer : return new IntegerValue(std::stoi(value));
+                case VType::Integer : return new IntegerValue(std::stoi(value.substr(1, value.length()-1)));
                 case VType::String : return new StringValue(value.substr(1, value.length()-2));
                 case VType::Bool : return new BoolValue(((value == "true")? true: false));
+                case VType::Float : return new FloatValue(std::stof(value.substr(1, value.length()-1)));
                 default: return nullptr;
             }
         }
@@ -139,8 +140,11 @@ namespace spider
                 return new BoolValue(true);
             if (str == "false")
                 return new BoolValue(false);
-            else return new IntegerValue(std::stoi(str));
-            //TODO float support
+            if (str[0] == 'f')
+                return new FloatValue(std::stof(str.substr(1, str.length())));
+            if (str[0] == 'i')
+                return new IntegerValue(std::stoi(str.substr(1, str.length())));
+            else throw std::runtime_error("Can not parse Literal Value.\n");
         }
         std::vector<Value*> substituteArgs(std::vector<std::string> args)
         {
