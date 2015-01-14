@@ -39,6 +39,13 @@ namespace spider
                 if(tryCall(args) == false)
                     throw std::runtime_error("Function Call Failed.\n");
             }
+            else 
+            { // make call keyword optional, may be removed later
+                auto it = FunctionMap.find(args[0]);
+                if (it != FunctionMap.end())
+                    if(tryCall(args) == false)
+                        throw std::runtime_error("Function Call Failed.\n");
+            }
         }
     private:
         bool tryShow(std::string idf)
