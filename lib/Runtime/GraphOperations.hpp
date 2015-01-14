@@ -5,17 +5,13 @@
 #include "Runtime/GraphValue.hpp"
 namespace spider
 {
-    GraphValue* getg(Value* v)
-    {
-        return static_cast<GraphValue*>(v);
-    }
     Value* graph_insert_vertex(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         auto g = getg(args[0]);
-        auto v = static_cast<StringValue*>(args[1]);
+        auto v = gets(args[1]);
         g->data->insertVertex(v->data);
         g->changeCallback();
         return g;
@@ -26,7 +22,7 @@ namespace spider
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         auto g = getg(args[0]);
-        auto v = static_cast<StringValue*>(args[1]);
+        auto v = gets(args[1]);
         g->data->removeVertex(v->data);
         g->changeCallback();
         return g;
@@ -55,8 +51,8 @@ namespace spider
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::String);
         auto g = getg(args[0]);
-        auto x = static_cast<StringValue*>(args[1]);
-        auto y = static_cast<StringValue*>(args[2]);
+        auto x = gets(args[1]);
+        auto y = gets(args[2]);
         
         g->data->removeEdge(x->data, y->data);
         g->changeCallback();
@@ -101,10 +97,10 @@ namespace spider
         for(int i = 1; i < args.size(); ++i)
         {
             assert_type(args[i], VType::Integer);
-            newArgs.push_back(static_cast<IntegerValue*>(args[i])->data);
+            newArgs.push_back(geti(args[i])->data);
         }
         auto g  = new GraphValue::Graph(
-            GraphNameMap[static_cast<StringValue*>(args[0])->data](newArgs, 1));
+            GraphNameMap[gets(args[0])->data](newArgs, 1));
         return new GraphValue(g);
     }
     
@@ -176,8 +172,8 @@ namespace spider
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::String);
         
-        auto x = static_cast<StringValue*>(args[1]);
-        auto y = static_cast<StringValue*>(args[2]);
+        auto x = gets(args[1]);
+        auto y = gets(args[2]);
         
         auto g = new GraphValue::Graph(graph::EdgeDeletionSubgraph(*(getg(args[0])->data), x->data, y->data));
         return new GraphValue(g);
@@ -189,7 +185,7 @@ namespace spider
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         
-        auto x = static_cast<StringValue*>(args[1]);
+        auto x = gets(args[1]);
         
         auto g = new GraphValue::Graph(graph::VertexDeletionSubgraph(*(getg(args[0])->data), x->data));
         return new GraphValue(g);
@@ -202,8 +198,8 @@ namespace spider
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::String);
         
-        auto x = static_cast<StringValue*>(args[1]);
-        auto y = static_cast<StringValue*>(args[2]);
+        auto x = gets(args[1]);
+        auto y = gets(args[2]);
         
         auto g = new GraphValue::Graph(graph::EdgeContractionMinor(*(getg(args[0])->data), x->data, y->data));
         return new GraphValue(g);

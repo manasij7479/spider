@@ -8,7 +8,7 @@ namespace spider
         for (auto i : args)
         {
             assert_type(i, VType::Integer);
-            IntegerValue* iv = static_cast<IntegerValue*>(i);
+            auto iv = geti(i);
             result += iv->data;
         }
         return new IntegerValue(result);
