@@ -8,8 +8,11 @@ namespace spider
     {
         {"add_int", add_int},
         {"insert_vertex", insert_vertex},
+        {"insert_edge", insert_edge},
+        {"remove_vertex", remove_vertex},
+        {"remove_edge", remove_edge},
         {"order", order},
-        {"std_graph", std_graph},
-        {"make_window", make_window}
+        {"generate", generate},
+        {"make_win", make_win}
     };
 }

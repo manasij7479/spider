@@ -14,6 +14,47 @@ namespace spider
         g->data->insertVertex(v->data);
         return g;
     }
+    Value* remove_vertex(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        auto g = static_cast<GraphValue*>(args[0]);
+        auto v = static_cast<StringValue*>(args[1]);
+        g->data->removeVertex(v->data);
+        return g;
+    }
+    Value* insert_edge(std::vector<Value*> args)
+    {
+        assert_size(args, 4);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        assert_type(args[3], VType::Integer);
+        auto g = static_cast<GraphValue*>(args[0]);
+        auto x = static_cast<StringValue*>(args[1]);
+        auto y = static_cast<StringValue*>(args[2]);
+        auto e = static_cast<IntegerValue*>(args[3]);
+        
+        g->data->insertEdge(x->data, y->data, e->data);
+        return g;
+    }
+    
+    Value* remove_edge(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        auto g = static_cast<GraphValue*>(args[0]);
+        auto x = static_cast<StringValue*>(args[1]);
+        auto y = static_cast<StringValue*>(args[2]);
+        
+        g->data->removeEdge(x->data, y->data);
+        return g;
+    }
+    
+    
     Value* order(std::vector<Value*> args)
     {
         assert_size(args, 1);
@@ -43,7 +84,7 @@ namespace spider
         {"dodecahedron", graph::gen::dodecahedron},
         {"nauru", graph::gen::nauru}
     };
-    Value* std_graph(std::vector<Value*> args)
+    Value* generate(std::vector<Value*> args)
     {
         assert_size(args, greater_eq(1));
         assert_type(args[0], VType::String);

@@ -138,16 +138,7 @@ namespace spider
             {
                 Value* x;
                 if (arg == "_")
-                {
-//                     if (prev->type == VType::Graph)
-//                     {
-//                         GraphValue* g = static_cast<GraphValue*>(prev);
-//                         std::cerr<<"FOO:"<<(g->data == nullptr)<<"\n";
-//                         std::cerr << g->data->order();
-//                         std::cerr<<"\nBAR\n";
-//                     }
                     result.push_back(prev);
-                }
                 else if ((x=table.get(arg)) != nullptr)
                     result.push_back(x);
                 else 
