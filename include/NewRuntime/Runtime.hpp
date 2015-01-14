@@ -2,7 +2,9 @@
 #define SPIDER_RUNTIME_HPP
 #include "Type.hpp"
 #include "SymbolTable.hpp"
+#include "Functions.hpp"
 #include <iostream>
+#include <sstream>
 namespace spider
 {
     class Runtime
@@ -27,7 +29,13 @@ namespace spider
             else if (args[0] == "assign")
             {
                 if (tryAssign(args[1], args[2]) == false)
-                    throw std::runtime_error("Assignment failed.\n");
+                    throw std::runtime_error("Assignment Failed.\n");
+            }
+            else if (args[0] == "call")
+            {
+                args.erase(args.begin());
+                if(tryCall(args) == false)
+                    throw std::runtime_error("Function Call Failed.\n");
             }
         }
     private:
@@ -67,6 +75,20 @@ namespace spider
             assignPrev(x);
             return true;
         }
+        
+        bool tryCall(std::vector<std::string> args)
+        {
+            std::string fname = args[0];
+            args.erase(args.begin());
+            auto callArgs = substituteArgs(args);
+            auto it = FunctionMap.find(fname);
+            if (it == FunctionMap.end())
+                return false;
+            auto result = (it->second)(callArgs);
+            assignPrev(result);
+            return true;
+        }
+        
         void assignPrev(Value* x)
         {
             prev = x;
@@ -79,8 +101,9 @@ namespace spider
             else if ((result = table.get(value))!=nullptr)
                 return result;
             else return constructLiteral(type, value);
-            // Move these into a table somewhere
         }
+        
+        //TODO: Add other builtins here
         Value* constructLiteral(VType type, std::string value)
         {
             switch(type)
@@ -89,6 +112,29 @@ namespace spider
                 case VType::String : return new StringValue(value);
                 default: return nullptr;
             }
+        }
+        Value* constructLiteral(std::string str)
+        {
+            std::istringstream in(str);
+            int i;
+            if(in >> i)
+                return new IntegerValue(i);
+            else return new StringValue(str);
+        }
+        std::vector<Value*> substituteArgs(std::vector<std::string> args)
+        {
+            std::vector<Value*> result;
+            for(auto arg: args)
+            {
+                Value* x;
+                if (arg == "_")
+                    result.push_back(prev);
+                else if ((x=table.get(arg)) != nullptr)
+                    result.push_back(x);
+                else 
+                    result.push_back(constructLiteral(arg));
+            }
+            return result;
         }
         Value* prev;
         SymbolTable table;

@@ -24,7 +24,11 @@ namespace spider
         {"string", VType::String}
         //Add the rest as needed
     };
-    
+    void assert_type(Value* x, VType t)
+    {
+        if (x->type != t)
+            throw std::runtime_error("Type Mismatch.\n");
+    }
     
     class IntegerValue : public Value
     {
