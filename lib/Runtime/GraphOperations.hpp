@@ -12,6 +12,7 @@ namespace spider
         auto g = static_cast<GraphValue*>(args[0]);
         auto v = static_cast<StringValue*>(args[1]);
         g->data->insertVertex(v->data);
+        g->changeCallback();
         return g;
     }
     Value* remove_vertex(std::vector<Value*> args)
@@ -22,6 +23,7 @@ namespace spider
         auto g = static_cast<GraphValue*>(args[0]);
         auto v = static_cast<StringValue*>(args[1]);
         g->data->removeVertex(v->data);
+        g->changeCallback();
         return g;
     }
     Value* insert_edge(std::vector<Value*> args)
@@ -37,6 +39,7 @@ namespace spider
         auto e = static_cast<IntegerValue*>(args[3]);
         
         g->data->insertEdge(x->data, y->data, e->data);
+        g->changeCallback();
         return g;
     }
     
@@ -51,6 +54,7 @@ namespace spider
         auto y = static_cast<StringValue*>(args[2]);
         
         g->data->removeEdge(x->data, y->data);
+        g->changeCallback();
         return g;
     }
     
