@@ -72,4 +72,3 @@ namespace spider
 
 }
 #endif
-#include "TypeOps.hpp"

@@ -1,6 +1,7 @@
 #ifndef SPIDER_RUNTIME_HPP
 #define SPIDER_RUNTIME_HPP
 #include "Runtime/Type.hpp"
+#include "Runtime/TypeOps.hpp"
 #include "Runtime/SymbolTable.hpp"
 #include "Runtime/Functions.hpp"
 #include <iostream>
@@ -57,12 +58,14 @@ namespace spider
             Value* x;
             if (idf == "_")
                 x = prev;
+            else if (idf == "__")
+                x = prev_to_prev;
             else
                 x= table.get(idf);
             if (x == nullptr)
                 return false;
             std::cout<<x->show()<<std::endl;
-            assignPrev(x);
+//             assignPrev(x);
             return true;
         }
         bool tryDeclare(std::string idf, std::string type, std::string value)

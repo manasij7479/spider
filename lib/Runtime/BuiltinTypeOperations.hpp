@@ -1,4 +1,5 @@
 #include "Runtime/Type.hpp"
+#include "Runtime/TypeOps.hpp"
 #include <vector>
 namespace spider
 {
@@ -13,6 +14,29 @@ namespace spider
         }
         return new IntegerValue(result);
     }
+    
+    Value* int_greater(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(geti(args[0])->data > geti(args[1])->data);
+    }
+    Value* int_lesser(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(geti(args[0])->data < geti(args[1])->data);
+    }
+    Value* int_equal(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(geti(args[0])->data == geti(args[1])->data);
+    }
+    
     Value* bool_or(std::vector<Value*> args)
     {
         bool result = false;
