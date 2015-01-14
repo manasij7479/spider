@@ -32,8 +32,7 @@ namespace spider
             std::stable_sort(patharray.begin(),patharray.end(),sortComparison<Graph>);
 //             for(int i=0;i<patharray.size();++i)
 //                 std::cout<<i<<" "<<patharray[i].back()<<std::endl;
-            auto elist = graph::EcentricityList(Base::g);
-            int ecentricity = elist[v];
+            int ecentricity = patharray.back().size()-1;
             float yinc = (bounds.max.y-bounds.min.y)/ecentricity;
             float yp = bounds.min.y+yinc;
             
