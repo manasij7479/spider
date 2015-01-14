@@ -34,7 +34,7 @@ namespace spider
 //                 std::cout<<i<<" "<<patharray[i].back()<<std::endl;
             auto elist = graph::EcentricityList(Base::g);
             int ecentricity = elist[v];
-            float yinc = (bounds.max.y+bounds.min.y)/ecentricity;
+            float yinc = (bounds.max.y-bounds.min.y)/ecentricity;
             float yp = bounds.min.y+yinc;
             
             int nadded = 0;
@@ -56,7 +56,7 @@ namespace spider
                     }
                 }
                 
-                float xinc = (bounds.max.x+bounds.min.x)/(layerend-nadded-1);
+                float xinc = (bounds.max.x-bounds.min.x)/(layerend-nadded-1);
                 float xp = bounds.min.x;
                 for(int i=nadded;i<layerend;++i)
                 {
