@@ -14,7 +14,24 @@ namespace spider
         }
         return new IntegerValue(result);
     }
-    
+    Value* int_sub(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new IntegerValue(args[0]-args[1]);
+    }
+    Value* int_mul(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new IntegerValue(args[0]*args[1]);
+    }
+    Value* int_mod(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new IntegerValue(args[0]%args[1]);
+    }
     Value* int_greater(std::vector<Value*> args)
     {
         assert_size(args, 2);
@@ -99,7 +116,18 @@ namespace spider
         assert_type(args[1], VType::Float);
         return new BoolValue(getf(args[0])->data == getf(args[1])->data);
     }
-    
+    Value* float_sub(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new FloatValue(args[0]-args[1]);
+    }
+    Value* float_mul(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new FloatValue(args[0]*args[1]);
+    }
 =======
 >>>>>>> beb8bf0b9ff1c64311a36b49fb379234593473a0
 }
