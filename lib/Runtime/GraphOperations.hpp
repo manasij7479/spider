@@ -204,4 +204,85 @@ namespace spider
         auto g = new GraphValue::Graph(graph::EdgeContractionMinor(*(getg(args[0])->data), x->data, y->data));
         return new GraphValue(g);
     }
+    
+    Value* graph_size(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+                
+        auto g = new IntegerValue::Graph(graph::Size(*(getg(args[0])->data)));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_out_degree(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        
+        auto x = gets(args[1]);
+                
+        auto g = new IntegerValue::Graph(graph::outDegree(*(getg(args[0])->data), x->data));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_in_degree(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        
+        auto x = gets(args[1]);
+                
+        auto g = new IntegerValue::Graph(graph::inDegree(*(getg(args[0])->data), x->data));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_degree(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        
+        auto x = gets(args[1]);
+                
+        auto g = new IntegerValue::Graph(graph::degree(*(getg(args[0])->data), x->data));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_nregular(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+                
+        auto g = new IntegerValue::Graph(graph::nregular(*(getg(args[0])->data)));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_radius(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+                
+        auto g = new IntegerValue::Graph(graph::Radius(*(getg(args[0])->data)));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_diameter(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+                
+        auto g = new IntegerValue::Graph(graph::Radius(*(getg(args[0])->data)));
+        return new IntegerValue(g);
+    }
+    
+    Value* graph_density(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+                
+        auto g = new FloatValue::Graph(graph::Density(*(getg(args[0])->data)));
+        return new FloatValue(g);
+    }
 }

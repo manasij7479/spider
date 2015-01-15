@@ -65,4 +65,38 @@ namespace spider
         return new BoolValue(!(getb(args[0])->data));
     }
     
+    Value* float_add(std::vector<Value*> args)
+    {
+        int result = 0;
+        for (auto i : args)
+        {
+            assert_type(i, VType::Float);
+            auto iv = getf(i);
+            result += iv->data;
+        }
+        return new FloatValue(result);
+    }
+    
+    Value* float_greater(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new BoolValue(getf(args[0])->data > getf(args[1])->data);
+    }
+    Value* float_lesser(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new BoolValue(getf(args[0])->data < getf(args[1])->data);
+    }
+    Value* float_equal(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new BoolValue(getf(args[0])->data == getf(args[1])->data);
+    }
+    
 }
