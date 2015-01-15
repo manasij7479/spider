@@ -60,14 +60,18 @@ namespace spider
                 assert_size(args, greater_eq(2));
                 args.erase(args.begin());
                 if(tryCall(args) == false)
-                    throw std::runtime_error("Function Call Failed.\n");
+                    throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
             }
             else 
             { // make call keyword optional, may be removed later
                 auto it = FunctionMap.find(args[0]);
                 if (it != FunctionMap.end())
+                {
                     if(tryCall(args) == false)
-                        throw std::runtime_error("Function Call Failed.\n");
+                        throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
+                }
+                else 
+                    throw std::runtime_error("Bad keyword: '"+args[0]+"'.\n");
             }
         }
         void operator()(std::istream& inStream)
