@@ -28,6 +28,11 @@ namespace spider
         GMAP(edge_deletion_subgraph), GMAP(vertex_deletion_subgraph),
         GMAP(edge_contraction_minor), GMAP(size_), GMAP(out_degree), GMAP(in_degree),
         GMAP (degree), GMAP(nregular), GMAP(radius), GMAP(diameter), GMAP(density), 
+        GMAP(isVertex), GMAP(isAdjacent), GMAP(isSubgraph), GMAP(isSpanningSubgraph),
+        GMAP(isCyclic), GMAP(isConnected), GMAP(isConnected_), GMAP(isComplement), 
+        GMAP(isComplete), GMAP(isSparse), GMAP(isEmpty), GMAP(isEdgeless),
+        GMAP(isTree), GMAP(isCentre), GMAP(isPeriphery), GMAP(isEulerian), 
+        GMAP(isSemiEulerian), GMAP(isComponent), GMAP(isRegular), 
         
         //Window Functions
         WMAP(display), WMAP(change_layout)

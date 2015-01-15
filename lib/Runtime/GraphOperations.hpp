@@ -285,4 +285,148 @@ namespace spider
         auto g = new FloatValue::Graph(graph::Density(*(getg(args[0])->data)));
         return new FloatValue(g);
     }
+    
+    Value* graph_isVertex(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        return new BoolValue::Graph(graph::isVertex(*(getg(args[0])->data), *(gets(args[1])->data)));
+	}
+		
+    Value* graph_isAdjacent(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        return new BoolValue::Graph(graph::isAdjacent(*(getg(args[0])->data), *(gets(args[1])->data), *(gets(args[2])->data)));
+	}
+	
+	Value* graph_isSubgraph(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        return new BoolValue::Graph(graph::isSubgraph(*(getg(args[0])->data), *(getg(args[1])->data)));
+	}
+	
+	Value* graph_isSpanningSubgraph(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        return new BoolValue::Graph(graph::isSpanningSubgraph(*(getg(args[0])->data), *(getg(args[1])->data)));
+	}
+	
+	Value* graph_isConnected(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isConnected(*(getg(args[0])->data)));
+	}
+	
+	VValue* graph_isConnected(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::String);
+        return new BoolValue::Graph(graph::isConnected(*(getg(args[0])->data), *(gets(args[1])->data), *(gets(args[2])->data)));
+	}
+	
+	Value* graph_isComponent(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        return new BoolValue::Graph(graph::isComponent(*(getg(args[0])->data), *(getg(args[1])->data)));
+	}
+	
+	Value* graph_isRegular(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isRegular(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isEulerian(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isEulerian(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isSemiEulerian(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isSemiEulerian(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isComplete(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isComplete(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isCyclic(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isCyclic(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isEdgeless(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isEdgeless(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isComplement(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Graph);
+        return new BoolValue::Graph(graph::isComplement(*(getg(args[0])->data), *(getg(args[1])->data)));
+	}
+	
+	Value* graph_isSparse(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isSparse(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isTree(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isTree(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isEmpty(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new BoolValue::Graph(graph::isEmpty(*(getg(args[0])->data)));
+	}
+	
+	Value* graph_isCentre(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        return new BoolValue::Graph(graph::isCentre(*(getg(args[0])->data), *(gets(args[1])->data)));
+	}
+	
+	Value* graph_isPeriphery(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        return new BoolValue::Graph(graph::isPeriphery(*(getg(args[0])->data), *(gets(args[1])->data)));
+	}
 }
