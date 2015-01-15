@@ -65,6 +65,7 @@ namespace spider
         return new BoolValue(!(getb(args[0])->data));
     }
     
+<<<<<<< HEAD
     Value* float_add(std::vector<Value*> args)
     {
         int result = 0;
@@ -99,4 +100,6 @@ namespace spider
         return new BoolValue(getf(args[0])->data == getf(args[1])->data);
     }
     
+=======
+>>>>>>> beb8bf0b9ff1c64311a36b49fb379234593473a0
 }
