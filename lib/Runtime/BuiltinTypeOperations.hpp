@@ -18,19 +18,19 @@ namespace spider
     {
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
-        return new IntegerValue(args[0]-args[1]);
+        return new IntegerValue(geti(args[0])->data - geti(args[1])->data);
     }
     Value* int_mul(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
-        return new IntegerValue(args[0]*args[1]);
+        return new IntegerValue(geti(args[0])->data * geti(args[1])->data);
     }
     Value* int_mod(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
-        return new IntegerValue(args[0]%args[1]);
+        return new IntegerValue(geti(args[0])->data % geti(args[1])->data);
     }
     Value* int_greater(std::vector<Value*> args)
     {
@@ -81,9 +81,8 @@ namespace spider
         assert_type(args[0], VType::Bool);
         return new BoolValue(!(getb(args[0])->data));
     }
-    
-<<<<<<< HEAD
-    Value* float_add(std::vector<Value*> args)
+
+    Value* float_addf(std::vector<Value*> args)
     {
         int result = 0;
         for (auto i : args)
@@ -95,39 +94,37 @@ namespace spider
         return new FloatValue(result);
     }
     
-    Value* float_greater(std::vector<Value*> args)
+    Value* float_greaterf(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
         return new BoolValue(getf(args[0])->data > getf(args[1])->data);
     }
-    Value* float_lesser(std::vector<Value*> args)
+    Value* float_lesserf(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
         return new BoolValue(getf(args[0])->data < getf(args[1])->data);
     }
-    Value* float_equal(std::vector<Value*> args)
+    Value* float_equalf(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
         return new BoolValue(getf(args[0])->data == getf(args[1])->data);
     }
-    Value* float_sub(std::vector<Value*> args)
+    Value* float_subf(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
-        return new FloatValue(args[0]-args[1]);
+        return new FloatValue(getf(args[0])->data - getf(args[1])->data);
     }
-    Value* float_mul(std::vector<Value*> args)
+    Value* float_mulf(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
-        return new FloatValue(args[0]*args[1]);
+        return new FloatValue(getf(args[0])->data * getf(args[1])->data);
     }
-=======
->>>>>>> beb8bf0b9ff1c64311a36b49fb379234593473a0
 }
