@@ -211,8 +211,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
                 
-        auto g = new GraphValue::Graph(graph::Size(*(getg(args[0])->data)));
-        return new IntegerValue(graph::Size(*g));
+        return new IntegerValue(graph::Size(*(getg(args[0])->data)));
     }
     
     Value* graph_out_degree(std::vector<Value*> args)
@@ -223,8 +222,7 @@ namespace spider
         
         auto x = gets(args[1]);
                 
-        auto g = new GraphValue::Graph(graph::outDegree(*(getg(args[0])->data), x->data));
-        return new IntegerValue(graph::outDegree(*g, x->data));
+        return new IntegerValue(graph::outDegree(*(getg(args[0])->data), x->data));
     }
     
     Value* graph_in_degree(std::vector<Value*> args)
@@ -235,8 +233,7 @@ namespace spider
         
         auto x = gets(args[1]);
                 
-        auto g = new GraphValue::Graph(graph::inDegree(*(getg(args[0])->data), x->data));
-        return new IntegerValue(graph::inDegree(*g, x->data));
+        return new IntegerValue(graph::inDegree(*(getg(args[0])->data), x->data));
     }
     
     Value* graph_degree(std::vector<Value*> args)
@@ -247,8 +244,7 @@ namespace spider
         
         auto x = gets(args[1]);
                 
-        auto g = new GraphValue::Graph(graph::degree(*(getg(args[0])->data), x->data));
-        return new IntegerValue(graph::degree(*g, x->data));
+        return new IntegerValue(graph::degree(*(getg(args[0])->data), x->data));
     }
     
     Value* graph_nregular(std::vector<Value*> args)
@@ -256,8 +252,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
                 
-        auto g = new GraphValue::Graph(graph::nregular(*(getg(args[0])->data)));
-        return new IntegerValue(graph::nregular(*g));
+        return new IntegerValue(graph::nregular(*(getg(args[0])->data)));
     }
     
     Value* graph_radius(std::vector<Value*> args)
@@ -265,8 +260,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
                 
-        auto g = new GraphValue::Graph(graph::Radius(*(getg(args[0])->data)));
-        return new IntegerValue(graph::Radius(*g));
+        return new IntegerValue(graph::Radius(*(getg(args[0])->data)));
     }
     
     Value* graph_diameter(std::vector<Value*> args)
@@ -274,8 +268,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
                 
-        auto g = new GraphValue::Graph(graph::Radius(*(getg(args[0])->data)));
-        return new IntegerValue(graph::Diameter(*g));
+        return new IntegerValue(graph::Radius(*(getg(args[0])->data)));
     }
     
     Value* graph_density(std::vector<Value*> args)
@@ -283,8 +276,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
                 
-        auto g = new GraphValue::Graph(graph::Density(*(getg(args[0])->data)));
-        return new FloatValue(graph::Density(*g));
+        return new FloatValue(graph::Density(*(getg(args[0])->data)));
     }
     
     Value* graph_is_vertex(std::vector<Value*> args)
