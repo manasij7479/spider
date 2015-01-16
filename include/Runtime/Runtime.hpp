@@ -84,8 +84,10 @@ namespace spider
                 eval(stmt.getSingle());
             else 
             {
+                table.push(); // for local variables
                 for (auto inner_stmt : stmt.getBlock())
                     eval(*inner_stmt);
+                table.pop();
             }
         }
     private:
@@ -107,7 +109,7 @@ namespace spider
         bool tryDeclare(std::string idf, std::string type, std::string value)
         {
             //TODO Handle type-value mismatch
-            Value* x = table.get(idf);
+            Value* x = table.local_get(idf);
             if (x != nullptr)
                 return false;
             else
