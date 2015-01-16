@@ -8,6 +8,7 @@
 #include <sstream>
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include "Runtime/Statement.hpp"
 namespace spider
 {
     class Runtime
@@ -37,24 +38,6 @@ namespace spider
                 if (tryAssign(args[1], args[2]) == false)
                     throw std::runtime_error("Assignment Failed.\n");
             }
-            else if (args[0] == "if")
-            {
-                assert_size(args, 3);
-                bool b = getb(constructValue(VType::Bool, args[1]))->data;
-                auto it = labels.find(args[2]);
-                if (it == labels.end())
-                    throw std::runtime_error("Label :'"+args[2]+"' not found.\n");
-//                 std::cerr<< "\nIF COND: " << b<<std::endl;
-                if (b == true)
-                {
-//                     std::cerr << "JUMPING TO label: "<< args[2] << std::endl;
-//                     std::cerr << "CODE: ";
-//                     for(auto x: input[labels[args[2]]])
-//                         std::cerr << x <<' ';
-//                     std::cerr <<std::endl;
-                    evalStored(args[2]);
-                }
-            }
             else if (args[0] == "call")
             {
                 assert_size(args, greater_eq(2));
@@ -74,45 +57,16 @@ namespace spider
                     throw std::runtime_error("Bad keyword: '"+args[0]+"'.\n");
             }
         }
-        void operator()(std::istream& inStream)
+        void eval(Statement& stmt)
         {
-            while(true)
+            if (stmt.isBlock() == false)
+                eval(stmt.getSingle());
+            else 
             {
-                std::string foo;
-                std::getline(inStream, foo);
-                std::istringstream in(foo);
-                std::vector<std::string> args;
-                std::string temp;
-                while(in >> temp)
-                    args.push_back(temp);
-                if (args.size() == 0)
-                    continue;
-                if (args[0] == "label")
-                {
-                    labels[args[1]] = input.size();
-                    continue;
-                }
-                input.push_back(args);
-                eval(args);
+                for (auto inner_stmt : stmt.getBlock())
+                    eval(*inner_stmt);
             }
         }
-        void trap(){/*while(true);*/ std::cin.get();}
-        void evalStored(std::string label)
-        {
-            auto it = labels.find(label);
-            if (it == labels.end())
-                throw std::runtime_error("Label :'"+label+"' not found.\n");
-            for (int i = it->second; i < input.size(); ++i)
-            {
-                eval(input[i]);
-//                 for(auto x : input[i])
-//                     std::cout << x << ' ';
-//                 std::cout<<"\n"<<prev->show()<<std::endl;
-//                 trap();
-            }
-        }
-        
-        
     private:
         bool tryShow(std::string idf)
         {
@@ -234,8 +188,6 @@ namespace spider
         Value* prev;
         Value* prev_to_prev;
         SymbolTable table;
-        std::vector<std::vector<std::string>> input;
-        std::map<std::string, int> labels;
     };
 }
 #endif

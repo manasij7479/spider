@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "Event/EventManager.hpp"
-// #include "Runtime/Runtime.hpp"
+#include "Runtime/Runtime.hpp"
 #include "Runtime/Statement.hpp"
 #include "X11/Xlib.h"
 /*ISSUES and TODO:
@@ -19,9 +19,10 @@ int main()
         std::cerr<<"Threading not fully supported, do not open more than one window.\n";
     }
 
-//     spider::Runtime rt;
-// 
-//     rt(std::cin);
-    spider::Statement st(std::cin);
-    st.print(std::cout);
+    spider::Runtime rt;
+    while (true)
+    {
+        spider::Statement input(std::cin);
+        rt.eval(input);
+    }
 }
