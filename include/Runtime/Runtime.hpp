@@ -59,7 +59,28 @@ namespace spider
         }
         void eval(Statement& stmt)
         {
-            if (stmt.isBlock() == false)
+            if (stmt.hasTail())
+            {
+                auto command = stmt.getSingle();
+                assert_size(command, 2);
+                if (command[0] == "if")
+                {
+                    BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
+                    if (cond->data == true)
+                        eval(*(stmt.getTail()));
+                }
+                else if (command[0] == "while")
+                {
+                    while (true)
+                    {
+                        BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
+                        if (cond->data == false)
+                            break;
+                        else eval(*(stmt.getTail())); 
+                    }
+                }
+            }
+            else if (stmt.isBlock() == false)
                 eval(stmt.getSingle());
             else 
             {
@@ -188,6 +209,7 @@ namespace spider
         Value* prev;
         Value* prev_to_prev;
         SymbolTable table;
+
     };
 }
 #endif

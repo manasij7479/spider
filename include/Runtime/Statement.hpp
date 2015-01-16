@@ -10,6 +10,8 @@ namespace spider
     public:
         Statement(std::istream& in)
         {
+            block = has_tail = false;
+            
             do standalone = split_get(in);
             while(standalone.size() == 0);
             
@@ -35,12 +37,21 @@ namespace spider
             else
             {
                 block = false;
+                if (standalone[0] == "if" || standalone[0] == "while")
+                {
+                    has_tail = true;
+                    tail = new Statement(in);
+                }
             }
             
         }
         bool isBlock()
         {
             return block;
+        }
+        bool hasTail()
+        {
+            return has_tail;
         }
         std::vector<std::string> getSingle()
         {
@@ -49,6 +60,10 @@ namespace spider
         std::vector<Statement*> getBlock()
         {
             return inner;
+        }
+        Statement* getTail()
+        {
+            return tail;
         }
         void print(std::ostream& out, int tab = 0)
         {
@@ -60,6 +75,8 @@ namespace spider
                 for (auto x : standalone)
                     out << x<<' ';
                 out << std::endl;
+                if (has_tail)
+                    tail->print(out, tab);
             }
             else
             {
@@ -87,8 +104,10 @@ namespace spider
             return result;
         }
         bool block;
+        bool has_tail;
         std::vector<Statement*> inner;
         std::vector<std::string> standalone;
+        Statement* tail;
     };
     
 }
