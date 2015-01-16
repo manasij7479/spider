@@ -10,10 +10,14 @@ namespace spider
     public:
         Statement(std::istream& in)
         {
-            block = has_tail = false;
+            block = has_tail = empty = false;
             
-            do standalone = split_get(in);
-            while(standalone.size() == 0);
+            standalone = split_get(in);
+            if (standalone.empty())
+            {
+                empty = true;
+                return;
+            }
             
             if (standalone[0] == "{")
             {
@@ -52,6 +56,10 @@ namespace spider
         bool hasTail()
         {
             return has_tail;
+        }
+        bool isEmpty()
+        {
+            return empty;
         }
         std::vector<std::string> getSingle()
         {
@@ -105,6 +113,7 @@ namespace spider
         }
         bool block;
         bool has_tail;
+        bool empty;
         std::vector<Statement*> inner;
         std::vector<std::string> standalone;
         Statement* tail;

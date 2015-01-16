@@ -18,11 +18,13 @@ int main()
     {
         std::cerr<<"Threading not fully supported, do not open more than one window.\n";
     }
-
+    std::cout << "*** Spider IR Executor ***"<<std::endl;;
     spider::Runtime rt;
     while (true)
     {
+        std::cout << ">> ";
         spider::Statement input(std::cin);
-        rt.eval(input);
+        if (! input.isEmpty())
+            rt.eval(input);
     }
 }
