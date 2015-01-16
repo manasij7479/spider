@@ -24,7 +24,14 @@ int main()
     {
         std::cout << ">> ";
         spider::Statement input(std::cin);
-        if (! input.isEmpty())
-            rt.eval(input);
+        try
+        {
+            if (! input.isEmpty())
+                rt.eval(input);
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << "ERROR: " << e.what()<<"\n";
+        }
     }
 }
