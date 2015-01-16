@@ -215,13 +215,15 @@ namespace spider
 #endif
 /*
  Test code:
- 
-let x int i10
-label loop
-show x
-add x i-1
-assign x _
-greater x i0
-if _ loop
+ let x int i10
+ let b bool true
+ while b
+ {
+    show x
+    add x i-1
+    assign x _
+    greater x i0
+    assign b _
+ }
  
  */
