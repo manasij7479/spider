@@ -16,7 +16,7 @@ namespace spider
         for (int i = 4; i < proto.size(); i+=2)
             formal_params.push_back({proto[i], n_t_map[proto[i+1]]});
     }
-    Value* UserFunction::call(std::vector<Value*> args)
+    Value* UserFunction::call(std::vector<Value*> args, FunctionSystem& f)
     {
         assert_size(args, formal_params.size());
         SymbolTable context;
@@ -25,7 +25,7 @@ namespace spider
             assert_type(args[i], formal_params[i].second);
             context.insert(formal_params[i].first, args[i]);
         }
-        Runtime nested(context, true);
+        Runtime nested(context, f, true);
         nested.eval(*block);
         Value* result = nested.getFromSymbolTable(return_idf.first);
         if (result == nullptr)

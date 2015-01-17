@@ -6,11 +6,15 @@
 #include "Runtime/TypeOps.hpp"
 namespace spider
 {
-    Runtime::Runtime(SymbolTable t, bool nested_mode_) : table(t)
+    Runtime::Runtime(SymbolTable t, FunctionSystem f, bool nested_mode_) : table(t), functions(f)
     {
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
         nested_mode = nested_mode_;
+    }
+    FunctionSystem& Runtime::getFunctions()
+    {
+        return functions;
     }
     void Runtime::eval(std::vector<std::string> args)
     {
@@ -145,7 +149,7 @@ namespace spider
         auto callArgs = substituteArgs(args);
         if (functions.isFunction(fname) == false)
             return false;
-        auto result = functions.call(fname, callArgs, table);
+        auto result = functions.call(fname, callArgs, functions);
         assignPrev(result);
         return true;
     }

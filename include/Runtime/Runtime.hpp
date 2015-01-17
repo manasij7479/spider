@@ -9,10 +9,11 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime(SymbolTable t = SymbolTable(), bool nested_mode_ = false);
+        Runtime(spider::SymbolTable t = SymbolTable(), spider::FunctionSystem f = FunctionSystem(), bool nested_mode_ = false);
         void eval(std::vector<std::string> args);
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
+        FunctionSystem& getFunctions();
     private:
         bool tryShow(std::string idf);
         bool tryDeclare(std::string idf, std::string type, std::string value);
@@ -63,5 +64,21 @@ function foo result int input int
 }
 foo i7479
 show _
- 
+
+3. Factorial !
+function factorial f int n int
+{
+    let f int i1
+    lesser n i2
+    if _
+    {
+        break
+    }
+    sub n i1
+    factorial _
+    mul n _
+    assign f _
+}
+factorial i5
+show _
 */

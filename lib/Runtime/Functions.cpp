@@ -22,6 +22,7 @@ namespace spider
         {
             //Integer Functions
             IMAP(add), IMAP(greater), IMAP(lesser), IMAP(equal),
+            IMAP(sub), IMAP(mul), IMAP(mod),
             
             //Float Functions
             FMAP(addf), FMAP(greaterf), FMAP(lesserf), FMAP(equalf),
@@ -51,13 +52,13 @@ namespace spider
         return (FunctionMap.find(name) != FunctionMap.end()) ||
                (UserFunctionMap.find(name) != UserFunctionMap.end());
     }
-    Value* FunctionSystem::call(std::string name, std::vector<Value*> values, SymbolTable& table)
+    Value* FunctionSystem::call(std::string name, std::vector<Value*> values, FunctionSystem& f)
     {
         if (! isFunction(name))
             throw std::runtime_error("Calling Function '"+name+"' Failed.\n");
         if (FunctionMap.find(name) != FunctionMap.end())
             return FunctionMap[name](values);
-        else return UserFunctionMap[name].call(values);
+        else return UserFunctionMap[name].call(values, f);
     }
     void FunctionSystem::def(std::vector<std::string> proto, Statement* block)
     {

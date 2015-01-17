@@ -7,12 +7,13 @@
 namespace spider
 {
     class Statement;
+    class FunctionSystem;
     class UserFunction
     {
     public:
         UserFunction(){};
         UserFunction(std::vector<std::string> proto, Statement* block_);
-        Value* call(std::vector<Value*> args);
+        Value* call(std::vector<Value*> args, FunctionSystem& f);
     private:
         std::string name;
         Statement* block;
