@@ -14,5 +14,6 @@ namespace spider
         }
         WindowUI* data;
     };
+
 }
 #endif

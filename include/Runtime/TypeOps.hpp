@@ -5,8 +5,9 @@
 #include "Runtime/WindowValue.hpp"
 namespace spider
 {
-    
-    void assert_type(Value* x, VType t)
+    class GraphValue;
+    class WindowValue;
+    inline void assert_type(Value* x, VType t)
     {
         if (x->type != t)
             throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
@@ -24,45 +25,46 @@ namespace spider
             throw std::runtime_error("Size Mismatch.\n");
     }
 
-    std::function<bool(int)> greater(int i)
+    inline std::function<bool(int)> greater(int i)
     {
         return [i](int x){return x > i;};
     }
-    std::function<bool(int)> lesser(int i)
+    inline std::function<bool(int)> lesser(int i)
     {
         return [i](int x){return x < i;};
     }
-    std::function<bool(int)> greater_eq(int i)
+    inline std::function<bool(int)> greater_eq(int i)
     {
         return [i](int x){return x >= i;};
     }
-    std::function<bool(int)> lesser_eq(int i)
+    inline std::function<bool(int)> lesser_eq(int i)
     {
         return [i](int x){return x <= i;};
     }
     
     
-    GraphValue* getg(Value* v)
+    inline GraphValue* getg(Value* v)
     {
         return static_cast<GraphValue*>(v);
     }
-    StringValue* gets(Value* v)
+    inline StringValue* gets(Value* v)
     {
         return static_cast<StringValue*>(v);
     }
-    IntegerValue* geti(Value* v)
+    inline IntegerValue* geti(Value* v)
     {
         return static_cast<IntegerValue*>(v);
     }
-    BoolValue* getb(Value* v)
+    inline BoolValue* getb(Value* v)
     {
         return static_cast<BoolValue*>(v);
     }
-    WindowValue* getw(Value* v)
+    inline WindowValue* getw(Value* v)
     {
         return static_cast<WindowValue*>(v);
     }
-    FloatValue* getf(Value* v)
+
+    inline FloatValue* getf(Value* v)
     {
         return static_cast<FloatValue*>(v);
     }

@@ -26,6 +26,7 @@ namespace spider
     private:
         std::vector<std::function<void(void)>> changeCallbacks;
     };
+
     
 }
 #endif

@@ -27,7 +27,7 @@ namespace spider
      * \brief - overloading operator '+' to add x and y coordinates of two points
      * **/
     
-    vec2 operator+(vec2 x, vec2 y)
+    inline vec2 operator+(vec2 x, vec2 y)
     {
         vec2 z;
         z.x = x.x + y.x;
@@ -65,7 +65,7 @@ namespace spider
      * Point b - Second parameter, the second point
      * **/
     
-    float distsquare(Point a, Point b)
+    inline float distsquare(Point a, Point b)
     {
         float dx = a.x - b.x;
         float dy = a.y - b.y;
@@ -80,7 +80,7 @@ namespace spider
      * Point b - Second parameter, the second point
      * **/
     
-    float Distance(Point a, Point b)
+    inline float Distance(Point a, Point b)
     {
         return std::sqrt(distsquare(a,b));
     }
@@ -93,7 +93,7 @@ namespace spider
      * float y - Second parameter, ty coordinate of point
      * **/
     
-    sf::Vector2f sfvec2(float x, float y)
+    inline sf::Vector2f sfvec2(float x, float y)
     {
         return sf::Vector2f(x,y);
     }

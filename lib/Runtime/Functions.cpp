@@ -3,6 +3,11 @@
 #include "GraphOperations.hpp"
 #include "WindowOperations.hpp"
 
+#include "Runtime/Type.hpp"
+#include "Runtime/Statement.hpp"
+#include "Runtime/SymbolTable.hpp"
+#include "Runtime/TypeOps.hpp"
+
 #define  MAP(x) {#x, x}
 #define IMAP(x) {#x, int_##x}
 #define FMAP(x) {#x, float_##x}
@@ -40,5 +45,24 @@ namespace spider
             //Window Functions
             WMAP(display), WMAP(change_layout)
         };
+    }
+    bool FunctionSystem::isFunction(std::string name)
+    {
+        return FunctionMap.find(name) != FunctionMap.end();
+    }
+//         Function& get(std::string name)
+//         {
+//             if (isFunction(name))
+//                 return FunctionMap[name];
+//         }
+    Value* FunctionSystem::call(std::string name, std::vector<Value*> values, SymbolTable& table)
+    {
+        if (! isFunction(name))
+            throw std::runtime_error("Calling Function '"+name+"' Failed.\n");
+        return FunctionMap[name](values);
+    }
+    void FunctionSystem::def(std::vector<std::string>, Statement* block)
+    {
+        
     }
 }
