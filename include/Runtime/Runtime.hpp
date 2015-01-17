@@ -113,7 +113,7 @@ namespace spider
                 return false;
             else
             {
-                x = constructValue(NameToTypeMap[type], value);
+                x = constructValue(Value::NameToTypeMap()[type], value);
                 table.insert(idf, x);
                 assignPrev(x);
                 return true;

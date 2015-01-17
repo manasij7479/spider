@@ -18,6 +18,33 @@ namespace spider
         Value(Type t):type(t){};
         virtual std::string show() {return "<Empty Value>";};
         Type type;
+        static std::map<std::string, Type> NameToTypeMap()
+        {
+            return  
+            {
+                {"int", Type::Integer},
+                {"string", Type::String},
+                {"bool", Type::Bool},
+                {"float", Type::Float},
+                {"graph", Type::Graph},
+                {"window", Type::Window}
+                //Add the rest as needed
+            };
+        }
+        
+        static std::map<Type, std::string> TypeToNameMap()
+        {
+            return 
+            {
+                { Type::Integer, "int"},
+                { Type::String, "string"},
+                { Type::Bool, "bool"},
+                { Type::Float, "float"},
+                { Type::Graph, "graph"},
+                { Type::Window, "window"}
+                //Add the rest as needed
+            };
+        }
     };
     using VType = Value::Type;
     class IntegerValue : public Value
