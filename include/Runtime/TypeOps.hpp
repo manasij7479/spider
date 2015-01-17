@@ -13,16 +13,16 @@ namespace spider
             throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, int size)
+    void assert_size(std::vector<T> args, int size, std::string reason = "<>")
     {
         if (args.size() != size)
-            throw std::runtime_error("Size Mismatch.\n");
+            throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, std::function<bool(int)> predicate)
+    void assert_size(std::vector<T> args, std::function<bool(int)> predicate, std::string reason = "<>")
     {
         if (predicate(args.size()) == false)
-            throw std::runtime_error("Size Mismatch.\n");
+            throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
 
     inline std::function<bool(int)> greater(int i)

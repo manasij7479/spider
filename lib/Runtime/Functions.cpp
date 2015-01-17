@@ -48,21 +48,19 @@ namespace spider
     }
     bool FunctionSystem::isFunction(std::string name)
     {
-        return FunctionMap.find(name) != FunctionMap.end();
+        return (FunctionMap.find(name) != FunctionMap.end()) ||
+               (UserFunctionMap.find(name) != UserFunctionMap.end());
     }
-//         Function& get(std::string name)
-//         {
-//             if (isFunction(name))
-//                 return FunctionMap[name];
-//         }
     Value* FunctionSystem::call(std::string name, std::vector<Value*> values, SymbolTable& table)
     {
         if (! isFunction(name))
             throw std::runtime_error("Calling Function '"+name+"' Failed.\n");
-        return FunctionMap[name](values);
+        if (FunctionMap.find(name) != FunctionMap.end())
+            return FunctionMap[name](values);
+        else return UserFunctionMap[name].call(values);
     }
-    void FunctionSystem::def(std::vector<std::string>, Statement* block)
+    void FunctionSystem::def(std::vector<std::string> proto, Statement* block)
     {
-        
+        UserFunctionMap[proto[1]] = UserFunction(proto, block);
     }
 }

@@ -25,10 +25,13 @@ namespace spider
             assert_type(args[i], formal_params[i].second);
             context.insert(formal_params[i].first, args[i]);
         }
-        Runtime nested(context);
+        Runtime nested(context, true);
         nested.eval(*block);
-        auto result = nested.getFromSymbolTable(return_idf.first);
+        Value* result = nested.getFromSymbolTable(return_idf.first);
+        if (result == nullptr)
+            throw std::runtime_error("Null return.\n");
         assert_type(result, return_idf.second);
+//         std::cout << result->show() <<std::endl;
         return result;
     }
 }

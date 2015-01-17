@@ -9,7 +9,7 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime(SymbolTable t = SymbolTable());
+        Runtime(SymbolTable t = SymbolTable(), bool nested_mode_ = false);
         void eval(std::vector<std::string> args);
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
@@ -31,16 +31,18 @@ namespace spider
         SymbolTable table;
         FunctionSystem functions;
         bool breakflag;
+        bool nested_mode;
 
     };
 }
 #endif
 /*
- Test code:
- let x int i10
- let b bool true
- while b
- {
+Test code:
+1. Loop from 10 to 6:
+let x int i10
+let b bool true
+while b
+{
     show x
     add x i-1
     assign x _
@@ -51,7 +53,15 @@ namespace spider
     }
     greater x i0
     assign b _
- }
- exit
+}
+exit
+
+2. Simple function returning its input:
+function foo result int input int
+{
+    let result int input 
+}
+foo i7479
+show _
  
- */
+*/

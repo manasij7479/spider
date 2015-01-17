@@ -6,10 +6,11 @@
 #include "Runtime/TypeOps.hpp"
 namespace spider
 {
-    Runtime::Runtime(SymbolTable t) : table(t)
+    Runtime::Runtime(SymbolTable t, bool nested_mode_) : table(t)
     {
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
+        nested_mode = nested_mode_;
     }
     void Runtime::eval(std::vector<std::string> args)
     {
@@ -58,7 +59,7 @@ namespace spider
         if (stmt.hasTail())
         {
             auto command = stmt.getSingle();
-            assert_size(command, 2);
+            assert_size(command, greater_eq(2));
             if (command[0] == "if")
             {
                 BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
@@ -87,7 +88,8 @@ namespace spider
             eval(stmt.getSingle());
         else 
         {
-            table.push(); // for local variables
+            if (!nested_mode )
+                table.push(); // for local variables
             for (auto inner_stmt : stmt.getBlock())
             {
 //                     std::cout<<breakflag<<std::endl;
@@ -95,6 +97,7 @@ namespace spider
                     break;
                 eval(*inner_stmt);
             }
+            if (!nested_mode)
             table.pop();
         }
     }

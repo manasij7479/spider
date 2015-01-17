@@ -10,6 +10,7 @@ namespace spider
     class UserFunction
     {
     public:
+        UserFunction(){};
         UserFunction(std::vector<std::string> proto, Statement* block_);
         Value* call(std::vector<Value*> args);
     private:
