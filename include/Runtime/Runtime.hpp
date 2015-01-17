@@ -81,4 +81,23 @@ function factorial f int n int
 }
 factorial i5
 show _
+
+4. Function with a loop:
+function foo x int n int
+{
+    let x int i1
+    while true
+    {
+        show x
+        add x i1 
+        assign x _
+        greater x n
+        if _
+        {
+            break
+        }
+    }
+}
+foo i10
+
 */
