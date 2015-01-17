@@ -26,6 +26,8 @@ namespace spider
                 if(tryShow(args[1]) == false)
                     throw std::runtime_error("Object : '"+args[1]+"' does not exist.\n");
             }
+            else if (args[0] == "exit")
+                exit(0);
             else if (args[0] == "let")
             {
                 assert_size(args, 4);
