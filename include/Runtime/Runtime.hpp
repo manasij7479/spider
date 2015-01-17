@@ -17,6 +17,7 @@ namespace spider
         Runtime()
         {
             prev_to_prev = prev = new VoidValue();
+            breakflag = false;
         }
         void eval(std::vector<std::string> args)
         {
@@ -28,6 +29,8 @@ namespace spider
             }
             else if (args[0] == "exit")
                 exit(0);
+            else if (args[0] == "break")
+                breakflag = true;
             else if (args[0] == "let")
             {
                 assert_size(args, 4);
@@ -77,6 +80,11 @@ namespace spider
                         BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
                         if (cond->data == false)
                             break;
+                        else if (breakflag == true)
+                        {
+                            breakflag = false;
+                            break;
+                        }
                         else eval(*(stmt.getTail())); 
                     }
                 }
@@ -212,6 +220,7 @@ namespace spider
         Value* prev_to_prev;
         SymbolTable table;
         FunctionSystem functions;
+        bool breakflag;
 
     };
 }
@@ -225,8 +234,14 @@ namespace spider
     show x
     add x i-1
     assign x _
+    equal x i5
+    if _
+    {
+        break
+    }
     greater x i0
     assign b _
  }
+ exit
  
  */
