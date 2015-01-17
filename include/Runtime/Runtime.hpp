@@ -102,15 +102,7 @@ namespace spider
     private:
         bool tryShow(std::string idf)
         {
-            Value* x;
-            if (idf == "_")
-                x = prev;
-            else if (idf == "__")
-                x = prev_to_prev;
-            else
-                x= table.get(idf);
-            if (x == nullptr)
-                return false;
+            Value* x = constructValue(idf);
             std::cout<<x->show()<<std::endl;
 //             assignPrev(x);
             return true;
@@ -172,7 +164,19 @@ namespace spider
             assert_type(result, type);
             return result;
         }
-        
+        Value* constructValue(std::string value)
+        {
+            Value* result;
+            if(value == "_")
+                result = prev;
+            else if (value == "__")
+                result = prev_to_prev;
+            else
+                result = table.get(value);
+            if (result == nullptr)
+                return constructLiteral(value);
+            return result;
+        }
         //TODO: Add other builtins here
         Value* constructLiteral(VType type, std::string value)
         {

@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 #include "Runtime/Type.hpp"
+#include "Runtime/Statement.hpp"
+#include "Runtime/SymbolTable.hpp"
 namespace spider
 {
     
@@ -20,6 +22,12 @@ namespace spider
         {
             if (isFunction(name))
                 return FunctionMap[name];
+        }
+        Value* call(std::string name, std::vector<Value*> values, SymbolTable& table)
+        {
+            if (! isFunction(name))
+                throw std::runtime_error("Calling Function '"+name+"' Failed.\n");
+            return FunctionMap[name](values);
         }
     private:
         std::map<std::string, Function> FunctionMap;
