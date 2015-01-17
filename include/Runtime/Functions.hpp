@@ -6,8 +6,24 @@
 #include "Runtime/Type.hpp"
 namespace spider
 {
-    typedef std::function<Value*(std::vector<Value*>)> Function;
-    extern std::map<std::string, Function> FunctionMap;
+    
+    class FunctionSystem
+    {
+        typedef std::function<Value*(std::vector<Value*>)> Function;
+    public:
+        FunctionSystem();
+        bool isFunction(std::string name)
+        {
+            return FunctionMap.find(name) != FunctionMap.end();
+        }
+        Function& get(std::string name)
+        {
+            if (isFunction(name))
+                return FunctionMap[name];
+        }
+    private:
+        std::map<std::string, Function> FunctionMap;
+    };
 
 }
 #endif

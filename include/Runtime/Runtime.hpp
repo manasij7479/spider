@@ -47,8 +47,7 @@ namespace spider
             }
             else 
             { // make call keyword optional, may be removed later
-                auto it = FunctionMap.find(args[0]);
-                if (it != FunctionMap.end())
+                if (functions.isFunction(args[0]))
                 {
                     if(tryCall(args) == false)
                         throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
@@ -136,10 +135,9 @@ namespace spider
             std::string fname = args[0];
             args.erase(args.begin());
             auto callArgs = substituteArgs(args);
-            auto it = FunctionMap.find(fname);
-            if (it == FunctionMap.end())
+            if (functions.isFunction(fname) == false)
                 return false;
-            auto result = (it->second)(callArgs);
+            auto result = functions.get(fname)(callArgs);
             assignPrev(result);
             return true;
         }
@@ -211,6 +209,7 @@ namespace spider
         Value* prev;
         Value* prev_to_prev;
         SymbolTable table;
+        FunctionSystem functions;
 
     };
 }

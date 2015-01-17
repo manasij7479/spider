@@ -68,28 +68,31 @@ namespace spider
         return new IntegerValue(getg(args[0])->data->order());
     }
     typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
-    std::map<std::string, F> GraphNameMap = 
+    std::map<std::string, F> GraphNameMap()
     {
-        {"path", graph::gen::path},
-        {"cycle", graph::gen::cycle},
-        {"complete", graph::gen::complete},
-        {"wheel", graph::gen::wheel},
-        {"complete_bipartite", graph::gen::complete_bipartite},
-        {"star", graph::gen::star},
-        {"star_polygon", graph::gen::star_polygon},
-        {"friendship", graph::gen::friendship},
-        {"mobius_ladder", graph::gen::mobius_ladder},
-        {"grid", graph::gen::grid},
-        {"generalized_petersen", graph::gen::generalized_petersen},
-        {"wagner", graph::gen::wagner},
-        {"butterfly", graph::gen::butterfly},
-        {"petersen", graph::gen::petersen},
-        {"durer", graph::gen::durer},
-        {"desargues", graph::gen::desargues},
-        {"mobius_kantor", graph::gen::mobius_kantor},
-        {"dodecahedron", graph::gen::dodecahedron},
-        {"nauru", graph::gen::nauru}
-    };
+        return {
+            {"path", graph::gen::path},
+            {"cycle", graph::gen::cycle},
+            {"complete", graph::gen::complete},
+            {"wheel", graph::gen::wheel},
+            {"complete_bipartite", graph::gen::complete_bipartite},
+            {"star", graph::gen::star},
+            {"star_polygon", graph::gen::star_polygon},
+            {"friendship", graph::gen::friendship},
+            {"mobius_ladder", graph::gen::mobius_ladder},
+            {"grid", graph::gen::grid},
+            {"generalized_petersen", graph::gen::generalized_petersen},
+            {"wagner", graph::gen::wagner},
+            {"butterfly", graph::gen::butterfly},
+            {"petersen", graph::gen::petersen},
+            {"durer", graph::gen::durer},
+            {"desargues", graph::gen::desargues},
+            {"mobius_kantor", graph::gen::mobius_kantor},
+            {"dodecahedron", graph::gen::dodecahedron},
+            {"nauru", graph::gen::nauru}
+        };
+    }
+    
     Value* graph_generate(std::vector<Value*> args)
     {
         assert_size(args, greater_eq(1));
@@ -101,7 +104,7 @@ namespace spider
             newArgs.push_back(geti(args[i])->data);
         }
         auto g  = new GraphValue::Graph(
-            GraphNameMap[gets(args[0])->data](newArgs, 1));
+            GraphNameMap()[gets(args[0])->data](newArgs, 1));
         return new GraphValue(g);
     }
     
