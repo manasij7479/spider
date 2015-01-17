@@ -41,7 +41,7 @@ namespace spider
             else
             {
                 block = false;
-                if (standalone[0] == "if" || standalone[0] == "while")
+                if (standalone[0] == "if" || standalone[0] == "while" || standalone[0] == "function")
                 {
                     has_tail = true;
                     tail = new Statement(in);

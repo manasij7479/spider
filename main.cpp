@@ -31,7 +31,7 @@ int main()
         }
         catch (std::exception& e)
         {
-            std::cerr << "ERROR: " << e.what()<<"\n";
+            std::cerr << "ERROR: " << e.what();
         }
     }
 }

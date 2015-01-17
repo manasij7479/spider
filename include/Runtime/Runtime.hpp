@@ -14,7 +14,7 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime()
+        Runtime(SymbolTable t = SymbolTable()) : table(t)
         {
             prev_to_prev = prev = new VoidValue();
             breakflag = false;
@@ -95,7 +95,12 @@ namespace spider
             {
                 table.push(); // for local variables
                 for (auto inner_stmt : stmt.getBlock())
+                {
+//                     std::cout<<breakflag<<std::endl;
+                    if (breakflag == true)
+                        break;
                     eval(*inner_stmt);
+                }
                 table.pop();
             }
         }
