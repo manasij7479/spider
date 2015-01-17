@@ -18,11 +18,11 @@ namespace spider
         {
             return FunctionMap.find(name) != FunctionMap.end();
         }
-        Function& get(std::string name)
-        {
-            if (isFunction(name))
-                return FunctionMap[name];
-        }
+//         Function& get(std::string name)
+//         {
+//             if (isFunction(name))
+//                 return FunctionMap[name];
+//         }
         Value* call(std::string name, std::vector<Value*> values, SymbolTable& table)
         {
             if (! isFunction(name))
