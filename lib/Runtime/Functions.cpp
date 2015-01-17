@@ -22,10 +22,11 @@ namespace spider
         {
             //Integer Functions
             IMAP(add), IMAP(greater), IMAP(lesser), IMAP(equal),
-            IMAP(sub), IMAP(mul), IMAP(mod),
+            IMAP(sub), IMAP(mul), IMAP(mod), IMAP(div),
             
             //Float Functions
             FMAP(addf), FMAP(greaterf), FMAP(lesserf), FMAP(equalf),
+            FMAP(mulf), FMAP(subf), FMAP(divf),
             
             //Boolean Functions
             BMAP(or), BMAP(and), BMAP(not),

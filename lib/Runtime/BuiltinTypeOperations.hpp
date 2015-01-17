@@ -20,6 +20,12 @@ namespace spider
         assert_type(args[1], VType::Integer);
         return new IntegerValue(geti(args[0])->data - geti(args[1])->data);
     }
+    Value* int_div(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new IntegerValue(geti(args[0])->data / geti(args[1])->data);
+    }
     Value* int_mul(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Integer);
@@ -84,7 +90,7 @@ namespace spider
 
     Value* float_addf(std::vector<Value*> args)
     {
-        int result = 0;
+        float result = 0;
         for (auto i : args)
         {
             assert_type(i, VType::Float);
@@ -126,5 +132,11 @@ namespace spider
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
         return new FloatValue(getf(args[0])->data * getf(args[1])->data);
+    }
+    Value* float_divf(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Float);
+        assert_type(args[1], VType::Float);
+        return new FloatValue(getf(args[0])->data / getf(args[1])->data);
     }
 }
