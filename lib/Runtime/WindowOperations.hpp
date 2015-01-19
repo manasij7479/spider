@@ -6,7 +6,7 @@
 namespace spider
 {
     typedef GraphValue::Graph GT;
-    Value* make_win(std::vector<Value*> args)
+    Value* win_display(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
@@ -14,7 +14,7 @@ namespace spider
         return new WindowValue(g, new CircularLayout<GT>(*(g->data)));
     }
     
-    Value* change_layout(std::vector<Value*> args)
+    Value* win_change_layout(std::vector<Value*> args)
     {
         assert_size(args, greater_eq(2));
         assert_type(args[0], VType::Window);
@@ -48,6 +48,13 @@ namespace spider
         else if (name == "wheel")
         {
             l = new BiCircularLayout<GT>(g, 1.0/ g.order(), 0);
+        }
+        else if(name == "tree")
+        {
+            assert_size(args,3);
+            assert_type(args[2],VType::String);
+            std::string v = gets(args[2])->data;
+            l = new TreeLayout<GT>(g, v);
         }
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");
         

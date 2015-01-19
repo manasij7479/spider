@@ -3,11 +3,25 @@
 #include <functional>
 #include <map>
 #include <vector>
-#include "Runtime/Type.hpp"
+#include "Runtime/UserFunction.hpp"
 namespace spider
 {
-    typedef std::function<Value*(std::vector<Value*>)> Function;
-    extern std::map<std::string, Function> FunctionMap;
+    class SymbolTable;
+    class Value;
+    class FunctionSystem
+    {
+        typedef std::function<Value*(std::vector<Value*>)> Function;
+    public:
+        FunctionSystem();
+        bool isFunction(std::string name);
+
+        Value* call(std::string name, std::vector<Value*> values, FunctionSystem& f);
+        void def(std::vector<std::string>, Statement* block);
+    private:
+        std::map<std::string, Function> FunctionMap;
+        std::map<std::string, UserFunction> UserFunctionMap;
+    };
+    
 
 }
 #endif

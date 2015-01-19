@@ -41,6 +41,13 @@ namespace spider
             }
             return nullptr;
         }
+        Value* local_get(std::string name)
+        {
+            auto it = stack[stack.size()-1].find(name);
+            if(it != stack[stack.size()-1].end())
+                return it->second;
+            return nullptr;
+        }
     private:
         std::vector<Map> stack;
     };

@@ -3,91 +3,113 @@
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include <algorithm>
 namespace spider
 {
-
-    std::map<std::string, VType> NameToTypeMap = 
-    {
-        {"int", VType::Integer},
-        {"string", VType::String},
-        {"bool", VType::Bool},
-        {"float", VType::Float},
-        {"graph", VType::Graph},
-        {"window", VType::Window}
-        //Add the rest as needed
-    };
-    std::map<VType, std::string> TypeToNameMap = 
-    {
-        { VType::Integer, "int"},
-        { VType::String, "string"},
-        { VType::Bool, "bool"},
-        { VType::Float, "float"},
-        { VType::Graph, "graph"},
-        { VType::Window, "window"}
-        //Add the rest as needed
-    };
-    
-    
-    
-    void assert_type(Value* x, VType t)
+    inline void assert_type(Value* x, VType t)
     {
         if (x->type != t)
-            throw std::runtime_error("Type Mismatch: Expected: '"+TypeToNameMap[t]+"'. Got: '"+TypeToNameMap[x->type]+"' \n");
+            throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, int size)
+    void assert_size(std::vector<T> args, int size, std::string reason = "<>")
     {
         if (args.size() != size)
-            throw std::runtime_error("Size Mismatch.\n");
+            throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, std::function<bool(int)> predicate)
+    void assert_size(std::vector<T> args, std::function<bool(int)> predicate, std::string reason = "<>")
     {
         if (predicate(args.size()) == false)
-            throw std::runtime_error("Size Mismatch.\n");
+            throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
 
-    std::function<bool(int)> greater(int i)
+    inline std::function<bool(int)> greater(int i)
     {
         return [i](int x){return x > i;};
     }
-    std::function<bool(int)> lesser(int i)
+    inline std::function<bool(int)> lesser(int i)
     {
         return [i](int x){return x < i;};
     }
-    std::function<bool(int)> greater_eq(int i)
+    inline std::function<bool(int)> greater_eq(int i)
     {
         return [i](int x){return x >= i;};
     }
-    std::function<bool(int)> lesser_eq(int i)
+    inline std::function<bool(int)> lesser_eq(int i)
     {
         return [i](int x){return x <= i;};
     }
     
     
-    GraphValue* getg(Value* v)
+    inline GraphValue* getg(Value* v)
     {
         return static_cast<GraphValue*>(v);
     }
-    StringValue* gets(Value* v)
+    inline StringValue* gets(Value* v)
     {
         return static_cast<StringValue*>(v);
     }
-    IntegerValue* geti(Value* v)
+    inline IntegerValue* geti(Value* v)
     {
         return static_cast<IntegerValue*>(v);
     }
-    BoolValue* getb(Value* v)
+    inline BoolValue* getb(Value* v)
     {
         return static_cast<BoolValue*>(v);
     }
-    WindowValue* getw(Value* v)
+    inline WindowValue* getw(Value* v)
     {
         return static_cast<WindowValue*>(v);
     }
-    FloatValue* getf(Value* v)
+
+    inline FloatValue* getf(Value* v)
     {
         return static_cast<FloatValue*>(v);
     }
+    
+    template <typename T>
+    inline std::vector<Value*> convertToValue(std::vector<T> data)
+    {
+        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to List.\n");
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<Value*>(std::vector<Value*> data)
+    {
+        return data;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<int>(std::vector<int> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](int x){return new IntegerValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<float>(std::vector<float> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](float x){return new FloatValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<bool>(std::vector<bool> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](bool x){return new BoolValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<std::string>(std::vector<std::string> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](std::string x){return new StringValue(x);});
+        return result;
+    }
+    
 }
 #endif

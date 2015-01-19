@@ -10,9 +10,10 @@ namespace spider
     public:
         WindowValue(GraphValue* g, Layout<GraphValue::Graph>* l):Value(VType::Window)
         {
-            data = new UserWindowUI(g, l);
+            data = new WindowUI(g, l);
         }
-        UserWindowUI* data;
+        WindowUI* data;
     };
+
 }
 #endif
