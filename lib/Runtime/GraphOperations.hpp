@@ -2,8 +2,10 @@
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/operations.hpp"
 #include "graph/algorithm/enumeration.hpp"
+#include "graph/algorithm/search.hpp"
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
+#include "Runtime/WindowValue.hpp"
 namespace spider
 {
     Value* graph_insert_vertex(std::vector<Value*> args)
@@ -82,6 +84,7 @@ namespace spider
             {"mobius_ladder", graph::gen::mobius_ladder},
             {"grid", graph::gen::grid},
             {"generalized_petersen", graph::gen::generalized_petersen},
+            {"k_ary_tree", graph::gen::k_ary_tree},
             {"wagner", graph::gen::wagner},
             {"butterfly", graph::gen::butterfly},
             {"petersen", graph::gen::petersen},
@@ -89,7 +92,7 @@ namespace spider
             {"desargues", graph::gen::desargues},
             {"mobius_kantor", graph::gen::mobius_kantor},
             {"dodecahedron", graph::gen::dodecahedron},
-            {"nauru", graph::gen::nauru}
+            {"nauru", graph::gen::nauru},
         };
     }
     
@@ -428,5 +431,50 @@ namespace spider
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::String);
         return new BoolValue(graph::isPeriphery(*(getg(args[0])->data), gets(args[1])->data));
+    }
+    
+    Value* graph_bfs_animate(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        auto g = new graph::AdjacencyList<std::string, int>();
+        auto gv = new GraphValue(g);
+        std::string s = gets(args[1])->data;
+        g->insertVertex(s);
+        WindowValue* win = new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));
+        graph::BreadthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
+        bfs.setp4([&](const std::string& x,const std::string& y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            gv->changeCallback();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        bfs();
+        return gv;
+    }
+    Value* graph_dfs_animate(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        auto g = new graph::AdjacencyList<std::string, int>();
+        auto gv = new GraphValue(g);
+        std::string s = gets(args[1])->data;
+        g->insertVertex(s);
+        WindowValue* win = new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));
+        graph::DepthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
+        bfs.setp4([&](const std::string& x,const std::string& y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            gv->changeCallback();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        bfs();
+        return gv;
     }
 }
