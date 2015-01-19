@@ -3,10 +3,9 @@
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include <algorithm>
 namespace spider
 {
-    class GraphValue;
-    class WindowValue;
     inline void assert_type(Value* x, VType t)
     {
         if (x->type != t)
@@ -68,5 +67,49 @@ namespace spider
     {
         return static_cast<FloatValue*>(v);
     }
+    
+    template <typename T>
+    inline std::vector<Value*> convertToValue(std::vector<T> data)
+    {
+        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to List.\n");
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<Value*>(std::vector<Value*> data)
+    {
+        return data;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<int>(std::vector<int> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](int x){return new IntegerValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<float>(std::vector<float> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](float x){return new FloatValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<bool>(std::vector<bool> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](bool x){return new BoolValue(x);});
+        return result;
+    }
+    template <>
+    inline std::vector<Value*> convertToValue<std::string>(std::vector<std::string> data)
+    {
+        std::vector<Value*> result(data.size());
+        std::transform(data.begin(), data.end(), result.begin(), 
+                       [](std::string x){return new StringValue(x);});
+        return result;
+    }
+    
 }
 #endif

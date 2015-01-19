@@ -13,7 +13,8 @@ namespace spider
         {
             Void,
             Integer, String, Bool, Float,
-            Graph, Window
+            Graph, Window,
+            List
         };
         Value(Type t):type(t){};
         virtual std::string show() {return "<Empty Value>";};
@@ -27,7 +28,8 @@ namespace spider
                 {"bool", Type::Bool},
                 {"float", Type::Float},
                 {"graph", Type::Graph},
-                {"window", Type::Window}
+                {"window", Type::Window},
+                {"list", Type::List}
                 //Add the rest as needed
             };
         }
@@ -41,7 +43,8 @@ namespace spider
                 { Type::Bool, "bool"},
                 { Type::Float, "float"},
                 { Type::Graph, "graph"},
-                { Type::Window, "window"}
+                { Type::Window, "window"},
+                { Type::List, "list"}
                 //Add the rest as needed
             };
         }
@@ -91,6 +94,7 @@ namespace spider
         }
         float data;
     };
+    
     class VoidValue: public Value //contains nothing
     {
     public:

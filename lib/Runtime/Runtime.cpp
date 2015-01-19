@@ -4,6 +4,7 @@
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
 #include "Runtime/TypeOps.hpp"
+#include "Runtime/ListValue.hpp"
 namespace spider
 {
     Runtime::Runtime(SymbolTable t, FunctionSystem f, bool nested_mode_) : table(t), functions(f)
@@ -20,38 +21,36 @@ namespace spider
     {
         if (args[0] == "show")
         {
-            assert_size(args, 2);
-            if(tryShow(args[1]) == false)
+            assert_size(args, greater_eq(2));
+            if(tryShow(std::vector<std::string>(args.begin()+1, args.end())) == false)
                 throw std::runtime_error("Object : '"+args[1]+"' does not exist.\n");
         }
-        else if (args[0] == "exit")
-            exit(0);
         else if (args[0] == "break")
             breakflag = true;
         else if (args[0] == "let")
         {
-            assert_size(args, 4);
-            if (tryDeclare(args[1], args[2], args[3]) == false)
+            assert_size(args, greater_eq(4));
+            if (tryDeclare(args[1], args[2], std::vector<std::string>(args.begin()+3, args.end())) == false)
                 throw std::runtime_error("Declaration Failed.\n");
         }
         else if (args[0] == "assign")
         {
-            assert_size(args, 3);
-            if (tryAssign(args[1], args[2]) == false)
+            assert_size(args, greater_eq(3));
+            if (tryAssign(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
                 throw std::runtime_error("Assignment Failed.\n");
         }
         else if (args[0] == "call")
         {
             assert_size(args, greater_eq(2));
-            args.erase(args.begin());
-            if(tryCall(args) == false)
+//             args.erase(args.begin());
+            if(tryCall(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
                 throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
         }
         else 
         { // make call keyword optional, may be removed later
             if (functions.isFunction(args[0]))
             {
-                if(tryCall(args) == false)
+                if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
             }
             else 
@@ -110,43 +109,61 @@ namespace spider
         return table.get(name);
     }
     
-    bool Runtime::tryShow(std::string idf)
+    bool Runtime::tryShow(std::vector<std::string> idf, char sep)
     {
-        Value* x = constructValue(idf);
-        std::cout<<x->show()<<std::endl;
+        std::vector<Value*> list = substituteArgs(idf);
+        for(auto x: list)
+            std::cout << x->show() << sep;
+        std::cout << std::endl;
 //             assignPrev(x);
         return true;
     }
-    bool Runtime::tryDeclare(std::string idf, std::string type, std::string value)
+    bool Runtime::tryDeclare(std::string idf, std::string type, std::vector<std::string> value)
     {
-        //TODO Handle type-value mismatch
         Value* x = table.local_get(idf);
         if (x != nullptr)
             return false;
         else
         {
-            x = constructValue(Value::NameToTypeMap()[type], value);
+            std::vector<Value*> list = substituteArgs(value);
+            if (type == "list")
+                x = new ListValue(list);
+            else 
+            {
+                assert_size(list, 1);
+                assert_type(list[0] , Value::NameToTypeMap()[type]);
+                x = list[0];
+            }
             table.insert(idf, x);
             assignPrev(x);
             return true;
         }
     }
-    bool Runtime::tryAssign(std::string idf, std::string value)
+    bool Runtime::tryAssign(std::string idf, std::vector<std::string> value)
     {
         Value* x = table.get(idf);
         if (x == nullptr)
             return false;
-        x = constructValue(x->type, value);
-        table.modify(idf, x);
-        assignPrev(x);
-        return true;
+        else
+        {
+            std::vector<Value*> list = substituteArgs(value);
+            if (x->type == VType::List)
+                x = new ListValue(list);
+            else 
+            {
+                assert_size(list, 1);
+                assert_type(list[0] , x->type);
+                x = list[0];
+            }
+            table.modify(idf, x);
+            assignPrev(x);
+            return true;
+        }
     }
     
-    bool Runtime::tryCall(std::vector<std::string> args)
+    bool Runtime::tryCall(std::string fname, std::vector<std::string> value)
     {
-        std::string fname = args[0];
-        args.erase(args.begin());
-        auto callArgs = substituteArgs(args);
+        auto callArgs = substituteArgs(value);
         if (functions.isFunction(fname) == false)
             return false;
         auto result = functions.call(fname, callArgs, functions);

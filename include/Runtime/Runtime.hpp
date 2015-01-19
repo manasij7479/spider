@@ -15,15 +15,14 @@ namespace spider
         Value* getFromSymbolTable(std::string name);
         FunctionSystem& getFunctions();
     private:
-        bool tryShow(std::string idf);
-        bool tryDeclare(std::string idf, std::string type, std::string value);
-        bool tryAssign(std::string idf, std::string value);
+        bool tryShow(std::vector<std::string> idf, char sep = '\n');
+        bool tryDeclare(std::string idf, std::string type, std::vector<std::string> value);
+        bool tryAssign(std::string idf, std::vector<std::string> value);
         
-        bool tryCall(std::vector<std::string> args);
+        bool tryCall(std::string fname, std::vector<std::string> value);
         void assignPrev(Value* x);
         Value* constructValue(VType type, std::string value);
         Value* constructValue(std::string value);
-        //TODO: Add other builtins here
         Value* constructLiteral(VType type, std::string value);
         Value* constructLiteral(std::string str);
         std::vector<Value*> substituteArgs(std::vector<std::string> args);
@@ -34,6 +33,11 @@ namespace spider
         bool breakflag;
         bool nested_mode;
 
+///TODO: Idea for List impl.
+//Remove most construct* functions
+//Make substituteArgs more sophisticated and return a LIstValue*
+//Make the rest of try* functions use the list returned by substituteArgs (rename it btw) 
+        
     };
 }
 #endif
