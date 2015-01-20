@@ -27,7 +27,7 @@ Look at GraphNameMap in lib/Runtime/GraphOperations.hpp
 ###Available layouts:
 Look win_change_layout in lib/Runtime/WindowOperations.hpp
 
-Example Code:
+##Example Code:
 * Generate and Display a graph:
 ```
 generate "petersen"
@@ -59,6 +59,7 @@ factorial i5
 show _
 ```
 * Insert and Delete Vertices:
+```
 generate "complete" i7
 let g graph _
 display g
@@ -66,4 +67,4 @@ insert_vertex g "8"
 insert_edge g "8" "7" i1
 remove_edge g "1" "2"
 remove_vertex g "3"
-
+```
