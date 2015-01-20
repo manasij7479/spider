@@ -45,6 +45,60 @@ namespace spider
             }
             l = new BiCircularLayout<GT>(g, c, r);
         }
+        else if(name == "bipartite")
+        {
+            float f=0.5;
+            bool isVertical=true;
+            if (args.size() >=3)
+            {
+                assert_type(args[2], VType::Float);
+                f = getf(args[2])->data;
+            }
+            if (args.size() == 4)
+            {
+                assert_type(args[3], VType::Bool);
+                isVertical = getb(args[3])->data;
+            }
+            l = new BipartiteLayout<GT>(g, f, isVertical);
+        }
+        else if(name == "ncircular")
+        {
+            assert_size(args,3);
+            assert_type(args[2],VType::Integer);
+            int n=geti(args[2])->data;
+            l = new NCircularLayout<GT>(g, n);
+        }
+        else if(name == "grid")
+        {
+            int n;
+            bool isCol = true;
+            if(args.size() > 3)
+            {
+                assert_size(args,4);
+                assert_type(args[2], VType::Integer);
+                assert_type(args[3], VType::Bool);
+                n = geti(args[2])->data;
+                isCol = getb(args[3])->data;
+            }
+            else
+            {
+                assert_size(args,3);
+                assert_type(args[2], VType::Integer);
+                n=geti(args[2])->data;
+            }
+            l = new GridLayout<GT>(g, n, isCol);
+        }
+        else if(name == "linear")
+        {
+            bool isVertical = false;
+            if(args.size() > 2)
+            {
+                assert_size(args,3);
+                assert_type(args[2], VType::Bool);
+                isVertical = getb(args[2])->data;
+            }
+            l= new LinearLayout<GT>(g, isVertical);
+        }
         else if (name == "wheel")
         {
             l = new BiCircularLayout<GT>(g, 1.0/ g.order(), 0);
