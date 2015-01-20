@@ -1,15 +1,15 @@
 #Spider IR Reference
 
 ###Keywords:
-* show : show variable
-* break : Break out of a block
+* show : show variable.
+* break : Break out of a block.
 * let : Declare a variable, `let i int i7479`
 * assign : Alter the value of a variable, `assign i j` means i=j
 * if : if condition {block} . `{` and `}` must be on new lines. There is no else.
-* while : WHile loop, structure similar to if.
+* while : While loop, structure similar to if.
 * function : Define a function. See example below.
 
-_ is treated as a special sybmol that contains the result of the last operation.  
+_ is treated as a special symbol that contains the result of the last operation.  
 Similarly, __ stores the one before that.
 
 ###The types supported are:
