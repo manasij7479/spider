@@ -3,6 +3,7 @@
 #include "graph/algorithm/operations.hpp"
 #include "graph/algorithm/enumeration.hpp"
 #include "graph/algorithm/search.hpp"
+#include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
@@ -475,6 +476,24 @@ namespace spider
             return true;
         });
         bfs();
+        return gv;
+    }
+    Value* graph_kruskal_animate(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto g = new graph::AdjacencyList<std::string, int>();
+        auto gv = new GraphValue(g);
+        WindowValue* win = new WindowValue(gv, new CircularLayout<graph::AdjacencyList<std::string, int>>(*g));
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](const std::string& x,const std::string& y, int w)
+        {
+            g->insertVertex(x);
+            g->insertVertex(y);
+            g->insertEdge(x, y, w);
+            gv->changeCallback();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
         return gv;
     }
 }
