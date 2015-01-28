@@ -74,6 +74,7 @@ namespace spider
     std::map<std::string, F> GraphNameMap()
     {
         return {
+            {"empty", graph::gen::empty},
             {"path", graph::gen::path},
             {"cycle", graph::gen::cycle},
             {"complete", graph::gen::complete},
