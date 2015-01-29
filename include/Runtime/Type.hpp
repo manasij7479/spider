@@ -4,9 +4,10 @@
 #include <map>
 #include <vector>
 #include <functional>
+#include <QObject>
 namespace spider
 {
-    class Value
+    class Value : public QObject
     {
     public:
         enum class Type 

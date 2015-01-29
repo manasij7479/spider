@@ -7,6 +7,8 @@
 #include <QWidget>
 class QGraphicsView;
 class QGraphicsScene;
+class QMouseEvent;
+class QEvent;
 namespace spider
 {
     typedef graph::Graph<std::string, int> Graph;
@@ -21,10 +23,16 @@ namespace spider
         {
             return g;
         }
+        bool eventFilter(QObject *obj, QEvent *event);
     private:
         GraphValue* g;
         QGraphicsView* m_View;
         QGraphicsScene* m_Scene;
+//         float scaleX;
+//         float scaleY;
+        Layout<Graph>* layout;
+    private slots:
+        void change();
     };
 }
 #endif
