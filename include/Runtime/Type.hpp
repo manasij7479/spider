@@ -17,6 +17,7 @@ namespace spider
             List
         };
         Value(Type t):type(t){};
+        virtual ~Value(){}
         virtual std::string show() {return "<Empty Value>";};
         Type type;
         static std::map<std::string, Type> NameToTypeMap()

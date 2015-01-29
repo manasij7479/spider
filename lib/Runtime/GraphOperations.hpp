@@ -5,6 +5,7 @@
 #include "graph/algorithm/search.hpp"
 #include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
+#include "Runtime/TypeOps.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
 namespace spider

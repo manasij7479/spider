@@ -14,15 +14,15 @@ int main (int argc, char *argv[])
 
 {
 
-    KAboutData aboutData( "editor", "editor",
+    KAboutData aboutData( "spider", "spider",
 
-        ki18n("Editor"), "1.0",
+        ki18n("Spider"), "0.1",
 
-        ki18n("A simple text area which can load and save."),
+        ki18n("A Graph Visualization Framework"),
 
-        KAboutData::License_GPL,
+        KAboutData::KAboutData::License_GPL_V3,
 
-        ki18n("Copyright (c) 2007 Developer") );
+        ki18n("Copyright (c) 2015 Manasij Mukherjee") );
 
     KCmdLineArgs::init( argc, argv, &aboutData );
 
