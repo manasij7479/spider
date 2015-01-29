@@ -19,7 +19,7 @@ namespace spider
     public:
         Layout(Graph& g_):g(g_){};
         virtual ~Layout(){}
-        virtual void generate(Rect bounds){}
+        virtual void generate(Rect){}
         /**
          * \brief - Returns attributes of vertex
          * 

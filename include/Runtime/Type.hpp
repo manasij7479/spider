@@ -54,7 +54,7 @@ namespace spider
     class IntegerValue : public Value
     {
     public:
-        IntegerValue(int i):data(i),Value(VType::Integer){}
+        IntegerValue(int i):Value(VType::Integer),data(i){}
         std::string show()
         {
             return std::to_string(data);
@@ -65,7 +65,7 @@ namespace spider
     class BoolValue : public Value
     {
     public:
-        BoolValue(bool b):data(b),Value(VType::Bool){}
+        BoolValue(bool b):Value(VType::Bool),data(b){}
         std::string show()
         {
             if (data == true)
@@ -78,7 +78,7 @@ namespace spider
     class StringValue : public Value
     {
     public:
-        StringValue(std::string s):data(s),Value(VType::String){}
+        StringValue(std::string s):Value(VType::String),data(s){}
         std::string show()
         {
             return data;
@@ -88,7 +88,7 @@ namespace spider
     class FloatValue : public Value
     {
     public:
-        FloatValue(float f):data(f), Value(VType::Float){}
+        FloatValue(float f):Value(VType::Float), data(f){}
         std::string show()
         {
             return std::to_string(data);

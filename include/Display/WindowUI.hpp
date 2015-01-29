@@ -86,10 +86,6 @@ namespace spider
             gWrap->setCallback([&](){eventManager->reportRedrawEvent();});
         }
         bool isOpen(){return disp->isOpen();}
-        void eval(std::vector<std::string> args)
-        {
-            //TODO: save image, change layout..things like that
-        }
         void setLayout(Layout<GraphSprite::Graph>* newLayout)
         {
             gObj->setLayout(newLayout, sizex - 200, sizey);

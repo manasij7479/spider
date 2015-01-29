@@ -34,6 +34,7 @@ namespace spider
         void toggleTextDisplay();
 
         void refreshVertexNames(Graph* g);
+        virtual ~GraphSprite(){}
     private:
         int sizex, sizey;
         std::vector<sf::Vertex> vertexArray;
@@ -44,7 +45,7 @@ namespace spider
         bool displayNames;
         std::vector<std::string> VertexNames;
         
-        void fixInput(float& x, float& y)
+        void fixInput(float& /*x*/, float& /*y*/)
         {
 //             std::cout <<"ORI:"<<x<<' '<<y<<std::endl;
 //             sf::Transform inv = transform.getInverse();

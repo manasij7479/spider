@@ -33,7 +33,7 @@ namespace spider
             state.texture = &tex;
             win->draw(quad, 4, sf::Quads, state);
         }
-        void handleClick(float x, float y)
+        void handleClick(float /*x*/, float /*y*/)
         {
 //             std::cout<<"T:"<<x<<' '<<y<<std::endl;
             callback();

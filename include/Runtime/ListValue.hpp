@@ -8,7 +8,7 @@ namespace spider
     {
     public:
         template <typename T>
-        ListValue(std::vector<T> li) : data(convertToValue(li)), Value(VType::List){}
+        ListValue(std::vector<T> li) : Value(VType::List), data(convertToValue(li)){}
         ListValue():Value(VType::List){}
         std::string show()
         {

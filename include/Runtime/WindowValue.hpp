@@ -8,7 +8,7 @@ namespace spider
     class WindowValue : public Value
     {
     public:
-        WindowValue(GraphValue* g, Layout<Graph>* l):Value(VType::Window)
+        WindowValue(GraphValue* g, Layout<Graph>* l): Value(VType::Window)
         {
             data = new WindowUI(g, l);
         }

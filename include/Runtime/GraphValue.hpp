@@ -10,9 +10,9 @@ namespace spider
     public:
         typedef graph::AdjacencyList<std::string, int> Graph;
         GraphValue(Graph* g)
-            :data(g), Value(VType::Graph){};
+            :Value(VType::Graph), data(g){};
         GraphValue(bool dir = false)
-            :data(new Graph(dir)), Value(VType::Graph){};
+            :Value(VType::Graph), data(new Graph(dir)){};
         std::string show()
         {
             std::ostringstream out;
