@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *)
     this->setMinimumHeight(400);
     this->setMinimumWidth(600);
 //     show ();
+    rt = new spider::Runtime();
 }
 
 void MainWindow::setupActions()
@@ -54,7 +55,6 @@ void MainWindow::openFile()
 void MainWindow::run()
 {
     std::istringstream in(editor->getDocument()->text().toStdString());
-    spider::Runtime rt;
     while (true)
     {
 //         std::cout << ">> ";
@@ -62,7 +62,7 @@ void MainWindow::run()
         try
         {
             if (! input.isEmpty())
-                rt.eval(input);
+                rt->eval(input);
             else break;
         }
         catch (std::exception& e)

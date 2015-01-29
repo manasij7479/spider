@@ -4,6 +4,10 @@
 #include <KParts/MainWindow>
 #include <QtGui/QKeyEvent>
 #include "SpiderEditor.hpp"
+namespace spider
+{
+    class Runtime;
+}
 class MainWindow : public KParts::MainWindow
 {
     Q_OBJECT
@@ -16,6 +20,7 @@ private slots:
 private:
     void setupActions();
     spider::EditorWrapper* editor;
+    spider::Runtime* rt;
 };
 
     
