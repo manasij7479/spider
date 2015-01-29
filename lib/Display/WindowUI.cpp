@@ -25,6 +25,7 @@ namespace spider
         installEventFilter(this);
 //         scaleX = 1;
 //         scaleY = 1;
+        connect(gWrap, SIGNAL(changed()), this, SLOT(change()));
         this->show();
     }
     void WindowUI::setLayout(Layout<Graph>* newLayout)
