@@ -4,21 +4,16 @@
 #include "Runtime/GraphValue.hpp"
 #include "Layout/Layout.hpp"
 #include <iostream>
+#include <QWidget>
 namespace spider
 {
     typedef graph::Graph<std::string, int> Graph;
-    class WindowUI
+    class WindowUI : QWidget
     {
+        Q_OBJECT
     public:
-        WindowUI(GraphValue* gWrap, Layout<Graph>* l):g(gWrap)
-        {
-            std::cout << "Window Open"<<std::endl;
-        }
-        void setLayout(Layout<Graph>* newLayout)
-        {
-//             gObj->setLayout(newLayout, sizex - 200, sizey);
-            std::cout << "Layout Set"<<std::endl;
-        }
+        WindowUI(GraphValue* gWrap, Layout<Graph>* l);
+        void setLayout(Layout<Graph>* newLayout);
         bool isOpen(){return true;}
         GraphValue* getGraph()
         {
