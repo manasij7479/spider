@@ -16,6 +16,7 @@
 #include "Runtime/GraphValue.hpp"
 namespace spider
 {
+    typedef graph::AdjacencyList<std::string, int> Graph;
     class WindowUI
     {
     public:

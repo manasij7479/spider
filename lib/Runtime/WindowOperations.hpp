@@ -3,6 +3,11 @@
 #include "Layout/ForceBasedLayout.hpp"
 #include "Layout/BiCircularLayout.hpp"
 #include "Layout/CircularLayout.hpp"
+#include "Layout/BipartiteLayout.hpp"
+#include "Layout/NCircularLayout.hpp"
+#include "Layout/LinearLayout.hpp"
+#include "Layout/TreeLayout.hpp"
+#include "Layout/GridLayout.hpp"
 namespace spider
 {
     typedef GraphValue::Graph GT;

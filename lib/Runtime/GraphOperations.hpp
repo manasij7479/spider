@@ -8,6 +8,10 @@
 #include "Runtime/TypeOps.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include "Layout/CircularLayout.hpp"
+#include "Layout/TreeLayout.hpp"
+#include <chrono>
+#include <thread>
 namespace spider
 {
     Value* graph_insert_vertex(std::vector<Value*> args)
