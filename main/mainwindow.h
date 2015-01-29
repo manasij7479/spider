@@ -1,59 +1,21 @@
 #ifndef MAINWINDOW_H
-
 #define MAINWINDOW_H
 
-    
-
 #include <KParts/MainWindow>
-
 #include <QtGui/QKeyEvent>
-
-    
-
-    
-
-namespace KTextEditor
-
-{
-
-    class Document;
-
-    class View;
-
-}
-
-    
-
+#include "SpiderEditor.hpp"
 class MainWindow : public KParts::MainWindow
-
 {
-
     Q_OBJECT
-
-    
-
-    public:
-
+public:
     MainWindow(QWidget *parent=0);
-
-    
-
-    private slots:
-
+private slots:
     void clear();
-
     void openFile();
-
-    
-
-    private:
-
+    void run();
+private:
     void setupActions();
-
-    KTextEditor::View *m_view;
-
-    KTextEditor::Document *m_doc;
-
+    spider::EditorWrapper* editor;
 };
 
     
