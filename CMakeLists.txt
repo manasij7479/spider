@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.7)
 project(spider)
 project(qspider)
 find_package(KDE4 REQUIRED)
-set(CMAKE_AUTOMOC TRUE)
+# set(CMAKE_AUTOMOC TRUE)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fexceptions") 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")

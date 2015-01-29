@@ -1,6 +1,6 @@
 #ifndef SPIDER_WINDOW_VALUE_HPP
 #define SPIDER_WINDOW_VALUE_HPP
-#include "Display/WindowUI.hpp"
+#include "QtDisplay/WindowUI.hpp"
 #include "Runtime/Type.hpp"
 #include "Layout/Layout.hpp"
 namespace spider
