@@ -5,6 +5,8 @@
 #include "Layout/Layout.hpp"
 #include <iostream>
 #include <QWidget>
+class QGraphicsView;
+class QGraphicsScene;
 namespace spider
 {
     typedef graph::Graph<std::string, int> Graph;
@@ -21,6 +23,8 @@ namespace spider
         }
     private:
         GraphValue* g;
+        QGraphicsView* m_View;
+        QGraphicsScene* m_Scene;
     };
 }
 #endif
