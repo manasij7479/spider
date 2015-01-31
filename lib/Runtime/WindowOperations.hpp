@@ -63,7 +63,7 @@ namespace spider
         }
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");
         
-        win->data->setLayout(l);
+        win->data->changeLayout(l);
         return win;
     }
 }

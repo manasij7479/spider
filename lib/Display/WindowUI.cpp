@@ -13,7 +13,6 @@ namespace spider
         std::cout << "Window Open"<<std::endl;
         m_Scene = new QGraphicsScene;
         m_Scene->setSceneRect(0, 0, 800, 600);
-
         m_View = new QGraphicsView(this);
         m_View->setFixedSize(850, 650);
         m_View->setScene(m_Scene);
@@ -21,14 +20,16 @@ namespace spider
         m_View->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_View->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //         m_graphScen->addLine(100, 100, 690, 190);
-        setLayout(l);
+        changeLayout(l);
         installEventFilter(this);
 //         scaleX = 1;
 //         scaleY = 1;
         connect(gWrap, SIGNAL(changed()), this, SLOT(change()));
+        
+        
         this->show();
     }
-    void WindowUI::setLayout(Layout<Graph>* newLayout)
+    void WindowUI::changeLayout(Layout<Graph>* newLayout)
     {
         std::cout << "Layout Set"<<std::endl;
         layout = newLayout;
@@ -44,20 +45,24 @@ namespace spider
     }
     bool WindowUI::eventFilter(QObject* obj, QEvent* event)
     {
-//         if (event->type() == QEvent::KeyPress) 
-//         {
-//             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-//             qDebug("Ate key press %d", keyEvent->key());
-//             if (keyEvent->key() == Qt::Key_Q)
-//             {
-//                 m_View->scale(1.1, 1.1);
-//             }
-//             else if (keyEvent->key() == Qt::Key_W)
-//             {
-//                 m_View->scale(0.9, 0.9);
-//             }
-//             return true;
-//         }
+        if (event->type() == QEvent::KeyPress) 
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+            qDebug("Ate key press %d", keyEvent->key());
+            if (keyEvent->key() == Qt::Key_Q)
+            {
+                m_View->scale(1.1, 1.1);
+            }
+            else if (keyEvent->key() == Qt::Key_W)
+            {
+                m_View->scale(0.9, 0.9);
+            }
+            else if (keyEvent->key() == Qt::Key_Escape)
+            {
+                m_View->setMatrix(QMatrix());
+            }
+            return true;
+        }
 //         else if (event->type() == QEvent::MouseButtonPress)
 //         {
 //             QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
@@ -74,7 +79,7 @@ namespace spider
     }
     void WindowUI::change()
     {
-        setLayout(layout);
+        changeLayout(layout);
     }
 
 }

@@ -17,13 +17,15 @@ namespace spider
         Q_OBJECT
     public:
         WindowUI(GraphValue* gWrap, Layout<Graph>* l);
-        void setLayout(Layout<Graph>* newLayout);
+        void changeLayout(Layout<Graph>* newLayout);
         bool isOpen(){return true;}
         GraphValue* getGraph()
         {
             return g;
         }
         bool eventFilter(QObject *obj, QEvent *event);
+    private slots:
+        void change();
     private:
         GraphValue* g;
         QGraphicsView* m_View;
@@ -31,8 +33,6 @@ namespace spider
 //         float scaleX;
 //         float scaleY;
         Layout<Graph>* layout;
-    private slots:
-        void change();
     };
 }
 #endif
