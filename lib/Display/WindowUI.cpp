@@ -19,6 +19,7 @@ namespace spider
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
         m_View->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_View->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_View->setRenderHints( QPainter::Antialiasing | QPainter::HighQualityAntialiasing );
 //         m_graphScen->addLine(100, 100, 690, 190);
         changeLayout(l);
         installEventFilter(this);
@@ -41,6 +42,11 @@ namespace spider
         {
             Curve c=newLayout->getEdge(std::get<0>(e),std::get<1>(e));
             m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
+        }
+        for (auto v : graph::VertexList(newLayout->getGraph()))
+        {
+            Point p = newLayout->getVertex(v);
+            m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20);
         }
     }
     bool WindowUI::eventFilter(QObject* obj, QEvent* event)
