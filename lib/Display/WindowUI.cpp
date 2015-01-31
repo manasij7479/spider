@@ -43,10 +43,16 @@ namespace spider
             Curve c=newLayout->getEdge(std::get<0>(e),std::get<1>(e));
             m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
         }
+        QRadialGradient radial;
+        radial.setColorAt(0, Qt::white);
+        radial.setColorAt(1, Qt::green);
+        radial.setRadius(10);
         for (auto v : graph::VertexList(newLayout->getGraph()))
         {
             Point p = newLayout->getVertex(v);
-            m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20);
+            radial.setCenter(p.x, p.y);
+            radial.setFocalPoint(p.x, p.y);
+            m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
         }
     }
     bool WindowUI::eventFilter(QObject* obj, QEvent* event)
