@@ -505,6 +505,12 @@ namespace spider
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
-        return new ListValue(convertToValue(graph::VertexList(*getg(args[0])->data)));
+        return new ListValue(graph::VertexList(*getg(args[0])->data));
+    }
+    Value* graph_edges(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        
     }
 }

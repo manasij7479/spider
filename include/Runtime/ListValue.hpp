@@ -8,14 +8,16 @@ namespace spider
     {
     public:
         template <typename T>
-        ListValue(std::vector<T> li) : data(convertToValue(li)), Value(VType::List){}
+        ListValue(std::vector<T> li) : data(convertVectorToValue(li)), Value(VType::List){}
         ListValue():Value(VType::List){}
         std::string show()
         {
-            std::string result = "";
+            std::ostringstream out;
+            out << "(";
             for(auto v : data)
-                result += (v->show() + " ");
-            return result;
+                out << v->show() <<  " ";
+            out << ")";
+            return out.str();
         }
         std::vector<Value*> data;
     };

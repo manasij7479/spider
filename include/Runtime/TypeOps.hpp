@@ -69,47 +69,47 @@ namespace spider
     }
     
     template <typename T>
-    inline std::vector<Value*> convertToValue(std::vector<T> data)
+    inline Value* convertToValue(T x)
     {
-        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to List.\n");
+        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to Value.");
     }
-    template <>
-    inline std::vector<Value*> convertToValue<Value*>(std::vector<Value*> data)
+    
+    template<>
+    inline Value* convertToValue<int>(int x)
     {
-        return data;
+        return new IntegerValue(x);
     }
-    template <>
-    inline std::vector<Value*> convertToValue<int>(std::vector<int> data)
+    template<>
+    inline Value* convertToValue<float>(float x)
+    {
+        return new FloatValue(x);
+    }
+    template<>
+    inline Value* convertToValue<bool>(bool x)
+    {
+        return new BoolValue(x);
+    }
+    template<>
+    inline Value* convertToValue<std::string>(std::string x)
+    {
+        return new StringValue(x);
+    }
+    template<>
+    inline Value* convertToValue<Value*>(Value* x)
+    {
+        return x;
+    }
+    
+    
+    template <typename T>
+    inline std::vector<Value*> convertVectorToValue(std::vector<T> data)
     {
         std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](int x){return new IntegerValue(x);});
+        std::transform(data.begin(), data.end(), result.begin(), convertToValue<T>);
         return result;
     }
-    template <>
-    inline std::vector<Value*> convertToValue<float>(std::vector<float> data)
-    {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](float x){return new FloatValue(x);});
-        return result;
-    }
-    template <>
-    inline std::vector<Value*> convertToValue<bool>(std::vector<bool> data)
-    {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](bool x){return new BoolValue(x);});
-        return result;
-    }
-    template <>
-    inline std::vector<Value*> convertToValue<std::string>(std::vector<std::string> data)
-    {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](std::string x){return new StringValue(x);});
-        return result;
-    }
+    
+    
     
 }
 #endif
