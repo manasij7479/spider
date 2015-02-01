@@ -93,6 +93,7 @@ void MainWindow::create(spider::GraphValue* g, spider::Layout<spider::Graph>* l)
 void MainWindow::error(const QString& s)
 {
     QMessageBox msgBox;
+    msgBox.setWindowTitle("Error");
     msgBox.setText(s);
     msgBox.exec();
 }

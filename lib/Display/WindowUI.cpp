@@ -13,7 +13,6 @@ namespace spider
 {
     WindowUI::WindowUI(GraphValue* gWrap, Layout<Graph>* l):g(gWrap), layout(l)
     {
-        std::cout << "Window Open"<<std::endl;
         displayText = true;
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
@@ -55,7 +54,6 @@ namespace spider
     {
         m_Scene->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         m_View->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
-        std::cout << "Layout Set"<<std::endl;
         layout = newLayout;
         float border = 50;
         Rect bounds = {{0 + border,0 + border},{this->geometry().width() * 1.0f - border , this->geometry().height() * 1.0f - border}};
@@ -93,7 +91,7 @@ namespace spider
         if (event->type() == QEvent::KeyPress) 
         {
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-            qDebug("Ate key press %d", keyEvent->key());
+//             qDebug("Ate key press %d", keyEvent->key());
             if (keyEvent->key() == Qt::Key_Q)
                 zoom_in();
             else if (keyEvent->key() == Qt::Key_W)
