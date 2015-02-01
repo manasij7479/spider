@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "QtDisplay/MainWindow.hpp"
 #include <KApplication>
 #include <KAction>
 #include <KLocale>
@@ -17,7 +17,7 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QMessageBox>
-#include "SpiderEditor.hpp"
+#include "QtDisplay/SpiderEditor.hpp"
 #include <iostream>
 #include "Runtime/Runtime.hpp"
 #include "Runtime/WindowValue.hpp"

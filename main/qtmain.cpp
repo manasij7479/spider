@@ -1,7 +1,7 @@
 #include <KApplication>
 #include <KAboutData>
 #include <KCmdLineArgs>
-#include "mainwindow.h"
+#include "QtDisplay/MainWindow.hpp"
 
 int main (int argc, char *argv[])
 {

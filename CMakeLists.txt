@@ -17,7 +17,7 @@ add_subdirectory(lib)
 # add_executable(spider main/main.cpp)
 # target_link_libraries(spider spiderMain X11 pthread sfml-system sfml-window sfml-graphics)
 
-kde4_add_executable(qspider main/qtmain.cpp main/mainwindow.cpp main/SpiderEditor.cpp main/OutputPane.cpp)
+kde4_add_executable(qspider main/qtmain.cpp)
 target_link_libraries(qspider ${KDE4_KDEUI_LIBS} 
                                 ${KDE4_KIO_LIBS}
                                 ${KDE4_KTEXTEDITOR_LIBS} spiderMain)

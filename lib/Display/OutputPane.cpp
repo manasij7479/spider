@@ -1,4 +1,4 @@
-#include "OutputPane.hpp"
+#include "QtDisplay/OutputPane.hpp"
 #include <QVBoxLayout>
 
 OutputPane::OutputPane()

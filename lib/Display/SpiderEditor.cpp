@@ -1,4 +1,4 @@
-#include "SpiderEditor.hpp"
+#include "QtDisplay/SpiderEditor.hpp"
 #include <QLineEdit>
 #include <QPushButton>
 namespace spider

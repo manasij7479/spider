@@ -3,7 +3,7 @@
 #include "QtDisplay/WindowUI.hpp"
 #include "Runtime/Type.hpp"
 #include "Layout/Layout.hpp"
-#include "../../main/mainwindow.h"
+#include "QtDisplay/MainWindow.hpp"
 namespace spider
 {
     class WindowValue : public Value
