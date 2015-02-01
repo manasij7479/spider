@@ -33,6 +33,7 @@ namespace spider
 //         float scaleX;
 //         float scaleY;
         Layout<Graph>* layout;
+        bool displayText;
     };
 }
 #endif

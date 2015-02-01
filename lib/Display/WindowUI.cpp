@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsTextItem>
 #include <QEvent>
 #include <QKeyEvent>
 #include <graph/algorithm/collections.hpp>
@@ -11,6 +12,7 @@ namespace spider
     WindowUI::WindowUI(GraphValue* gWrap, Layout<Graph>* l):g(gWrap), layout(l)
     {
         std::cout << "Window Open"<<std::endl;
+        displayText = true;
         m_Scene = new QGraphicsScene;
         m_Scene->setSceneRect(0, 0, 800, 600);
         m_View = new QGraphicsView(this);
@@ -45,12 +47,22 @@ namespace spider
         radial.setColorAt(0, Qt::white);
         radial.setColorAt(1, Qt::green);
         radial.setRadius(10);
+        
+
         for (auto v : graph::VertexList(newLayout->getGraph()))
         {
             Point p = newLayout->getVertex(v);
             radial.setCenter(p.x, p.y);
             radial.setFocalPoint(p.x, p.y);
             m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
+            
+            if (displayText)
+            {
+                auto text = new QGraphicsTextItem();
+                text->setPos(p.x - 10, p.y + 5); //TODO: Remove magic number
+                text->setPlainText(v.c_str());
+                m_Scene->addItem(text);
+            }
         }
     }
     bool WindowUI::eventFilter(QObject* obj, QEvent* event)
