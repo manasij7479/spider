@@ -456,6 +456,7 @@ namespace spider
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
@@ -478,6 +479,7 @@ namespace spider
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
@@ -497,6 +499,7 @@ namespace spider
             g->insertVertex(y);
             g->insertEdge(x, y, w);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });

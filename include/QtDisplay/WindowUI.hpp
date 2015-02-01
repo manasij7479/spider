@@ -12,7 +12,7 @@ class QEvent;
 namespace spider
 {
     typedef graph::Graph<std::string, int> Graph;
-    class WindowUI : QWidget
+    class WindowUI : public QWidget
     {
         Q_OBJECT
     public:

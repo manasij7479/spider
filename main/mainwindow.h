@@ -4,10 +4,14 @@
 #include <KParts/MainWindow>
 #include <QtGui/QKeyEvent>
 #include "SpiderEditor.hpp"
+#include <Runtime/GraphValue.hpp>
+#include <Layout/Layout.hpp>
+#include <QtDisplay/WindowUI.hpp>
 namespace spider
 {
     class Runtime;
 }
+using namespace spider;
 class MainWindow : public KParts::MainWindow
 {
     Q_OBJECT
@@ -17,12 +21,13 @@ private slots:
     void clear();
     void openFile();
     void run();
+    void create(GraphValue* g,Layout<Graph>* l);
 private:
     void setupActions();
     spider::EditorWrapper* editor;
     spider::Runtime* rt;
 };
 
-    
+extern MainWindow* mainWin;    
 
 #endif

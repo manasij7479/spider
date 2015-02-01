@@ -17,6 +17,8 @@
 #include "SpiderEditor.hpp"
 #include <iostream>
 #include "Runtime/Runtime.hpp"
+#include "Runtime/WindowValue.hpp"
+MainWindow* mainWin;
 MainWindow::MainWindow(QWidget *)
 {
     editor = new spider::EditorWrapper();
@@ -70,4 +72,10 @@ void MainWindow::run()
             std::cerr << "ERROR: " << e.what();
         }
     }
+}
+
+void MainWindow::create(spider::GraphValue* g, spider::Layout<spider::Graph>* l)
+{
+    spider::WindowValue* winv = static_cast<spider::WindowValue*>(QObject::sender());
+    winv->data = new spider::WindowUI(g,l);
 }
