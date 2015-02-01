@@ -26,6 +26,9 @@ namespace spider
         bool eventFilter(QObject *obj, QEvent *event);
     private slots:
         void change();
+        void zoom_in();
+        void zoom_out();
+        void reset();
     private:
         GraphValue* g;
         QGraphicsView* m_View;

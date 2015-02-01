@@ -5,7 +5,8 @@
 #include <QGraphicsTextItem>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QPushButton>
 #include <graph/algorithm/collections.hpp>
 #include <Layout/Layout.hpp>
 namespace spider
@@ -15,13 +16,21 @@ namespace spider
         std::cout << "Window Open"<<std::endl;
         displayText = true;
         m_Scene = new QGraphicsScene;
-//         m_Scene->setSceneRect(0, 0, 800, 600);
         m_View = new QGraphicsView();
-//         m_View->setFixedSize(850, 650);
-        
-        QHBoxLayout* layout = new QHBoxLayout();
-        layout->addWidget(m_View);
+
+        auto zin = new QPushButton(QIcon("resource/zoom_in.png"), "Zoom In");
+        auto zout = new QPushButton(QIcon("resource/zoom_out.png"), "Zoom Out");
+        auto fit = new QPushButton(QIcon("resource/fit_page.png"), "Fit Page");
+        auto layout = new QGridLayout();
+        layout->addWidget(m_View, 0, 0, 5, 1);
+        layout->addWidget(zin, 0, 1);
+        layout->addWidget(zout, 1, 1);
+        layout->addWidget(fit, 2, 1);
         this->setLayout(layout);
+        
+        connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
+        connect(zout, SIGNAL(clicked(bool)), this, SLOT(zoom_out()));
+        connect(fit, SIGNAL(clicked(bool)), this, SLOT(reset()));
         
         m_View->setScene(m_Scene);
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
@@ -80,17 +89,11 @@ namespace spider
             QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
             qDebug("Ate key press %d", keyEvent->key());
             if (keyEvent->key() == Qt::Key_Q)
-            {
-                m_View->scale(1.1, 1.1);
-            }
+                zoom_in();
             else if (keyEvent->key() == Qt::Key_W)
-            {
-                m_View->scale(0.9, 0.9);
-            }
+                zoom_out();
             else if (keyEvent->key() == Qt::Key_Escape)
-            {
-                m_View->setMatrix(QMatrix());
-            }
+                reset();
             return true;
         }
         else if (event->type() == QEvent::Resize)
@@ -115,5 +118,19 @@ namespace spider
     {
         changeLayout(layout);
     }
+    void WindowUI::zoom_in()
+    {
+        m_View->scale(1.1, 1.1);
+    }
+
+    void WindowUI::zoom_out()
+    {
+        m_View->scale(0.9, 0.9);
+    }
+    void WindowUI::reset()
+    {
+        m_View->setMatrix(QMatrix());
+    }
+
 
 }
