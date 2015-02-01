@@ -17,6 +17,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QLineEdit>
+#include "OutputPane.hpp"
 namespace spider
 {
     class EditorWrapper : public QWidget
@@ -26,12 +27,14 @@ namespace spider
         EditorWrapper();
         KTextEditor::View* getView(){return m_view;}
         KTextEditor::Document* getDocument(){return m_doc;};
+        OutputPane* getOutputPane(){return pane;}
     private:
         KTextEditor::View *m_view;
         KTextEditor::Document *m_doc;
         QGridLayout* layout;
         QPushButton* pb;
         QLineEdit* le;
+        OutputPane* pane;
     private slots:
         void ktrun();
         void lerun();

@@ -4,6 +4,7 @@
 #include "Runtime/SymbolTable.hpp"
 #include "Runtime/Functions.hpp"
 #include "Runtime/Statement.hpp"
+#include <functional>
 namespace spider
 {
     class Runtime
@@ -14,8 +15,9 @@ namespace spider
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
         FunctionSystem& getFunctions();
+        void setShowCallback(std::function<void(std::string)> f);
     private:
-        bool tryShow(std::vector<std::string> idf, char sep = '\n');
+        bool tryShow(std::vector<std::string> idf, char sep = ' ');
         bool tryDeclare(std::string idf, std::string type, std::vector<std::string> value);
         bool tryAssign(std::string idf, std::vector<std::string> value);
         
@@ -32,7 +34,7 @@ namespace spider
         FunctionSystem functions;
         bool breakflag;
         bool nested_mode;
-
+        std::function<void(std::string)> showCallback;
 ///TODO: Idea for List impl.
 //Remove most construct* functions
 //Make substituteArgs more sophisticated and return a LIstValue*

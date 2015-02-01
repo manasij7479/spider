@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *)
     this->setMinimumWidth(600);
 //     show ();
     rt = new spider::Runtime();
+    rt->setShowCallback([&](std::string s){emit output(s.c_str());});
+    
 }
 
 void MainWindow::setupActions()
@@ -48,6 +50,7 @@ void MainWindow::setupActions()
     mb->addMenu("Run")->addAction(runAction);
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
+    connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
 }
 
 void MainWindow::clear()

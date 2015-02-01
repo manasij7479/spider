@@ -17,11 +17,13 @@ namespace spider
         layout = new QGridLayout(this);
         le = new QLineEdit();
         pb = new QPushButton("Run");
-
+        pane = new OutputPane();
+        pane->setFixedWidth(200);
         
         layout->addWidget(m_view, 0, 0, 1, 2);
         layout->addWidget(le, 1, 0);
         layout->addWidget(pb, 1, 1);
+        layout->addWidget(pane, 0, 2, 2, 1);
         
         connect(le, SIGNAL(returnPressed()), this, SLOT(lerun()));
         connect(pb, SIGNAL(clicked(bool)), this, SLOT(lerun()));

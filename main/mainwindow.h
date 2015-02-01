@@ -23,6 +23,8 @@ private slots:
     void openFile();
     void run(const QString& str);
     void create(GraphValue* g,Layout<Graph>* l);
+signals:
+    void output(const QString&);
 private:
     void setupActions();
     spider::EditorWrapper* editor;
