@@ -14,7 +14,9 @@
 #include <KTextEditor/View>
 #include <KTextEditor/Editor>
 #include <KTextEditor/EditorChooser>
-
+#include <QGridLayout>
+#include <QPushButton>
+#include <QLineEdit>
 namespace spider
 {
     class EditorWrapper : public QWidget
@@ -27,6 +29,14 @@ namespace spider
     private:
         KTextEditor::View *m_view;
         KTextEditor::Document *m_doc;
+        QGridLayout* layout;
+        QPushButton* pb;
+        QLineEdit* le;
+    private slots:
+        void ktrun();
+        void lerun();
+    signals:
+        void run(const QString&);
     };
 }
 

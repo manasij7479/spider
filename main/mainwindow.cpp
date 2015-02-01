@@ -14,6 +14,8 @@
 #include <KTextEditor/Editor>
 #include <KTextEditor/EditorChooser>
 #include <KMenuBar>
+#include <QTextEdit>
+#include <QPushButton>
 #include "SpiderEditor.hpp"
 #include <iostream>
 #include "Runtime/Runtime.hpp"
@@ -22,9 +24,11 @@ MainWindow* mainWin;
 MainWindow::MainWindow(QWidget *)
 {
     editor = new spider::EditorWrapper();
-    setCentralWidget(editor->getView());
-    setupActions();
 
+//     this->setLayout(layout);
+    
+    setCentralWidget(editor);
+    setupActions();
     createShellGUI(true);
 
     guiFactory()->addClient(editor->getView());
@@ -42,7 +46,8 @@ void MainWindow::setupActions()
     KAction* runAction = new KAction(QString("IR Execute"), this);
     KMenuBar* mb = this->menuBar();
     mb->addMenu("Run")->addAction(runAction);
-    connect(runAction, SIGNAL(triggered(bool)), this, SLOT(run()));
+    connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
+    connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
 }
 
 void MainWindow::clear()
@@ -54,9 +59,9 @@ void MainWindow::openFile()
 {
     editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
 }
-void MainWindow::run()
+void MainWindow::run(const QString& text)
 {
-    std::istringstream in(editor->getDocument()->text().toStdString());
+    std::istringstream in(text.toStdString());
     while (true)
     {
 //         std::cout << ">> ";
