@@ -9,6 +9,7 @@ namespace spider
 {
     class Value : public QObject
     {
+        Q_OBJECT
     public:
         enum class Type 
         {
@@ -50,6 +51,9 @@ namespace spider
                 //Add the rest as needed
             };
         }
+        void changeCallback(){emit changed();}
+    signals:
+        void changed();
     };
     using VType = Value::Type;
     class IntegerValue : public Value

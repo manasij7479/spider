@@ -164,6 +164,7 @@ namespace spider
             }
             table.modify(idf, x);
             assignPrev(x);
+            x->changeCallback();
             return true;
         }
     }

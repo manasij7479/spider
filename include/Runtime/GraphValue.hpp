@@ -24,11 +24,10 @@ namespace spider
         Graph* data;
         
 //         void setCallback(std::function<void(void)> f){changeCallbacks.push_back(f);}
-        void changeCallback(){emit changed();}
+        
 //     private:
 //         std::vector<std::function<void(void)>> changeCallbacks;
-    signals:
-        void changed();
+
     };
 
     
