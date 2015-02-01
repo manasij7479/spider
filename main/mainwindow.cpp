@@ -81,6 +81,6 @@ void MainWindow::run(const QString& text)
 
 void MainWindow::create(spider::GraphValue* g, spider::Layout<spider::Graph>* l)
 {
-    spider::WindowValue* winv = static_cast<spider::WindowValue*>(QObject::sender());
+    spider::WindowValue* winv = qobject_cast<spider::WindowValue*>(QObject::sender());
     winv->data = new spider::WindowUI(g,l);
 }
