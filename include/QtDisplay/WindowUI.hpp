@@ -29,6 +29,8 @@ namespace spider
         void zoom_in();
         void zoom_out();
         void reset();
+        void rot_right();
+        void rot_left();
     private:
         GraphValue* g;
         QGraphicsView* m_View;

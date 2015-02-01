@@ -21,16 +21,22 @@ namespace spider
         auto zin = new QPushButton(QIcon("resource/zoom_in.png"), "Zoom In");
         auto zout = new QPushButton(QIcon("resource/zoom_out.png"), "Zoom Out");
         auto fit = new QPushButton(QIcon("resource/fit_page.png"), "Fit Page");
+        auto rotr = new QPushButton("Left");
+        auto rotl = new QPushButton("Right");
         auto layout = new QGridLayout();
-        layout->addWidget(m_View, 0, 0, 5, 1);
+        layout->addWidget(m_View, 0, 0, 10, 1);
         layout->addWidget(zin, 0, 1);
         layout->addWidget(zout, 1, 1);
         layout->addWidget(fit, 2, 1);
+        layout->addWidget(rotl, 3, 1);
+        layout->addWidget(rotr, 4, 1);
         this->setLayout(layout);
         
         connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
         connect(zout, SIGNAL(clicked(bool)), this, SLOT(zoom_out()));
         connect(fit, SIGNAL(clicked(bool)), this, SLOT(reset()));
+        connect(rotl, SIGNAL(clicked(bool)), this, SLOT(rot_left()));
+        connect(rotr, SIGNAL(clicked(bool)), this, SLOT(rot_right()));
         
         m_View->setScene(m_Scene);
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
@@ -130,6 +136,14 @@ namespace spider
     void WindowUI::reset()
     {
         m_View->setMatrix(QMatrix());
+    }
+    void WindowUI::rot_left()
+    {
+        m_View->rotate(45);
+    }
+    void WindowUI::rot_right()
+    {
+        m_View->rotate(-45);
     }
 
 
