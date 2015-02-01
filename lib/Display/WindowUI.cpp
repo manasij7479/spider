@@ -5,6 +5,7 @@
 #include <QGraphicsTextItem>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QHBoxLayout>
 #include <graph/algorithm/collections.hpp>
 #include <Layout/Layout.hpp>
 namespace spider
@@ -14,9 +15,14 @@ namespace spider
         std::cout << "Window Open"<<std::endl;
         displayText = true;
         m_Scene = new QGraphicsScene;
-        m_Scene->setSceneRect(0, 0, 800, 600);
-        m_View = new QGraphicsView(this);
-        m_View->setFixedSize(850, 650);
+//         m_Scene->setSceneRect(0, 0, 800, 600);
+        m_View = new QGraphicsView();
+//         m_View->setFixedSize(850, 650);
+        
+        QHBoxLayout* layout = new QHBoxLayout();
+        layout->addWidget(m_View);
+        this->setLayout(layout);
+        
         m_View->setScene(m_Scene);
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
         m_View->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -32,10 +38,12 @@ namespace spider
     }
     void WindowUI::changeLayout(Layout<Graph>* newLayout)
     {
+        m_Scene->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
+        m_View->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         std::cout << "Layout Set"<<std::endl;
         layout = newLayout;
-        float border = 15;
-        Rect bounds = {{0 + border,0 + border},{800 * 1.0f - border , 600 * 1.0f - border}};
+        float border = 50;
+        Rect bounds = {{0 + border,0 + border},{this->geometry().width() * 1.0f - border , this->geometry().height() * 1.0f - border}};
         m_Scene->clear();
         newLayout->generate(bounds);
         for (auto e : graph::EdgeList(newLayout->getGraph(), false))
@@ -84,6 +92,10 @@ namespace spider
                 m_View->setMatrix(QMatrix());
             }
             return true;
+        }
+        else if (event->type() == QEvent::Resize)
+        {
+            change();
         }
 //         else if (event->type() == QEvent::MouseButtonPress)
 //         {
