@@ -2,11 +2,13 @@
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/operations.hpp"
 #include "graph/algorithm/enumeration.hpp"
+#include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/search.hpp"
 #include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include "Runtime/ListValue.hpp"
 namespace spider
 {
     Value* graph_insert_vertex(std::vector<Value*> args)
@@ -496,5 +498,13 @@ namespace spider
             return true;
         });
         return gv;
+    }
+    
+    
+    Value* graph_vertices(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return new ListValue(convertToValue(graph::VertexList(*getg(args[0])->data)));
     }
 }
