@@ -16,6 +16,7 @@
 #include <KMenuBar>
 #include <QTextEdit>
 #include <QPushButton>
+#include <QMessageBox>
 #include "SpiderEditor.hpp"
 #include <iostream>
 #include "Runtime/Runtime.hpp"
@@ -65,20 +66,21 @@ void MainWindow::openFile()
 void MainWindow::run(const QString& text)
 {
     std::istringstream in(text.toStdString());
-    while (true)
+    try
     {
-//         std::cout << ">> ";
-        spider::Statement input(in);
-        try
+        while (true)
         {
-            if (! input.isEmpty())
-                rt->eval(input);
-            else break;
+    //         std::cout << ">> ";
+            spider::Statement input(in);
+
+                if (! input.isEmpty())
+                    rt->eval(input);
+                else break;
         }
-        catch (std::exception& e)
-        {
-            std::cerr << "ERROR: " << e.what();
-        }
+    }
+    catch (std::exception& e)
+    {
+        error(e.what());
     }
 }
 
@@ -86,4 +88,11 @@ void MainWindow::create(spider::GraphValue* g, spider::Layout<spider::Graph>* l)
 {
     spider::WindowValue* winv = qobject_cast<spider::WindowValue*>(QObject::sender());
     winv->data = new spider::WindowUI(g,l);
+}
+
+void MainWindow::error(const QString& s)
+{
+    QMessageBox msgBox;
+    msgBox.setText(s);
+    msgBox.exec();
 }

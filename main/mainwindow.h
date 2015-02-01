@@ -23,6 +23,7 @@ private slots:
     void openFile();
     void run(const QString& str);
     void create(GraphValue* g,Layout<Graph>* l);
+    void error(const QString& s);
 signals:
     void output(const QString&);
 private:
