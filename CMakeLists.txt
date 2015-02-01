@@ -20,7 +20,8 @@ add_subdirectory(lib)
 kde4_add_executable(qspider main/qtmain.cpp)
 target_link_libraries(qspider ${KDE4_KDEUI_LIBS} 
                                 ${KDE4_KIO_LIBS}
-                                ${KDE4_KTEXTEDITOR_LIBS} spiderMain)
+                                ${KDE4_KPARTS_LIB}
+                                ${KDE4_KTEXTEDITOR_LIBS} kparts spiderMain)
 
 
 file(COPY resource DESTINATION .)
