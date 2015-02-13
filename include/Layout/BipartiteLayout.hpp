@@ -1,3 +1,9 @@
+/**
+ * \brief BipartiteLayout.hpp - Header file that contains functions to generate
+ * Bipartite Layout for drawing a graph. The layout plots vertices on two sides
+ * of an imaginary demarcation such that no two vertices on the same side has an edge
+ * between them.
+ * **/
 #ifndef SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
 #define SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
 #include "Layout/Layout.hpp"
@@ -15,6 +21,12 @@ namespace spider
             Base::hasEdgeData = false;
         };
         
+        /**
+         * \brief - generates x and y coordinates of each vertex
+         * 
+         * Rect bounds - Parameter, contains the x and y coordinates of 
+         * the boundary of the drawing area
+         * **/
         virtual void generate(Rect bounds)
         {
             int order = Base::g.order();
