@@ -4,10 +4,12 @@
 #include <map>
 #include <vector>
 #include <functional>
+#include <QObject>
 namespace spider
 {
-    class Value
+    class Value : public QObject
     {
+        Q_OBJECT
     public:
         enum class Type 
         {
@@ -17,6 +19,7 @@ namespace spider
             List
         };
         Value(Type t):type(t){};
+        virtual ~Value(){}
         virtual std::string show() {return "<Empty Value>";};
         Type type;
         static std::map<std::string, Type> NameToTypeMap()
@@ -48,12 +51,15 @@ namespace spider
                 //Add the rest as needed
             };
         }
+        void changeCallback(){emit changed();}
+    signals:
+        void changed();
     };
     using VType = Value::Type;
     class IntegerValue : public Value
     {
     public:
-        IntegerValue(int i):data(i),Value(VType::Integer){}
+        IntegerValue(int i):Value(VType::Integer),data(i){}
         std::string show()
         {
             return std::to_string(data);
@@ -64,7 +70,7 @@ namespace spider
     class BoolValue : public Value
     {
     public:
-        BoolValue(bool b):data(b),Value(VType::Bool){}
+        BoolValue(bool b):Value(VType::Bool),data(b){}
         std::string show()
         {
             if (data == true)
@@ -77,7 +83,7 @@ namespace spider
     class StringValue : public Value
     {
     public:
-        StringValue(std::string s):data(s),Value(VType::String){}
+        StringValue(std::string s):Value(VType::String),data(s){}
         std::string show()
         {
             return data;
@@ -87,7 +93,7 @@ namespace spider
     class FloatValue : public Value
     {
     public:
-        FloatValue(float f):data(f), Value(VType::Float){}
+        FloatValue(float f):Value(VType::Float), data(f){}
         std::string show()
         {
             return std::to_string(data);

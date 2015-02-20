@@ -32,7 +32,7 @@ namespace spider
             while(iter--)
             {
                 graph::VertexAttribute<Graph,Point> newva;
-                int numeq = 0; // number of vertices in equilibrium 
+                uint numeq = 0; // number of vertices in equilibrium 
                 Point old;
                 for(auto x=Base::g.begin();x!=Base::g.end();++x)
                 {

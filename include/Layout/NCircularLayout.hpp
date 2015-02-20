@@ -1,4 +1,9 @@
-#ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
+/**
+ * \brief NCircularLayout.hpp - Header file that contains functions to generate
+ * NCircular Layout for drawing a graph. The layout has N number of concentric circles
+ * on whose circumference the vertices are plotted at equal intervals.
+ * **/
+ #ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
 #define SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
@@ -15,6 +20,12 @@ namespace spider
             Base::hasEdgeData = false;
         };
         
+        /**
+         * \brief - generates x and y coordinates of each vertex
+         * 
+         * Rect bounds - Parameter, contains the x and y coordinates of 
+         * the boundary of the drawing area
+         * **/
         virtual void generate(Rect bounds)
         {
             Point center = {(bounds.max.x+bounds.min.x)/2, (bounds.max.y+bounds.min.y)/2};

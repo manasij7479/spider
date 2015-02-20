@@ -5,8 +5,13 @@
 #include "graph/algorithm/search.hpp"
 #include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
+#include "Runtime/TypeOps.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include "Layout/CircularLayout.hpp"
+#include "Layout/TreeLayout.hpp"
+#include <chrono>
+#include <thread>
 namespace spider
 {
     Value* graph_insert_vertex(std::vector<Value*> args)
@@ -103,7 +108,7 @@ namespace spider
         assert_size(args, greater_eq(1));
         assert_type(args[0], VType::String);
         std::vector<int> newArgs;
-        for(int i = 1; i < args.size(); ++i)
+        for(uint i = 1; i < args.size(); ++i)
         {
             assert_type(args[i], VType::Integer);
             newArgs.push_back(geti(args[i])->data);
@@ -444,13 +449,14 @@ namespace spider
         auto gv = new GraphValue(g);
         std::string s = gets(args[1])->data;
         g->insertVertex(s);
-        WindowValue* win = new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));
+        new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));// FIXME: Leak
         graph::BreadthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
         bfs.setp4([&](const std::string& x,const std::string& y)
         {
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
@@ -466,13 +472,14 @@ namespace spider
         auto gv = new GraphValue(g);
         std::string s = gets(args[1])->data;
         g->insertVertex(s);
-        WindowValue* win = new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));
+        new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s)); // FIXME: Leak
         graph::DepthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
         bfs.setp4([&](const std::string& x,const std::string& y)
         {
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
@@ -485,13 +492,14 @@ namespace spider
         assert_type(args[0], VType::Graph);
         auto g = new graph::AdjacencyList<std::string, int>();
         auto gv = new GraphValue(g);
-        WindowValue* win = new WindowValue(gv, new CircularLayout<graph::AdjacencyList<std::string, int>>(*g));
+        new WindowValue(gv, new CircularLayout<graph::AdjacencyList<std::string, int>>(*g));// FIXME: Leak
         auto state = graph::Kruskal(*getg(args[0])->data, [&](const std::string& x,const std::string& y, int w)
         {
             g->insertVertex(x);
             g->insertVertex(y);
             g->insertEdge(x, y, w);
             gv->changeCallback();
+            QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });

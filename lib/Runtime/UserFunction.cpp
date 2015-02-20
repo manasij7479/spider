@@ -13,14 +13,14 @@ namespace spider
         auto&& n_t_map =  Value::NameToTypeMap();
         
         return_idf = {proto[2],n_t_map[proto[3]]};
-        for (int i = 4; i < proto.size(); i+=2)
+        for (uint i = 4; i < proto.size(); i+=2)
             formal_params.push_back({proto[i], n_t_map[proto[i+1]]});
     }
     Value* UserFunction::call(std::vector<Value*> args, FunctionSystem& f)
     {
         assert_size(args, formal_params.size());
         SymbolTable context;
-        for(int i = 0; i < args.size(); ++i)
+        for(uint i = 0; i < args.size(); ++i)
         {
             assert_type(args[i], formal_params[i].second);
             context.insert(formal_params[i].first, args[i]);

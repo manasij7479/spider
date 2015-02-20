@@ -1,3 +1,8 @@
+/**
+ * \brief TreeLayout.hpp - Header file that contains functions to generate
+ * Tree Layout for drawing a graph. The layout starts at the root and plots the adjacent
+ * vertices in the form of tree datastructure.
+ * **/
 #ifndef SPIDER_LAYOUT_TREELAYOUT_HPP
 #define SPIDER_LAYOUT_TREELAYOUT_HPP
 #include<algorithm>
@@ -20,6 +25,12 @@ namespace spider
             Base::hasEdgeData = false;
         };
         
+        /**
+         * \brief - generates x and y coordinates of each vertex
+         * 
+         * Rect bounds - Parameter, contains the x and y coordinates of 
+         * the boundary of the drawing area
+         * **/
         virtual void generate(Rect bounds)
         {
             std::vector<std::pair<typename Graph::VertexType,int>> levelarray;
@@ -30,8 +41,8 @@ namespace spider
             {
                 if(x != v)
                 {
-                    int level;
-                    for(int i=0;i<levelarray.size();++i)
+                    int level = 0;
+                    for(uint i=0;i<levelarray.size();++i)
                         if(levelarray[i].first == parent)
                         {
                             level = levelarray[i].second;
@@ -50,8 +61,8 @@ namespace spider
             Base::points.value(v)=Point({(bounds.max.x+bounds.min.x)/2,bounds.min.y});
             for(int layer=1;layer<=ecentricity;++layer)
             {
-                int layerend;
-                for(int i=nadded;i<levelarray.size();++i)
+                int layerend = 0;
+                for(uint i=nadded;i<levelarray.size();++i)
                 {
                     if(levelarray[i].second != layer)
                     {
