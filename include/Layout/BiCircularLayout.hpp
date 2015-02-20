@@ -47,7 +47,7 @@ namespace spider
             }
             deg = 0;
             inc = 2*3.142/outer;
-            for(int i=inner ;i<Base::g.order();++i)
+            for(uint i=inner ;i<Base::g.order();++i)
             {
                 float xp= center.x+outradius*cos(deg);
                 float yp= center.y+outradius*sin(deg);

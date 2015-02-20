@@ -85,7 +85,7 @@ namespace spider
             t.setFont(font);
             t.setCharacterSize(20);
             t.setColor(sf::Color::Black);
-            for (int i=1, j = 0; i< vertexArray.size(); i+=4, ++j)
+            for (uint i=1, j = 0; i< vertexArray.size(); i+=4, ++j)
             {
                 t.setString(VertexNames[j]);
                 t.setPosition(vertexArray[i].position.x,vertexArray[i].position.y);
@@ -117,7 +117,7 @@ namespace spider
     }
     void GraphSprite::handleRotate(int dir)
     {
-        transform.rotate(90, 300, 300);
+        transform.rotate(dir*90, 300, 300);
     }
 
     void GraphSprite::handleReleased()
@@ -150,7 +150,7 @@ namespace spider
             transform.scale(0.8f, 0.8f, x, y);
         }
         if(ticks != 0)
-            ;
+        {}
     }
     void GraphSprite::toggleTextDisplay()
     {

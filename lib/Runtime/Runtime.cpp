@@ -12,7 +12,13 @@ namespace spider
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
         nested_mode = nested_mode_;
+        showCallback = [](std::string s){std::cout<<s<<std::endl;};
     }
+    void Runtime::setShowCallback(std::function<void(std::string)> f)
+    {
+        showCallback = f;
+    }
+
     FunctionSystem& Runtime::getFunctions()
     {
         return functions;
@@ -111,10 +117,11 @@ namespace spider
     
     bool Runtime::tryShow(std::vector<std::string> idf, char sep)
     {
+        std::ostringstream out;
         std::vector<Value*> list = substituteArgs(idf);
         for(auto x: list)
-            std::cout << x->show() << sep;
-        std::cout << std::endl;
+            out << x->show() << sep;
+        showCallback(out.str());
 //             assignPrev(x);
         return true;
     }
@@ -157,6 +164,7 @@ namespace spider
             }
             table.modify(idf, x);
             assignPrev(x);
+            x->changeCallback();
             return true;
         }
     }

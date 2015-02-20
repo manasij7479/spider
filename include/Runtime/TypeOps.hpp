@@ -12,31 +12,31 @@ namespace spider
             throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, int size, std::string reason = "<>")
+    void assert_size(std::vector<T> args, uint size, std::string reason = "<>")
     {
         if (args.size() != size)
             throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
     template <typename T>
-    void assert_size(std::vector<T> args, std::function<bool(int)> predicate, std::string reason = "<>")
+    void assert_size(std::vector<T> args, std::function<bool(uint)> predicate, std::string reason = "<>")
     {
         if (predicate(args.size()) == false)
             throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
 
-    inline std::function<bool(int)> greater(int i)
+    inline std::function<bool(uint)> greater(int i)
     {
         return [i](int x){return x > i;};
     }
-    inline std::function<bool(int)> lesser(int i)
+    inline std::function<bool(uint)> lesser(int i)
     {
         return [i](int x){return x < i;};
     }
-    inline std::function<bool(int)> greater_eq(int i)
+    inline std::function<bool(uint)> greater_eq(int i)
     {
         return [i](int x){return x >= i;};
     }
-    inline std::function<bool(int)> lesser_eq(int i)
+    inline std::function<bool(uint)> lesser_eq(int i)
     {
         return [i](int x){return x <= i;};
     }
