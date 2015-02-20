@@ -505,4 +505,55 @@ namespace spider
         });
         return gv;
     }
+    Value* graph_set_graph_attribute(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        g->gA[s->data].value() = args[2];
+        return g;
+    }
+    Value* graph_get_graph_attribute(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        return g->gA[s->data].value();
+    }
+    
+    Value* graph_set_vertex_attribute(std::vector<Value*> args)
+    {
+        assert_size(args, 4);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Integer);
+        
+        
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        auto v = geti(args[2]);
+        
+        g->vA[s->data].value(v->data) = args[3];
+        return g;
+    }
+    Value* graph_get_vertex_attribute(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Integer);
+        
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        auto v = geti(args[2]);
+        if (g->vA[s->data].isKnown(v->data))
+            return g->vA[s->data].value(v->data);
+        else 
+            return new VoidValue();
+    }
 }
