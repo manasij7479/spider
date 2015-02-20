@@ -18,9 +18,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         auto g = getg(args[0]);
-        auto v = gets(args[1]);
+        auto v = geti(args[1]);
         g->data->insertVertex(v->data);
         g->changeCallback();
         return g;
@@ -29,9 +29,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         auto g = getg(args[0]);
-        auto v = gets(args[1]);
+        auto v = geti(args[1]);
         g->data->removeVertex(v->data);
         g->changeCallback();
         return g;
@@ -40,12 +40,12 @@ namespace spider
     {
         assert_size(args, 4);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         assert_type(args[3], VType::Integer);
         auto g = getg(args[0]);
-        auto x = static_cast<StringValue*>(args[1]);
-        auto y = static_cast<StringValue*>(args[2]);
+        auto x = static_cast<IntegerValue*>(args[1]);
+        auto y = static_cast<IntegerValue*>(args[2]);
         auto e = static_cast<IntegerValue*>(args[3]);
         
         g->data->insertEdge(x->data, y->data, e->data);
@@ -57,11 +57,11 @@ namespace spider
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         auto g = getg(args[0]);
-        auto x = gets(args[1]);
-        auto y = gets(args[2]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
         
         g->data->removeEdge(x->data, y->data);
         g->changeCallback();
@@ -75,7 +75,7 @@ namespace spider
         assert_type(args[0], VType::Graph);
         return new IntegerValue(getg(args[0])->data->order());
     }
-    typedef std::function<graph::AdjacencyList<std::string,int>(std::vector<int>, int)> F;
+    typedef std::function<GraphValue::Graph(std::vector<int>, int)> F;
     std::map<std::string, F> GraphNameMap()
     {
         return {
@@ -183,11 +183,11 @@ namespace spider
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         
-        auto x = gets(args[1]);
-        auto y = gets(args[2]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
         
         auto g = new GraphValue::Graph(graph::EdgeDeletionSubgraph(*(getg(args[0])->data), x->data, y->data));
         return new GraphValue(g);
@@ -197,9 +197,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         
-        auto x = gets(args[1]);
+        auto x = geti(args[1]);
         
         auto g = new GraphValue::Graph(graph::VertexDeletionSubgraph(*(getg(args[0])->data), x->data));
         return new GraphValue(g);
@@ -209,11 +209,11 @@ namespace spider
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         
-        auto x = gets(args[1]);
-        auto y = gets(args[2]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
         
         auto g = new GraphValue::Graph(graph::EdgeContractionMinor(*(getg(args[0])->data), x->data, y->data));
         return new GraphValue(g);
@@ -231,9 +231,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         
-        auto x = gets(args[1]);
+        auto x = geti(args[1]);
                 
         return new IntegerValue(graph::outDegree(*(getg(args[0])->data), x->data));
     }
@@ -242,9 +242,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         
-        auto x = gets(args[1]);
+        auto x = geti(args[1]);
                 
         return new IntegerValue(graph::inDegree(*(getg(args[0])->data), x->data));
     }
@@ -253,9 +253,9 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
+        assert_type(args[1], VType::Integer);
         
-        auto x = gets(args[1]);
+        auto x = geti(args[1]);
                 
         return new IntegerValue(graph::degree(*(getg(args[0])->data), x->data));
     }
@@ -296,19 +296,19 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        return new BoolValue(graph::isVertex(*(getg(args[0])->data), gets(args[1])->data));
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(graph::isVertex(*(getg(args[0])->data), geti(args[1])->data));
     }
 		
     Value* graph_is_adjacent(std::vector<Value*> args)
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         return new BoolValue(graph::isAdjacent(*(getg(args[0])->data), 
-                                               gets(args[1])->data, 
-                                               gets(args[2])->data));
+                                               geti(args[1])->data, 
+                                               geti(args[2])->data));
     }
         
     Value* graph_is_subgraph(std::vector<Value*> args)
@@ -338,11 +338,11 @@ namespace spider
     {
         assert_size(args, 3);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        assert_type(args[2], VType::String);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
         return new BoolValue(graph::isConnected(*(getg(args[0])->data), 
-                                                gets(args[1])->data, 
-                                                gets(args[2])->data));
+                                                geti(args[1])->data, 
+                                                geti(args[2])->data));
     }
         
     Value* graph_is_component(std::vector<Value*> args)
@@ -428,30 +428,30 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        return new BoolValue(graph::isCentre(*(getg(args[0])->data), gets(args[1])->data));
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(graph::isCentre(*(getg(args[0])->data), geti(args[1])->data));
     }
         
     Value* graph_is_periphery(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        return new BoolValue(graph::isPeriphery(*(getg(args[0])->data), gets(args[1])->data));
+        assert_type(args[1], VType::Integer);
+        return new BoolValue(graph::isPeriphery(*(getg(args[0])->data), geti(args[1])->data));
     }
     
     Value* graph_bfs_animate(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        auto g = new graph::AdjacencyList<std::string, int>();
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
-        std::string s = gets(args[1])->data;
+        auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s));// FIXME: Leak
-        graph::BreadthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
-        bfs.setp4([&](const std::string& x,const std::string& y)
+        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
+        bfs.setp4([&](int x,int y)
         {
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
@@ -467,14 +467,14 @@ namespace spider
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::String);
-        auto g = new graph::AdjacencyList<std::string, int>();
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
-        std::string s = gets(args[1])->data;
+        auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<graph::AdjacencyList<std::string, int>>(*g, s)); // FIXME: Leak
-        graph::DepthFirstSearch<graph::AdjacencyList<std::string, int>> bfs(*getg(args[0])->data, s);
-        bfs.setp4([&](const std::string& x,const std::string& y)
+        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
+        dfs.setp4([&](int x,int y)
         {
             g->insertVertex(y);
             g->insertEdge(x, y, 1);
@@ -483,17 +483,17 @@ namespace spider
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
-        bfs();
+        dfs();
         return gv;
     }
     Value* graph_kruskal_animate(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
-        auto g = new graph::AdjacencyList<std::string, int>();
+        auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
-        new WindowValue(gv, new CircularLayout<graph::AdjacencyList<std::string, int>>(*g));// FIXME: Leak
-        auto state = graph::Kruskal(*getg(args[0])->data, [&](const std::string& x,const std::string& y, int w)
+        new WindowValue(gv, new CircularLayout<GraphValue::Graph>(*g));// FIXME: Leak
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
         {
             g->insertVertex(x);
             g->insertVertex(y);

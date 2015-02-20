@@ -10,7 +10,7 @@ namespace spider
     {
         Q_OBJECT
     public:
-        typedef graph::AdjacencyList<std::string, int> Graph;
+        typedef graph::AdjacencyList<int, int> Graph;
         GraphValue(Graph* g)
             :Value(VType::Graph), data(g){};
         GraphValue(bool dir = false)
