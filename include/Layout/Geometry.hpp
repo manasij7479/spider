@@ -6,7 +6,6 @@
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>
 #include <cmath>
-#include <SFML/System/Vector2.hpp>
 //switch to glm if this proves insufficient and inextensible
 namespace spider
 {
@@ -85,17 +84,5 @@ namespace spider
         return std::sqrt(distsquare(a,b));
     }
     
-    /**
-     * \brief - Returns a vector which is a pair of the two coordinates 'x' and 'y'
-     * 
-     * float x - First parameter, x coordinate of point
-     * 
-     * float y - Second parameter, ty coordinate of point
-     * **/
-    
-    inline sf::Vector2f sfvec2(float x, float y)
-    {
-        return sf::Vector2f(x,y);
-    }
 }
 #endif
