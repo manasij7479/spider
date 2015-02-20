@@ -56,7 +56,7 @@ namespace spider
         m_View->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         layout = newLayout;
         float border = 50;
-        Rect bounds = {{0 + border,0 + border},{this->geometry().width() - 200 * 1.0f - border , this->geometry().height() * 1.0f - border}};
+        Rect bounds = {{0 + border,0 + border},{m_View->geometry().width()  * 1.0f - border , m_View->geometry().height() * 1.0f - border}};
         m_Scene->clear();
         newLayout->generate(bounds);
         for (auto e : graph::EdgeList(newLayout->getGraph(), false))
