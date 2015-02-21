@@ -44,6 +44,9 @@ namespace spider
             GMAP(is_tree), GMAP(is_centre), GMAP(is_periphery), GMAP(is_eulerian), 
             GMAP(is_semi_eulerian), GMAP(is_component), GMAP(is_regular), 
             GMAP(bfs_animate), GMAP(dfs_animate), GMAP(kruskal_animate),
+            GMAP(set_graph_attribute), GMAP(get_graph_attribute),
+            GMAP(set_vertex_attribute), GMAP(get_vertex_attribute),
+            
             //Window Functions
             WMAP(display), WMAP(change_layout)
         };

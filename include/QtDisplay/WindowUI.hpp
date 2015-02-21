@@ -11,13 +11,12 @@ class QMouseEvent;
 class QEvent;
 namespace spider
 {
-    typedef graph::Graph<std::string, int> Graph;
     class WindowUI : public QWidget
     {
         Q_OBJECT
     public:
-        WindowUI(GraphValue* gWrap, Layout<Graph>* l);
-        void changeLayout(Layout<Graph>* newLayout);
+        WindowUI(GraphValue* gWrap, Layout<GraphValue::Graph>* l);
+        void changeLayout(Layout<GraphValue::Graph>* newLayout);
         bool isOpen(){return true;}
         GraphValue* getGraph()
         {
@@ -37,7 +36,7 @@ namespace spider
         QGraphicsScene* m_Scene;
 //         float scaleX;
 //         float scaleY;
-        Layout<Graph>* layout;
+        Layout<GraphValue::Graph>* layout;
         bool displayText;
     };
 }

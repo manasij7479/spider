@@ -57,8 +57,8 @@ namespace spider
         else if(name == "tree")
         {
             assert_size(args,3);
-            assert_type(args[2],VType::String);
-            std::string v = gets(args[2])->data;
+            assert_type(args[2],VType::Integer);
+            auto v = geti(args[2])->data;
             l = new TreeLayout<GT>(g, v);
         }
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");

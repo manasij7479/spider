@@ -1,6 +1,7 @@
 /**
- * \brief ForceBasedLayout.hpp - Header file that contains functions to generate
- * non centered Circular Layout for drawing a graph
+ * \brief CircularLayout.hpp - Header file that contains functions to generate
+ * Circular Layout for drawing a graph. The layout has a circle
+ * on whose circumference the vertex are plotted at equal intervals.
  * **/
 #ifndef SPIDER_CIRCULAR_LAYOUT_HPP
 #define SPIDER_CIRCULAR_LAYOUT_HPP

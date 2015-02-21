@@ -11,7 +11,7 @@
 #include <Layout/Layout.hpp>
 namespace spider
 {
-    WindowUI::WindowUI(GraphValue* gWrap, Layout<Graph>* l):g(gWrap), layout(l)
+    WindowUI::WindowUI(GraphValue* gWrap, Layout<GraphValue::Graph>* l):g(gWrap), layout(l)
     {
         displayText = true;
         m_Scene = new QGraphicsScene;
@@ -50,13 +50,13 @@ namespace spider
         connect(gWrap, SIGNAL(changed()), this, SLOT(change()));
         this->show();
     }
-    void WindowUI::changeLayout(Layout<Graph>* newLayout)
+    void WindowUI::changeLayout(Layout<GraphValue::Graph>* newLayout)
     {
         m_Scene->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         m_View->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         layout = newLayout;
         float border = 50;
-        Rect bounds = {{0 + border,0 + border},{this->geometry().width() - 200 * 1.0f - border , this->geometry().height() * 1.0f - border}};
+        Rect bounds = {{0 + border,0 + border},{m_View->geometry().width()  * 1.0f - border , m_View->geometry().height() * 1.0f - border}};
         m_Scene->clear();
         newLayout->generate(bounds);
         for (auto e : graph::EdgeList(newLayout->getGraph(), false))
@@ -81,7 +81,7 @@ namespace spider
             {
                 auto text = new QGraphicsTextItem();
                 text->setPos(p.x - 10, p.y + 5); //TODO: Remove magic number
-                text->setPlainText(v.c_str());
+                text->setPlainText(std::to_string(v).c_str());
                 m_Scene->addItem(text);
             }
         }

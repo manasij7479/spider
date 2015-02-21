@@ -2,7 +2,9 @@
 #define SPIDER_RUNTIME_GRAPH_VALUE_HPP
 #include "graph/graph.hpp"
 #include "graph/util/io.hpp"
+#include "graph/structures/attribute.hpp"
 #include "Runtime/Type.hpp"
+#include <map>
 #include <QObject>
 namespace spider
 {
@@ -10,7 +12,7 @@ namespace spider
     {
         Q_OBJECT
     public:
-        typedef graph::AdjacencyList<std::string, int> Graph;
+        typedef graph::AdjacencyList<int, int> Graph;
         GraphValue(Graph* g)
             :Value(VType::Graph), data(g){};
         GraphValue(bool dir = false)
@@ -21,13 +23,12 @@ namespace spider
             graph::displayGraph(*data, out);
             return out.str();
         }
+        
         Graph* data;
+        std::map<std::string, graph::GraphAttribute<Graph, Value*>> gA;
+        std::map<std::string, graph::VertexAttribute<Graph, Value*>> vA;
+        std::map<std::string, graph::EdgeAttribute<Graph, Value*>> eA;
         
-//         void setCallback(std::function<void(void)> f){changeCallbacks.push_back(f);}
-        
-//     private:
-//         std::vector<std::function<void(void)>> changeCallbacks;
-
     };
 
     
