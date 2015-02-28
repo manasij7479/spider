@@ -25,6 +25,7 @@ namespace spider
     }
     void Runtime::eval(std::vector<std::string> args)
     {
+        Value* v = nullptr;
         if (args[0] == "show")
         {
             assert_size(args, greater_eq(2));
@@ -35,8 +36,8 @@ namespace spider
             breakflag = true;
         else if (args[0] == "let")
         {
-            assert_size(args, greater_eq(4));
-            if (tryDeclare(args[1], args[2], std::vector<std::string>(args.begin()+3, args.end())) == false)
+            assert_size(args, greater_eq(3));
+            if (tryDeclare(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
                 throw std::runtime_error("Declaration Failed.\n");
         }
         else if (args[0] == "assign")
@@ -58,6 +59,14 @@ namespace spider
             {
                 if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
+            }
+            else if ((v = table.get(args[0])) != nullptr)
+            {
+                assignPrev(v);
+            }
+            else if ((v = constructLiteral(args[0])) != nullptr)
+            {
+                assignPrev(v);
             }
             else 
                 throw std::runtime_error("Bad keyword: '"+args[0]+"'.\n");
@@ -125,24 +134,16 @@ namespace spider
 //             assignPrev(x);
         return true;
     }
-    bool Runtime::tryDeclare(std::string idf, std::string type, std::vector<std::string> value)
+    bool Runtime::tryDeclare(std::string idf, std::vector<std::string> value)
     {
         Value* x = table.local_get(idf);
         if (x != nullptr)
             return false;
         else
         {
-            std::vector<Value*> list = substituteArgs(value);
-            if (type == "list")
-                x = new ListValue(list);
-            else 
-            {
-                assert_size(list, 1);
-                assert_type(list[0] , Value::NameToTypeMap()[type]);
-                x = list[0];
-            }
-            table.insert(idf, x);
-            assignPrev(x);
+            eval(value);
+            table.insert(idf, prev);
+            assignPrev(prev);
             return true;
         }
     }

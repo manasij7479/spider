@@ -18,7 +18,7 @@ namespace spider
         void setShowCallback(std::function<void(std::string)> f);
     private:
         bool tryShow(std::vector<std::string> idf, char sep = ' ');
-        bool tryDeclare(std::string idf, std::string type, std::vector<std::string> value);
+        bool tryDeclare(std::string idf, std::vector<std::string> value);
         bool tryAssign(std::string idf, std::vector<std::string> value);
         
         bool tryCall(std::string fname, std::vector<std::string> value);
@@ -46,8 +46,8 @@ namespace spider
 /*
 Test code:
 1. Loop from 10 to 6:
-let x int i10
-let b bool true
+let x i10
+let b true
 while b
 {
     show x
@@ -66,7 +66,7 @@ exit
 2. Simple function returning its input:
 function foo result int input int
 {
-    let result int input 
+    let result input 
 }
 foo i7479
 show _
