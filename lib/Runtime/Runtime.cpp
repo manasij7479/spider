@@ -143,7 +143,7 @@ namespace spider
         {
             eval(value);
             table.insert(idf, prev);
-            assignPrev(prev);
+//             assignPrev(prev);
             return true;
         }
     }
@@ -154,17 +154,9 @@ namespace spider
             return false;
         else
         {
-            std::vector<Value*> list = substituteArgs(value);
-            if (x->type == VType::List)
-                x = new ListValue(list);
-            else 
-            {
-                assert_size(list, 1);
-                assert_type(list[0] , x->type);
-                x = list[0];
-            }
-            table.modify(idf, x);
-            assignPrev(x);
+            eval(value);
+            table.modify(idf, prev);
+//             assignPrev(prev);
             x->changeCallback();
             return true;
         }

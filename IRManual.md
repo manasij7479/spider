@@ -55,8 +55,7 @@ function factorial f int n int
     }
     sub n i1
     factorial _
-    mul n _
-    assign f _
+    assign f mul n _
 }
 factorial i5
 show _

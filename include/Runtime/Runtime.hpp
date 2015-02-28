@@ -51,15 +51,13 @@ let b true
 while b
 {
     show x
-    add x i-1
-    assign x _
+    assign x sub x i1
     equal x i5
     if _
     {
         break
     }
-    greater x i0
-    assign b _
+    assign b greater x i0
 }
 exit
 
@@ -82,8 +80,7 @@ function factorial f int n int
     }
     sub n i1
     factorial _
-    mul n _
-    assign f _
+    assign f mul n _
 }
 factorial i5
 show _
@@ -95,8 +92,7 @@ function foo x int n int
     while true
     {
         show x
-        add x i1 
-        assign x _
+        assign x add x i1 
         greater x n
         if _
         {
