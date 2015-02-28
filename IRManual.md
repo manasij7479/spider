@@ -3,7 +3,7 @@
 ###Keywords:
 * show : show variable.
 * break : Break out of a block.
-* let : Declare a variable, `let i int i7479`
+* let : Declare a variable, `let i i7479`
 * assign : Alter the value of a variable, `assign i j` means i=j
 * if : if condition {block} . `{` and `}` must be on new lines. There is no else.
 * while : While loop, structure similar to if.
@@ -47,7 +47,7 @@ bfs_animate _ "1"
 ```
 function factorial f int n int
 {
-    let f int i1
+    let f i1
     lesser n i2
     if _
     {

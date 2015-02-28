@@ -74,7 +74,7 @@ show _
 3. Factorial !
 function factorial f int n int
 {
-    let f int i1
+    let f i1
     lesser n i2
     if _
     {
@@ -91,7 +91,7 @@ show _
 4. Function with a loop:
 function foo x int n int
 {
-    let x int i1
+    let x i1
     while true
     {
         show x
