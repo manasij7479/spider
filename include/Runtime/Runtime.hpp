@@ -17,7 +17,7 @@ namespace spider
         FunctionSystem& getFunctions();
         void setShowCallback(std::function<void(std::string)> f);
     private:
-        bool tryShow(std::vector<std::string> idf, char sep = ' ');
+        bool tryShow(std::vector<std::string> idf);
         bool tryDeclare(std::string idf, std::vector<std::string> value);
         bool tryAssign(std::string idf, std::vector<std::string> value);
         
@@ -47,17 +47,14 @@ namespace spider
 Test code:
 1. Loop from 10 to 6:
 let x i10
-let b true
-while b
+while greater x i0
 {
     show x
     assign x sub x i1
-    equal x i5
-    if _
+    if equal x i5
     {
         break
     }
-    assign b greater x i0
 }
 exit
 
@@ -66,15 +63,14 @@ function foo result int input int
 {
     let result input 
 }
-foo i7479
-show _
+show foo i7479
+
 
 3. Factorial !
 function factorial f int n int
 {
     let f i1
-    lesser n i2
-    if _
+    if lesser n i2
     {
         break
     }
@@ -82,8 +78,7 @@ function factorial f int n int
     factorial _
     assign f mul n _
 }
-factorial i5
-show _
+show factorial i5
 
 4. Function with a loop:
 function foo x int n int
@@ -93,8 +88,7 @@ function foo x int n int
     {
         show x
         assign x add x i1 
-        greater x n
-        if _
+        if greater x n
         {
             break
         }

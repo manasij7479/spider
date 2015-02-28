@@ -80,7 +80,9 @@ namespace spider
             assert_size(command, greater_eq(2));
             if (command[0] == "if")
             {
-                BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
+                eval(std::vector<std::string>(command.begin()+1, command.end()));
+                assert_type(prev, VType::Bool);
+                BoolValue* cond = getb(prev);
                 if (cond->data == true)
                     eval(*(stmt.getTail()));
             }
@@ -88,7 +90,9 @@ namespace spider
             {
                 while (true)
                 {
-                    BoolValue* cond = getb(constructValue(VType::Bool, command[1]));
+                    eval(std::vector<std::string>(command.begin()+1, command.end()));
+                    assert_type(prev, VType::Bool);
+                    BoolValue* cond = getb(prev);
                     if (cond->data == false)
                         break;
                     else if (breakflag == true)
@@ -124,13 +128,10 @@ namespace spider
         return table.get(name);
     }
     
-    bool Runtime::tryShow(std::vector<std::string> idf, char sep)
+    bool Runtime::tryShow(std::vector<std::string> idf)
     {
-        std::ostringstream out;
-        std::vector<Value*> list = substituteArgs(idf);
-        for(auto x: list)
-            out << x->show() << sep;
-        showCallback(out.str());
+        eval(idf);
+        showCallback(prev->show());
 //             assignPrev(x);
         return true;
     }

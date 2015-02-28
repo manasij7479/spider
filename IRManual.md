@@ -48,8 +48,7 @@ bfs_animate _ "1"
 function factorial f int n int
 {
     let f i1
-    lesser n i2
-    if _
+    if lesser n i2
     {
         break
     }
@@ -57,8 +56,8 @@ function factorial f int n int
     factorial _
     assign f mul n _
 }
-factorial i5
-show _
+show factorial i5
+
 ```
 * Insert and Delete Vertices:
 ```
