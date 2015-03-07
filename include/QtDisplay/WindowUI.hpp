@@ -11,6 +11,7 @@ class QMouseEvent;
 class QEvent;
 namespace spider
 {
+    class LayoutPainter;
     class WindowUI : public QWidget
     {
         Q_OBJECT
@@ -37,7 +38,7 @@ namespace spider
 //         float scaleX;
 //         float scaleY;
         Layout<GraphValue::Graph>* layout;
-        bool displayText;
+        LayoutPainter* lp;
     };
 }
 #endif

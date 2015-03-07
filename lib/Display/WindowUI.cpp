@@ -8,15 +8,15 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <graph/algorithm/collections.hpp>
-#include <Layout/Layout.hpp>
+#include "Layout/Layout.hpp"
+#include "QtDisplay/LayoutPainter.hpp"
 namespace spider
 {
     WindowUI::WindowUI(GraphValue* gWrap, Layout<GraphValue::Graph>* l):g(gWrap), layout(l)
     {
-        displayText = true;
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
-
+        lp = new LayoutPainter(m_View, m_Scene);
         auto zin = new QPushButton(QIcon("resource/zoom_in.png"), "Zoom In");
         auto zout = new QPushButton(QIcon("resource/zoom_out.png"), "Zoom Out");
         auto fit = new QPushButton(QIcon("resource/fit_page.png"), "Fit Page");
@@ -52,39 +52,8 @@ namespace spider
     }
     void WindowUI::changeLayout(Layout<GraphValue::Graph>* newLayout)
     {
-        m_Scene->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
-        m_View->setSceneRect(0, 0, this->geometry().width(), this->geometry().height());
         layout = newLayout;
-        float border = 50;
-        Rect bounds = {{0 + border,0 + border},{m_View->geometry().width()  * 1.0f - border , m_View->geometry().height() * 1.0f - border}};
-        m_Scene->clear();
-        newLayout->generate(bounds);
-        for (auto e : graph::EdgeList(newLayout->getGraph(), false))
-        {
-            Curve c=newLayout->getEdge(std::get<0>(e),std::get<1>(e));
-            m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
-        }
-        QRadialGradient radial;
-        radial.setColorAt(0, Qt::white);
-        radial.setColorAt(1, Qt::green);
-        radial.setRadius(10);
-        
-
-        for (auto v : graph::VertexList(newLayout->getGraph()))
-        {
-            Point p = newLayout->getVertex(v);
-            radial.setCenter(p.x, p.y);
-            radial.setFocalPoint(p.x, p.y);
-            m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
-            
-            if (displayText)
-            {
-                auto text = new QGraphicsTextItem();
-                text->setPos(p.x - 10, p.y + 5); //TODO: Remove magic number
-                text->setPlainText(std::to_string(v).c_str());
-                m_Scene->addItem(text);
-            }
-        }
+        lp->draw(layout, this->geometry().width(), this->geometry().height());
     }
     bool WindowUI::eventFilter(QObject* obj, QEvent* event)
     {
