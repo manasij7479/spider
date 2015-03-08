@@ -24,6 +24,7 @@ namespace spider
             return g;
         }
         bool eventFilter(QObject *obj, QEvent *event);
+        LayoutPainter* getLayoutPainter(){return lp;}
     private slots:
         void change();
         void zoom_in();

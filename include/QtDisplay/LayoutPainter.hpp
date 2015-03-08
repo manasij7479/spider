@@ -1,6 +1,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QColor>
 #include "Layout/Layout.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "graph/algorithm/collections.hpp"
@@ -11,8 +12,10 @@ namespace spider
     public:
         LayoutPainter(QGraphicsView* v, QGraphicsScene* s):m_View(v), m_Scene(s)
         {
-            displayText = true;
-            displayEdgeCost = true;
+            op_displayText = true;
+            op_displayEdgeCost = false;
+            op_useGradient = false;
+            op_useVertexColorAttrib = true;
         }
         virtual void draw(Layout<GraphValue::Graph>* layout, int w, int h)
         {
@@ -28,7 +31,7 @@ namespace spider
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
                 m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
                 
-                if (displayEdgeCost)
+                if (op_displayEdgeCost)
                 {
                     auto text = new QGraphicsTextItem();
                     int offx = 1, offy = 0;
@@ -43,19 +46,32 @@ namespace spider
                 }
             }
             QRadialGradient radial;
-            radial.setColorAt(0, Qt::white);
-            radial.setColorAt(1, Qt::green);
-            radial.setRadius(10);
-            
+            if (op_useGradient)
+            {
+                radial.setColorAt(0, Qt::white);
+                radial.setColorAt(1, Qt::green);
+                radial.setRadius(10);
+            }    
 
             for (auto v : graph::VertexList(layout->getGraph()))
             {
                 Point p = layout->getVertex(v);
-                radial.setCenter(p.x, p.y);
-                radial.setFocalPoint(p.x, p.y);
-                m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
-                
-                if (displayText)
+                if (op_useGradient)
+                {
+                    radial.setCenter(p.x, p.y);
+                    radial.setFocalPoint(p.x, p.y);
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
+                }
+                else if (op_useVertexColorAttrib)
+                {
+                    auto&& list = QColor::colorNames();
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(rand()%20))));
+                }
+                else
+                {
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(Qt::green)));
+                }
+                if (op_displayText)
                 {
                     auto text = new QGraphicsTextItem();
                     text->setPos(p.x - 10, p.y + 5); //TODO: Remove magic number
@@ -69,7 +85,14 @@ namespace spider
     private:
         QGraphicsView* m_View;
         QGraphicsScene* m_Scene;
-        bool displayText;
-        bool displayEdgeCost;
+        bool op_displayText;
+        bool op_displayEdgeCost;
+        bool op_useGradient;
+        bool op_useVertexColorAttrib;
+    public:
+         bool& displayText(){return op_displayText;}
+         bool& displayEdgeCost(){return op_displayEdgeCost;}
+         bool& useGradient(){return op_useGradient;}
+         bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}
     };
 }
