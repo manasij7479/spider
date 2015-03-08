@@ -10,13 +10,11 @@
 #include <iostream>
 namespace spider
 {
-    template <typename Graph>
-    class ForceBasedLayout : public Layout<Graph>
+    class ForceBasedLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        ForceBasedLayout(Graph& g, float gc_ = 3000, float kc_ = 1.0/1000, float errf_ = 0.1)
-        :Base(g), gc(gc_), kc(kc_), errf(errf_){};
+        ForceBasedLayout(GraphValue& g, float gc_ = 3000, float kc_ = 1.0/1000, float errf_ = 0.1)
+        :Layout(g), gc(gc_), kc(kc_), errf(errf_){};
         /**
          * \brief - generates Vertex Attributes of each vertex
          * 
@@ -25,22 +23,22 @@ namespace spider
          * **/
         void generate(Rect bounds)
         {
-            RandomLayout<Graph> rl(Base::g);
+            RandomLayout rl(g);
             rl.generate(bounds);
             auto va = rl.getVertexAttribute();
             int iter = 10000;
             while(iter--)
             {
-                graph::VertexAttribute<Graph,Point> newva;
+                graph::VertexAttribute<GraphValue::Graph,Point> newva;
                 uint numeq = 0; // number of vertices in equilibrium 
                 Point old;
-                for(auto x=Base::g.begin();x!=Base::g.end();++x)
+                for(auto x=getGraph().begin();x!=getGraph().end();++x)
                 {
                     Point cur=va.value(x->first);
                     old = cur;
                     float fx=0;
                     float fy=0;
-                    for(auto y=Base::g.begin();y!=Base::g.end();++y)
+                    for(auto y=getGraph().begin();y!=getGraph().end();++y)
                     {
                         
                         if(x->first!=y->first)
@@ -53,7 +51,7 @@ namespace spider
                             fx+=fgx;
                             fy+=fgy;
     //                         std::cout<<fgx<<' '<<fgy<<' ';
-                            if(graph::isAdjacent(Base::g,x->first,y->first))
+                            if(graph::isAdjacent(getGraph(),x->first,y->first))
                             {
     //                             std::cout<<dx <<' '<<dy<<std::endl;
 
@@ -76,13 +74,13 @@ namespace spider
                     newva.value(x->first)=cur;
                 }
                 std::swap(va,newva);
-                if (numeq == Base::g.order()) // Can be decreased
+                if (numeq == getGraph().order()) // Can be decreased
                 {
 //                     std::cout<<"EQ "<<iter<<std::endl;
                     break;
                 }
             }
-            Base::setVertexAttribute(va);
+            setVertexAttribute(va);
         }
     private:
         

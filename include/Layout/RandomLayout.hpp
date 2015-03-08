@@ -7,17 +7,15 @@
 #include "Layout/Layout.hpp"
 namespace spider
 {
-    template <typename Graph>
-    class RandomLayout : public Layout<Graph>
+    class RandomLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        RandomLayout(Graph& g, float m = 2.5f):
-            Layout<Graph>(g),
+        RandomLayout(GraphValue& g, float m = 2.5f):
+            Layout(g),
             twister(rd()),
             modifier(m)
             {
-                Base::hasEdgeData = false;
+                hasEdgeData = false;
             };
         /**
          * \brief - generates x and y coordinates of each vertex
@@ -36,11 +34,11 @@ namespace spider
             
             std::normal_distribution<> x(center.x, stddev.x),y(center.y, stddev.y);
             
-            for(auto it=Base::g.begin();it!=Base::g.end();++it)
+            for(auto it=getGraph().begin();it!=getGraph().end();++it)
             {
                 float xp=x(twister);
                 float yp=y(twister);
-                Base::points.value(it->first)=Point({xp,yp});
+                points.value(it->first)=Point({xp,yp});
             }
 
             

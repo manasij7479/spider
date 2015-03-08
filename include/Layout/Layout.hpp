@@ -7,17 +7,17 @@
 #include "graph/structures/attribute.hpp"
 #include "Layout/Geometry.hpp"
 #include <random>
+#include "Runtime/GraphValue.hpp"
 namespace spider
 {
-    template <typename Graph>
     class Layout
     {
-        typedef typename Graph::VertexType V;
-        typedef graph::VertexAttribute<Graph,Point> VA;
-        typedef graph::EdgeAttribute<Graph,Curve> EA;
+        typedef typename GraphValue::Graph::VertexType V;
+        typedef graph::VertexAttribute<GraphValue::Graph,Point> VA;
+        typedef graph::EdgeAttribute<GraphValue::Graph,Curve> EA;
         
     public:
-        Layout(Graph& g_):g(g_){};
+        Layout(GraphValue& g_):g(g_){};
         virtual ~Layout(){}
         virtual void generate(Rect){}
         /**
@@ -43,7 +43,7 @@ namespace spider
             else return curves.value(x,y);
         }
         /** \brief - returns a graph g **/
-        Graph& getGraph(){return g;}
+        GraphValue::Graph& getGraph(){return *(g.data);}
         /** \brief - returns attribute of a Vertex **/
         VA getVertexAttribute(){return points;}
         /** \brief - returns attribute of an edge **/
@@ -59,10 +59,10 @@ namespace spider
          * **/
         void setEdgeAttribute(EA ea){curves = ea;}
     protected:
-        graph::VertexAttribute<Graph,Point> points;
-        graph::EdgeAttribute<Graph,Curve> curves;
+        graph::VertexAttribute<GraphValue::Graph ,Point> points;
+        graph::EdgeAttribute<GraphValue::Graph ,Curve> curves;
         bool hasEdgeData;
-        Graph& g;
+        GraphValue& g;
     };
 }
 #endif

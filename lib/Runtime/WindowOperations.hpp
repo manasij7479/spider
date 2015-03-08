@@ -16,7 +16,7 @@ namespace spider
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
         auto g = dynamic_cast<GraphValue*>(args[0]);
-        return new WindowValue(g, new CircularLayout<GT>(*(g->data)));
+        return new WindowValue(g, new CircularLayout(*g));
     }
     
     Value* win_change_layout(std::vector<Value*> args)
@@ -27,14 +27,14 @@ namespace spider
         WindowValue* win = getw(args[0]);
         std::string name = gets(args[1])->data;
         
-        Layout<GT>* l;
-        auto& g = *(win->data->getGraph()->data);
+        Layout* l;
+        auto& g = *(win->data->getGraph());
         if (name == "circular")
-            l = new CircularLayout<GT>(g);
+            l = new CircularLayout(g);
         else if (name == "random")
-            l = new RandomLayout<GT>(g);
+            l = new RandomLayout(g);
         else if (name == "force")
-            l = new ForceBasedLayout<GT>(g);
+            l = new ForceBasedLayout(g);
         else if (name == "bicircular")
         {
             float r = 0.5, c = 0.5;
@@ -48,18 +48,18 @@ namespace spider
                 assert_type(args[3], VType::Float);
                 r = getf(args[3])->data;
             }
-            l = new BiCircularLayout<GT>(g, c, r);
+            l = new BiCircularLayout(g, c, r);
         }
         else if (name == "wheel")
         {
-            l = new BiCircularLayout<GT>(g, 1.0/ g.order(), 0);
+            l = new BiCircularLayout(g, 1.0/ g.data->order(), 0);
         }
         else if(name == "tree")
         {
             assert_size(args,3);
             assert_type(args[2],VType::Integer);
             auto v = geti(args[2])->data;
-            l = new TreeLayout<GT>(g, v);
+            l = new TreeLayout(g, v);
         }
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");
         

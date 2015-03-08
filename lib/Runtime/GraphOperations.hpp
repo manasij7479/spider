@@ -449,7 +449,7 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
         bfs.setp4([&](int x,int y)
         {
@@ -472,7 +472,7 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
         dfs.setp4([&](int x,int y)
         {
@@ -492,7 +492,7 @@ namespace spider
         assert_type(args[0], VType::Graph);
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
-        new WindowValue(gv, new CircularLayout<GraphValue::Graph>(*g));// FIXME: Leak
+        new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
         auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
         {
             g->insertVertex(x);

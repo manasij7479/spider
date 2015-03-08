@@ -10,14 +10,14 @@ namespace spider
     {
         Q_OBJECT
     public:
-        WindowValue(GraphValue* g, Layout<GraphValue::Graph>* l): Value(VType::Window)
+        WindowValue(GraphValue* g, Layout* l): Value(VType::Window)
         {
-            connect(this, SIGNAL(create(GraphValue*, Layout<GraphValue::Graph>*)), mainWin, SLOT(create(GraphValue*, Layout<GraphValue::Graph>*)));
+            connect(this, SIGNAL(create(GraphValue*, Layout*)), mainWin, SLOT(create(GraphValue*, Layout*)));
             emit create(g,l);
         }
         WindowUI* data;
     signals:
-        void create(GraphValue*, Layout<GraphValue::Graph>*);
+        void create(GraphValue*, Layout*);
     };
 
 }

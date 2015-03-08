@@ -10,15 +10,13 @@
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
-    template<typename Graph>
-    class BipartiteLayout : public Layout<Graph>
+    class BipartiteLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        BipartiteLayout(Graph& g, float fraction_=0.5, bool isVertical_=true):
-        Layout<Graph>(g),fraction(fraction_),isVertical(isVertical_)
+        BipartiteLayout(GraphValue& g, float fraction_=0.5, bool isVertical_=true):
+        Layout(g),fraction(fraction_),isVertical(isVertical_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         
         /**
@@ -29,9 +27,9 @@ namespace spider
          * **/
         virtual void generate(Rect bounds)
         {
-            int order = Base::g.order();
+            int order = getGraph().order();
             float xp,yp,inc;
-            auto vlist = graph::VertexList(Base::g);
+            auto vlist = graph::VertexList(getGraph());
             
             int start=0, end=order*fraction;
             for(int i=0;i<2;++i)
@@ -50,7 +48,7 @@ namespace spider
                 }
                 for(int j=start;j<end;++j)
                 {
-                    Base::points.value(vlist[j])=Point({xp,yp});
+                    points.value(vlist[j])=Point({xp,yp});
                     if(isVertical == true)
                         yp += inc;
                     else

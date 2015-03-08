@@ -10,15 +10,13 @@
 #include <iostream>
 namespace spider
 {
-    template <typename Graph>
-    class CircularLayout : public Layout<Graph>
+    class CircularLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        CircularLayout(Graph& g):
-            Layout<Graph>(g)
+        CircularLayout(GraphValue& g):
+            Layout(g)
             {
-                Base::hasEdgeData = false;
+                hasEdgeData = false;
             };
         /**
          * \brief - generates x and y coordinates of each vertex
@@ -32,14 +30,14 @@ namespace spider
             float xspan = center.x - bounds.min.x;
             float yspan = center.y - bounds.min.y;
             float radius = std::min(xspan,yspan);
-            float inc = 2*3.142/Base::g.order();
+            float inc = 2*3.142/getGraph().order();
             float deg = 0;
-            for(auto it=Base::g.begin();it!=Base::g.end();++it)
+            for(auto it=getGraph().begin();it!=getGraph().end();++it)
             {
                 float xp= center.x+radius*cos(deg);
                 float yp= center.y+radius*sin(deg);
                 deg+=inc;
-                Base::points.value(it->first)=Point({xp,yp});
+                points.value(it->first)=Point({xp,yp});
             }
 
             

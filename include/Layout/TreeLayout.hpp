@@ -11,18 +11,16 @@
 #include "graph/algorithm/enumeration.hpp"
 namespace spider
 {
-    template <typename Graph>
-    bool sortComparison(std::vector<typename Graph::VertexType> i, std::vector<typename Graph::VertexType> j) { return (i.size()<j.size()); }
+    template <typename V>
+    bool sortComparison(std::vector<V> i, std::vector<V> j) { return (i.size()<j.size()); }
     
-    template<typename Graph>
-    class TreeLayout : public Layout<Graph>
+    class TreeLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        TreeLayout(Graph& g, typename Graph::VertexType v_):
-        Layout<Graph>(g),v(v_)
+        TreeLayout(GraphValue& g, typename GraphValue::Graph::VertexType v_):
+        Layout(g),v(v_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         
         /**
@@ -33,11 +31,11 @@ namespace spider
          * **/
         virtual void generate(Rect bounds)
         {
-            std::vector<std::pair<typename Graph::VertexType,int>> levelarray;
+            std::vector<std::pair<GraphValue::Graph::VertexType,int>> levelarray;
             levelarray.push_back(std::make_pair(v,0));
             
-            graph::BreadthFirstSearch<Graph> bfs(Base::g,v);
-            bfs.setp4([&](const typename Graph::VertexType& parent, const typename Graph::VertexType& x)
+            graph::BreadthFirstSearch<GraphValue::Graph> bfs(getGraph(),v);
+            bfs.setp4([&](const typename GraphValue::Graph::VertexType& parent, const typename GraphValue::Graph::VertexType& x)
             {
                 if(x != v)
                 {
@@ -58,7 +56,7 @@ namespace spider
             float yp = bounds.min.y+yinc;
             
             int nadded = 1;
-            Base::points.value(v)=Point({(bounds.max.x+bounds.min.x)/2,bounds.min.y});
+            points.value(v)=Point({(bounds.max.x+bounds.min.x)/2,bounds.min.y});
             for(int layer=1;layer<=ecentricity;++layer)
             {
                 int layerend = 0;
@@ -81,7 +79,7 @@ namespace spider
                 for(int i=nadded;i<layerend;++i)
                 {
 //                     std::cout<<i<<" "<<patharray[i].back()<<std::endl;
-                    Base::points.value(levelarray[i].first)=Point({xp,yp});
+                    points.value(levelarray[i].first)=Point({xp,yp});
                     xp += xinc;
                 }
                 
@@ -90,7 +88,7 @@ namespace spider
             }
         }
     private:
-        typename Graph::VertexType v;
+        GraphValue::Graph::VertexType v;
     };
 }
 #endif

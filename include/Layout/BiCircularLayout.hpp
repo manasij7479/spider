@@ -9,15 +9,13 @@
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
-    template<typename Graph>
-    class BiCircularLayout : public Layout<Graph>
+    class BiCircularLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        BiCircularLayout(Graph& g,float inner_count_fraction_=0.5,float in_rad_fraction_=0.5):
-        Layout<Graph>(g),inner_count_fraction(inner_count_fraction_),in_rad_fraction(in_rad_fraction_)
+        BiCircularLayout(GraphValue& g,float inner_count_fraction_=0.5,float in_rad_fraction_=0.5):
+        Layout(g),inner_count_fraction(inner_count_fraction_),in_rad_fraction(in_rad_fraction_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         
         /**
@@ -33,26 +31,26 @@ namespace spider
             float yspan = center.y - bounds.min.y;
             float outradius = std::min(xspan,yspan);
             float inradius = outradius*in_rad_fraction;
-            int inner = Base::g.order() * inner_count_fraction;
-            int outer = Base::g.order() - inner;
+            int inner = g.data->order() * inner_count_fraction;
+            int outer = g.data->order() - inner;
             float inc = 2*3.142/inner;
             float deg = 0;
-            auto vlist = graph::VertexList(Base::g);
-            for(int i=0;i<inner;++i)
+            auto vlist = graph::VertexList(getGraph());
+            for (int i=0;i<inner;++i)
             {
                 float xp= center.x+inradius*cos(deg);
                 float yp= center.y+inradius*sin(deg);
                 deg+=inc;
-                Base::points.value(vlist[i])=Point({xp,yp});
+                points.value(vlist[i])=Point({xp,yp});
             }
             deg = 0;
             inc = 2*3.142/outer;
-            for(uint i=inner ;i<Base::g.order();++i)
+            for (uint i = inner ; i < getGraph().order() ; ++i)
             {
                 float xp= center.x+outradius*cos(deg);
                 float yp= center.y+outradius*sin(deg);
                 deg+=inc;
-                Base::points.value(vlist[i])=Point({xp,yp});
+                points.value(vlist[i])=Point({xp,yp});
             }
             
         }

@@ -12,7 +12,7 @@
 #include "QtDisplay/LayoutPainter.hpp"
 namespace spider
 {
-    WindowUI::WindowUI(GraphValue* gWrap, Layout<GraphValue::Graph>* l):g(gWrap), layout(l)
+    WindowUI::WindowUI(GraphValue* gWrap, Layout* l):g(gWrap), layout(l)
     {
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
@@ -50,7 +50,7 @@ namespace spider
         connect(gWrap, SIGNAL(changed()), this, SLOT(change()));
         this->show();
     }
-    void WindowUI::changeLayout(Layout<GraphValue::Graph>* newLayout)
+    void WindowUI::changeLayout(Layout* newLayout)
     {
         layout = newLayout;
         lp->draw(layout, this->geometry().width(), this->geometry().height());

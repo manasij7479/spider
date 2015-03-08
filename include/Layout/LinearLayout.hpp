@@ -9,15 +9,13 @@
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
-    template<typename Graph>
-    class LinearLayout : public Layout<Graph>
+    class LinearLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        LinearLayout(Graph& g, bool isVertical_ = false):
-        Layout<Graph>(g),isVertical(isVertical_)
+        LinearLayout(GraphValue& g, bool isVertical_ = false):
+        Layout(g),isVertical(isVertical_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         
         /**
@@ -28,7 +26,7 @@ namespace spider
          * **/
         virtual void generate(Rect bounds)
         {
-            int order = Base::g.order();
+            int order = getGraph().order();
             float xp,yp,inc;
             if(isVertical == true)
             {
@@ -43,10 +41,10 @@ namespace spider
                 inc = (bounds.max.x+bounds.min.x)/order-1;
             }
             
-            auto vlist = graph::VertexList(Base::g);
+            auto vlist = graph::VertexList(getGraph());
             for(int i=0;i<order;++i)
             {
-                Base::points.value(vlist[i])=Point({xp,yp});
+                points.value(vlist[i])=Point({xp,yp});
                 if(isVertical == true)
                     yp += inc;
                 else

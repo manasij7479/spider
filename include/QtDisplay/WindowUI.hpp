@@ -16,8 +16,8 @@ namespace spider
     {
         Q_OBJECT
     public:
-        WindowUI(GraphValue* gWrap, Layout<GraphValue::Graph>* l);
-        void changeLayout(Layout<GraphValue::Graph>* newLayout);
+        WindowUI(GraphValue* gWrap, Layout* l);
+        void changeLayout(Layout* newLayout);
         bool isOpen(){return true;}
         GraphValue* getGraph()
         {
@@ -38,7 +38,7 @@ namespace spider
         QGraphicsScene* m_Scene;
 //         float scaleX;
 //         float scaleY;
-        Layout<GraphValue::Graph>* layout;
+        Layout* layout;
         LayoutPainter* lp;
     };
 }

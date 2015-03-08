@@ -17,7 +17,7 @@ namespace spider
             op_useGradient = false;
             op_useVertexColorAttrib = true;
         }
-        virtual void draw(Layout<GraphValue::Graph>* layout, int w, int h)
+        virtual void draw(Layout* layout, int w, int h)
         {
             m_Scene->setSceneRect(0, 0, w, h);
             m_View->setSceneRect(0, 0, w, h);
