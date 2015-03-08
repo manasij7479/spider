@@ -26,6 +26,14 @@ namespace spider
             Rect bounds = {{0 + border,0 + border},{m_View->geometry().width()  * 1.0f - border , m_View->geometry().height() * 1.0f - border}};
             m_Scene->clear();
             layout->generate(bounds);
+            
+            graph::VertexAttribute<GraphValue::Graph, int> vertexcolattrib;
+            if (op_useVertexColorAttrib)
+            {
+                auto&& attrib = graph::minVertexColorAssignment(layout->getGraph());
+                std::swap(attrib, vertexcolattrib);
+            }
+            
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
@@ -65,7 +73,7 @@ namespace spider
                 else if (op_useVertexColorAttrib)
                 {
                     auto&& list = QColor::colorNames();
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(rand()%20))));
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(vertexcolattrib.value(v)))));
                 }
                 else
                 {

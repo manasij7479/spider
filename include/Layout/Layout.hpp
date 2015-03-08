@@ -45,6 +45,7 @@ namespace spider
         /** \brief - returns a graph g **/
         GraphValue::Graph& getGraph(){return *(g.data);}
         /** \brief - returns attribute of a Vertex **/
+        GraphValue& getGraphValue(){return g;}
         VA getVertexAttribute(){return points;}
         /** \brief - returns attribute of an edge **/
         EA getEdgeAttribute(){return curves;}
