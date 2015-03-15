@@ -21,6 +21,7 @@ public:
 private slots:
     void clear();
     void openFile();
+    void saveFile();
     void run(const QString& str);
     void create(GraphValue* g, Layout* l);
     void error(const QString& s);

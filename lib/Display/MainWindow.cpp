@@ -47,10 +47,20 @@ void MainWindow::setupActions()
 //     KStandardAction::open(this, SLOT(openFile()), actionCollection());
 //     KStandardAction::clear(this, SLOT(clear()), actionCollection());
     QAction* runAction = new QAction(QString("IR Execute"), this);
+    QAction* openAction = new QAction(QString("Open"), this);
+    QAction* saveAction = new QAction(QString("Save"), this);
     QMenuBar* mb = this->menuBar();
+    
+    auto fileMenu = mb->addMenu("File");
+    fileMenu->addAction(openAction);
+    fileMenu->addAction(saveAction);
     mb->addMenu("Run")->addAction(runAction);
+    
+    
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
+    connect(openAction, SIGNAL(triggered(bool)), this, SLOT(openFile()));
+    connect(saveAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
 }
 
@@ -63,7 +73,36 @@ void MainWindow::clear()
 void MainWindow::openFile()
 {
 //     editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
+    QString fileName = QFileDialog::getOpenFileName();
+
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(this, tr("Error"), tr("Could not open file"));
+            return;
+        }
+        QTextStream in(&file);
+        editor->getEditor()->setText(in.readAll());
+        file.close();
+    }
 }
+void MainWindow::saveFile()
+{
+    QString fileName = QFileDialog::getSaveFileName();
+
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            // error message
+        } else {
+            QTextStream stream(&file);
+            stream << editor->getEditor()->toPlainText();
+            stream.flush();
+            file.close();
+        }
+    }
+}
+
 void MainWindow::run(const QString& text)
 {
     std::istringstream in(text.toStdString());
