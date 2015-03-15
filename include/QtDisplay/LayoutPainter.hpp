@@ -30,7 +30,7 @@ namespace spider
             graph::VertexAttribute<GraphValue::Graph, int> vertexcolattrib;
             if (op_useVertexColorAttrib)
             {
-                auto&& attrib = graph::minVertexColorAssignment(layout->getGraph());
+                auto&& attrib = graph::VertexColorAssignment(layout->getGraph());
                 std::swap(attrib, vertexcolattrib);
             }
             
