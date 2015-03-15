@@ -128,6 +128,11 @@ namespace spider
     {
         return new DictValue(convertToCompoundValue(data));
     }
+    template <typename T>
+    inline Value* convertToValue(const std::map<int, T>& data)
+    {
+        return new VattrValue(convertToCompoundValue(data));
+    }
     
     
     

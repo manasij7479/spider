@@ -561,5 +561,11 @@ namespace spider
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
+    Value* graph_degree_map(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::DegreeMap(*getg(args[0])->data));
+    }
     
 }
