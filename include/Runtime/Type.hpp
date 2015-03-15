@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include <functional>
-#include <QObject>
+#include <QtWidgets>
 namespace spider
 {
     class Value : public QObject

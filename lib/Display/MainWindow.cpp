@@ -1,19 +1,19 @@
 #include "QtDisplay/MainWindow.hpp"
-#include <KApplication>
-#include <KAction>
-#include <KLocale>
-#include <KActionCollection>
-#include <KStandardAction>
-#include <KFileDialog>
-#include <KMessageBox>
-#include <KIO/NetAccess>
-#include <KSaveFile>
-#include <QTextStream>
-#include <KXMLGUIFactory>
-#include <KTextEditor/View>
-#include <KTextEditor/Editor>
-#include <KTextEditor/EditorChooser>
-#include <KMenuBar>
+// #include <KApplication>
+// #include <KAction>
+// #include <KLocale>
+// #include <KActionCollection>
+// #include <KStandardAction>
+// #include <KFileDialog>
+// #include <KMessageBox>
+// #include <KIO/NetAccess>
+// #include <KSaveFile>
+// #include <QTextStream>
+// #include <KXMLGUIFactory>
+// #include <KTextEditor/View>
+// #include <KTextEditor/Editor>
+// #include <KTextEditor/EditorChooser>
+// #include <KMenuBar>
 #include <QTextEdit>
 #include <QPushButton>
 #include <QMessageBox>
@@ -30,9 +30,9 @@ MainWindow::MainWindow(QWidget *)
     
     setCentralWidget(editor);
     setupActions();
-    createShellGUI(true);
-
-    guiFactory()->addClient(editor->getView());
+//     createShellGUI(true);
+// 
+//     guiFactory()->addClient(editor->getView());
     this->setMinimumHeight(400);
     this->setMinimumWidth(600);
 //     show ();
@@ -43,26 +43,66 @@ MainWindow::MainWindow(QWidget *)
 
 void MainWindow::setupActions()
 {
-    KStandardAction::quit(kapp, SLOT(quit()), actionCollection());
-    KStandardAction::open(this, SLOT(openFile()), actionCollection());
-    KStandardAction::clear(this, SLOT(clear()), actionCollection());
-    KAction* runAction = new KAction(QString("IR Execute"), this);
-    KMenuBar* mb = this->menuBar();
+//     KStandardAction::quit(kapp, SLOT(quit()), actionCollection());
+//     KStandardAction::open(this, SLOT(openFile()), actionCollection());
+//     KStandardAction::clear(this, SLOT(clear()), actionCollection());
+    QAction* runAction = new QAction(QString("IR Execute"), this);
+    QAction* openAction = new QAction(QString("Open"), this);
+    QAction* saveAction = new QAction(QString("Save"), this);
+    QMenuBar* mb = this->menuBar();
+    
+    auto fileMenu = mb->addMenu("File");
+    fileMenu->addAction(openAction);
+    fileMenu->addAction(saveAction);
     mb->addMenu("Run")->addAction(runAction);
+    
+    
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
+    connect(openAction, SIGNAL(triggered(bool)), this, SLOT(openFile()));
+    connect(saveAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
 }
 
 void MainWindow::clear()
 {
-    editor->getDocument()->clear();
+    editor->getEditor()->clear();
+    
 }
 
 void MainWindow::openFile()
 {
-    editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
+//     editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
+    QString fileName = QFileDialog::getOpenFileName();
+
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(this, tr("Error"), tr("Could not open file"));
+            return;
+        }
+        QTextStream in(&file);
+        editor->getEditor()->setText(in.readAll());
+        file.close();
+    }
 }
+void MainWindow::saveFile()
+{
+    QString fileName = QFileDialog::getSaveFileName();
+
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            // error message
+        } else {
+            QTextStream stream(&file);
+            stream << editor->getEditor()->toPlainText();
+            stream.flush();
+            file.close();
+        }
+    }
+}
+
 void MainWindow::run(const QString& text)
 {
     std::istringstream in(text.toStdString());
