@@ -4,6 +4,7 @@
 #include <QColor>
 #include "Layout/Layout.hpp"
 #include "Runtime/GraphValue.hpp"
+#include "Runtime/TypeOps.hpp"
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
@@ -27,12 +28,7 @@ namespace spider
             m_Scene->clear();
             layout->generate(bounds);
             
-            graph::VertexAttribute<GraphValue::Graph, int> vertexcolattrib;
-            if (op_useVertexColorAttrib)
-            {
-                auto&& attrib = graph::VertexColorAssignment(layout->getGraph());
-                std::swap(attrib, vertexcolattrib);
-            }
+            bool hasColor = layout->getGraphValue().hasVertexAttribute("color");
             
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
@@ -70,10 +66,12 @@ namespace spider
                     radial.setFocalPoint(p.x, p.y);
                     m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
                 }
-                else if (op_useVertexColorAttrib)
+                else if (op_useVertexColorAttrib && hasColor)
                 {
+                    
                     auto&& list = QColor::colorNames();
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(vertexcolattrib.value(v)))));
+                    int c = geti(layout->getGraphValue().getVertexAttribute("color", v))->data;
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(c))));
                 }
                 else
                 {
