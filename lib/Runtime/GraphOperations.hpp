@@ -580,4 +580,12 @@ namespace spider
         return convertToValue(graph::DegreeMap(*getg(args[0])->data));
     }
     
+    Value* graph_vertex_coloring(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        graph::VertexAttribute<GraphValue::Graph, int> color = graph::VertexColorAssignment(*getg(args[0])->data);
+        return convertToValue(color.getData());
+    }
+    
 }

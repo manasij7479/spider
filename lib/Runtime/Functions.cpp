@@ -49,7 +49,7 @@ namespace spider
             GMAP(bfs_animate), GMAP(dfs_animate), GMAP(kruskal_animate),
             GMAP(set_graph_attribute), GMAP(get_graph_attribute),
             GMAP(set_vertex_attribute), GMAP(get_vertex_attribute),
-            GMAP(vertex_list), GMAP(degree_map),
+            GMAP(vertex_list), GMAP(degree_map), GMAP(vertex_coloring),
             //List Functions
             
             //Dict Fuctions
