@@ -4,7 +4,7 @@
 #include "graph/util/io.hpp"
 #include "graph/structures/attribute.hpp"
 #include "Runtime/Type.hpp"
-#include <map>
+#include "Runtime/DictValue.hpp"
 #include <QObject>
 namespace spider
 {

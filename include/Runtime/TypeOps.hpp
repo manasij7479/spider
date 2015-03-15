@@ -3,6 +3,7 @@
 #include "Runtime/Type.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
+#include "Runtime/ListValue.hpp"
 #include <algorithm>
 namespace spider
 {
@@ -69,46 +70,43 @@ namespace spider
     }
     
     template <typename T>
-    inline std::vector<Value*> convertToValue(std::vector<T> data)
+    inline Value* convertToValue(T t)
     {
-        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to List.\n");
+        throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to Value.\n");
     }
     template <>
-    inline std::vector<Value*> convertToValue<Value*>(std::vector<Value*> data)
+    inline Value* convertToValue<Value*>(Value* data)
     {
         return data;
     }
     template <>
-    inline std::vector<Value*> convertToValue<int>(std::vector<int> data)
+    inline Value* convertToValue<int>(int data)
     {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](int x){return new IntegerValue(x);});
-        return result;
+        return new IntegerValue(data);
     }
     template <>
-    inline std::vector<Value*> convertToValue<float>(std::vector<float> data)
+    inline Value* convertToValue<float>(float data)
     {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](float x){return new FloatValue(x);});
-        return result;
+        return new FloatValue(data);
     }
     template <>
-    inline std::vector<Value*> convertToValue<bool>(std::vector<bool> data)
+    inline Value* convertToValue<bool>(bool data)
     {
-        std::vector<Value*> result(data.size());
-        std::transform(data.begin(), data.end(), result.begin(), 
-                       [](bool x){return new BoolValue(x);});
-        return result;
+        return new BoolValue(data);
     }
     template <>
-    inline std::vector<Value*> convertToValue<std::string>(std::vector<std::string> data)
+    inline Value* convertToValue<std::string>(std::string data)
+    {
+        return new StringValue(data);
+    }
+    
+    template <typename T>
+    inline Value* convertToValue(std::vector<T> data)
     {
         std::vector<Value*> result(data.size());
         std::transform(data.begin(), data.end(), result.begin(), 
-                       [](std::string x){return new StringValue(x);});
-        return result;
+                    [](T x){return convertToValue(x);});
+        return new ListValue(result);
     }
     
 }

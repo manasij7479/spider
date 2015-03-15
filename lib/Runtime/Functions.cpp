@@ -2,6 +2,7 @@
 #include "BuiltinTypeOperations.hpp"
 #include "GraphOperations.hpp"
 #include "WindowOperations.hpp"
+#include "CompundTypeOperations.hpp"
 
 #include "Runtime/Type.hpp"
 #include "Runtime/Statement.hpp"
@@ -14,6 +15,8 @@
 #define GMAP(x) {#x, graph_##x}
 #define BMAP(x) {#x, bool_##x}
 #define WMAP(x) {#x, win_##x}
+#define LMAP(x) {#x, list_##x}
+#define DMAP(x) {#x, dict_##x}
 namespace spider
 {
     FunctionSystem::FunctionSystem()
@@ -46,6 +49,11 @@ namespace spider
             GMAP(bfs_animate), GMAP(dfs_animate), GMAP(kruskal_animate),
             GMAP(set_graph_attribute), GMAP(get_graph_attribute),
             GMAP(set_vertex_attribute), GMAP(get_vertex_attribute),
+            
+            //List Functions
+            
+            //Dict Fuctions
+            DMAP(create_dict),
             
             //Window Functions
             WMAP(display), WMAP(change_layout)
