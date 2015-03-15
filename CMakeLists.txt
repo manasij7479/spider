@@ -1,27 +1,36 @@
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.0.0)
 
 # project(spider)
 project(qspider)
-find_package(KDE4 REQUIRED)
-# set(CMAKE_AUTOMOC TRUE)
+# find_package(KDE4 REQUIRED)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fexceptions") 
+find_package(Qt5Widgets REQUIRED)
+
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fexceptions -fPIC") 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 
+# set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+
 include_directories(include)
-include_directories(${KDE4_INCLUDES})
+
+# The Qt5Widgets_INCLUDES also includes the include directories for
+# dependencies QtCore and QtGui
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+
+# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
+# add_definitions(${Qt5Widgets_DEFINITIONS})
 
 link_directories(lib)
+
 add_subdirectory(lib)
 
 # add_executable(spider main/main.cpp)
 # target_link_libraries(spider spiderMain X11 pthread sfml-system sfml-window sfml-graphics)
 
-kde4_add_executable(qspider main/qtmain.cpp)
-target_link_libraries(qspider ${KDE4_KDEUI_LIBS} 
-                                ${KDE4_KIO_LIBS}
-                                ${KDE4_KPARTS_LIB}
-                                ${KDE4_KTEXTEDITOR_LIBS} kparts spiderMain)
-
-
+add_executable(qspider main/qtmain.cpp)
+qt5_use_modules(qspider Widgets Core)
+target_link_libraries(qspider spiderMain)
 file(COPY resource DESTINATION .)

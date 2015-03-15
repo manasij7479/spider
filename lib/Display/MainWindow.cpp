@@ -1,19 +1,19 @@
 #include "QtDisplay/MainWindow.hpp"
-#include <KApplication>
-#include <KAction>
-#include <KLocale>
-#include <KActionCollection>
-#include <KStandardAction>
-#include <KFileDialog>
-#include <KMessageBox>
-#include <KIO/NetAccess>
-#include <KSaveFile>
-#include <QTextStream>
-#include <KXMLGUIFactory>
-#include <KTextEditor/View>
-#include <KTextEditor/Editor>
-#include <KTextEditor/EditorChooser>
-#include <KMenuBar>
+// #include <KApplication>
+// #include <KAction>
+// #include <KLocale>
+// #include <KActionCollection>
+// #include <KStandardAction>
+// #include <KFileDialog>
+// #include <KMessageBox>
+// #include <KIO/NetAccess>
+// #include <KSaveFile>
+// #include <QTextStream>
+// #include <KXMLGUIFactory>
+// #include <KTextEditor/View>
+// #include <KTextEditor/Editor>
+// #include <KTextEditor/EditorChooser>
+// #include <KMenuBar>
 #include <QTextEdit>
 #include <QPushButton>
 #include <QMessageBox>
@@ -30,9 +30,9 @@ MainWindow::MainWindow(QWidget *)
     
     setCentralWidget(editor);
     setupActions();
-    createShellGUI(true);
-
-    guiFactory()->addClient(editor->getView());
+//     createShellGUI(true);
+// 
+//     guiFactory()->addClient(editor->getView());
     this->setMinimumHeight(400);
     this->setMinimumWidth(600);
 //     show ();
@@ -43,11 +43,11 @@ MainWindow::MainWindow(QWidget *)
 
 void MainWindow::setupActions()
 {
-    KStandardAction::quit(kapp, SLOT(quit()), actionCollection());
-    KStandardAction::open(this, SLOT(openFile()), actionCollection());
-    KStandardAction::clear(this, SLOT(clear()), actionCollection());
-    KAction* runAction = new KAction(QString("IR Execute"), this);
-    KMenuBar* mb = this->menuBar();
+//     KStandardAction::quit(kapp, SLOT(quit()), actionCollection());
+//     KStandardAction::open(this, SLOT(openFile()), actionCollection());
+//     KStandardAction::clear(this, SLOT(clear()), actionCollection());
+    QAction* runAction = new QAction(QString("IR Execute"), this);
+    QMenuBar* mb = this->menuBar();
     mb->addMenu("Run")->addAction(runAction);
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
@@ -56,12 +56,13 @@ void MainWindow::setupActions()
 
 void MainWindow::clear()
 {
-    editor->getDocument()->clear();
+    editor->getEditor()->clear();
+    
 }
 
 void MainWindow::openFile()
 {
-    editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
+//     editor->getView()->document()->openUrl(KFileDialog::getOpenFileName());
 }
 void MainWindow::run(const QString& text)
 {

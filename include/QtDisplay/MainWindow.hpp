@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <KParts/MainWindow>
+#include <QMainWindow>
 #include <QtGui/QKeyEvent>
 #include "SpiderEditor.hpp"
 #include <Runtime/GraphValue.hpp>
@@ -13,7 +13,7 @@ namespace spider
     class Runtime;
 }
 using namespace spider;
-class MainWindow : public KParts::MainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
