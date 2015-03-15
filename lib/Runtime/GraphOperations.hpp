@@ -2,6 +2,7 @@
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/operations.hpp"
 #include "graph/algorithm/enumeration.hpp"
+#include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/search.hpp"
 #include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
@@ -449,7 +450,7 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
         bfs.setp4([&](int x,int y)
         {
@@ -472,7 +473,7 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-        new WindowValue(gv, new TreeLayout<GraphValue::Graph>(*g, s));// FIXME: Leak
+        new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
         dfs.setp4([&](int x,int y)
         {
@@ -492,7 +493,7 @@ namespace spider
         assert_type(args[0], VType::Graph);
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
-        new WindowValue(gv, new CircularLayout<GraphValue::Graph>(*g));// FIXME: Leak
+        new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
         auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
         {
             g->insertVertex(x);
@@ -513,7 +514,7 @@ namespace spider
         
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
-        g->gA[s->data].value() = args[2];
+        g->getGraphAttribs()->data[s->data] = args[2];
         return g;
     }
     Value* graph_get_graph_attribute(std::vector<Value*> args)
@@ -523,7 +524,7 @@ namespace spider
         assert_type(args[1], VType::String);
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
-        return g->gA[s->data].value();
+        return g->getGraphAttribs()->data[s->data];
     }
     
     Value* graph_set_vertex_attribute(std::vector<Value*> args)
@@ -538,7 +539,19 @@ namespace spider
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
         
-        g->vA[s->data].value(v->data) = args[3];
+        g->setVertexAttribute(s->data, v->data, args[3]);
+        return g;
+    }
+    Value* graph_set_vertex_attribute_all(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Vattr);
+        
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        g->setVertexAttribute(s->data, static_cast<VattrValue*>(args[2]));
         return g;
     }
     Value* graph_get_vertex_attribute(std::vector<Value*> args)
@@ -551,9 +564,28 @@ namespace spider
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
-        if (g->vA[s->data].isKnown(v->data))
-            return g->vA[s->data].value(v->data);
-        else 
-            return new VoidValue();
+        return g->getVertexAttribute(s->data, v->data);
     }
+    
+    Value* graph_vertex_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::VertexList(*getg(args[0])->data));
+    }
+    Value* graph_degree_map(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::DegreeMap(*getg(args[0])->data));
+    }
+    
+    Value* graph_vertex_coloring(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        graph::VertexAttribute<GraphValue::Graph, int> color = graph::VertexColorAssignment(*getg(args[0])->data);
+        return convertToValue(color.getData());
+    }
+    
 }

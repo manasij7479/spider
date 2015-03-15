@@ -9,15 +9,13 @@
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
-    template<typename Graph>
-    class NCircularLayout : public Layout<Graph>
+    class NCircularLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        NCircularLayout(Graph& g, int n_):
-        Layout<Graph>(g),n(n_)
+        NCircularLayout(GraphValue& g, int n_):
+        Layout(g),n(n_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         
         /**
@@ -31,23 +29,23 @@ namespace spider
             Point center = {(bounds.max.x+bounds.min.x)/2, (bounds.max.y+bounds.min.y)/2};
             float xspan = center.x - bounds.min.x;
             float yspan = center.y - bounds.min.y;
-            int vcount = Base::g.order()/n;
+            int vcount = getGraph().order()/n;
             int start = 0, end;
             float rinc = std::min(xspan,yspan)/n;
             float radius = rinc;
             
-            auto vlist = graph::VertexList(Base::g);
+            auto vlist = graph::VertexList(getGraph());
             for(int i=1;i<=n;++i)
             {
                 float deg = 0;
-                end = (i==n) ? Base::g.order():start+vcount;
+                end = (i==n) ? getGraph().order():start+vcount;
                 float deginc = 2*3.142/(end-start);
                 for(int j=start;j<end;++j)
                 {
                     float xp = center.x+radius*cos(deg);
                     float yp = center.y+radius*sin(deg);
                     deg += deginc;
-                    Base::points.value(vlist[j]) = Point({xp,yp});
+                    points.value(vlist[j]) = Point({xp,yp});
                 }
                 start += vcount;
                 radius += rinc;

@@ -9,15 +9,13 @@
 #include "graph/algorithm/collections.hpp"
 namespace spider
 {
-    template<typename Graph>
-    class GridLayout : public Layout<Graph>
+    class GridLayout : public Layout
     {
-        typedef Layout<Graph> Base;
     public:
-        GridLayout(Graph& g,int n_,bool iscol_ = true):
-        Layout<Graph>(g),n(n_),iscol(iscol_)
+        GridLayout(GraphValue& g,int n_,bool iscol_ = true):
+        Layout(g),n(n_),iscol(iscol_)
         {
-            Base::hasEdgeData = false;
+            hasEdgeData = false;
         };
         /**
          * \brief - generates x and y coordinates of each vertex
@@ -31,22 +29,22 @@ namespace spider
             if(iscol)
             {
                 r = n;
-                c = Base::g.order()/r;
+                c = getGraph().order()/r;
             }
             else
             {
                 c = n;
-                r = Base::g.order()/c;
+                r = getGraph().order()/c;
             }
             float incx = (bounds.max.x - bounds.min.x)/(r-1);
             float incy = (bounds.max.y - bounds.min.y)/(c-1);
             
-            auto&& vlist = graph::VertexList(Base::g);
-            for(int i=0;i<vlist.size();++i)
+            auto&& vlist = graph::VertexList(getGraph());
+            for (uint i=0; i < vlist.size(); ++i)
             {
                 int x = i%r;
                 int y = i/r;
-                Base::points.value(vlist[i])=Point({bounds.min.x+x*incx,bounds.min.y+y*incy});
+                points.value(vlist[i])=Point({bounds.min.x+x*incx,bounds.min.y+y*incy});
             }
             
         }

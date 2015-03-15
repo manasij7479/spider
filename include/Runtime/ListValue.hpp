@@ -1,14 +1,12 @@
 #ifndef SPIDER_RUNTIME_LIST_VALUE_HPP
 #define SPIDER_RUNTIME_LIST_VALUE_HPP
 #include "Runtime/Type.hpp"
-#include "Runtime/TypeOps.hpp"
 namespace spider
 {
     class ListValue : public Value
     {
     public:
-        template <typename T>
-        ListValue(std::vector<T> li) : Value(VType::List), data(convertToValue(li)){}
+        ListValue(std::vector<Value*> li) : Value(VType::List), data(li){}
         ListValue():Value(VType::List){}
         std::string show()
         {

@@ -130,7 +130,8 @@ namespace spider
     
     bool Runtime::tryShow(std::vector<std::string> idf)
     {
-        eval(idf);
+        if (idf[0] != "_")
+            eval(idf);
         showCallback(prev->show());
 //             assignPrev(x);
         return true;
