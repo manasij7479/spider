@@ -514,7 +514,7 @@ namespace spider
         
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
-        g->gA[s->data].value() = args[2];
+        g->getGraphAttribs()->data[s->data] = args[2];
         return g;
     }
     Value* graph_get_graph_attribute(std::vector<Value*> args)
@@ -524,7 +524,7 @@ namespace spider
         assert_type(args[1], VType::String);
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
-        return g->gA[s->data].value();
+        return g->getGraphAttribs()->data[s->data];
     }
     
     Value* graph_set_vertex_attribute(std::vector<Value*> args)
@@ -539,7 +539,7 @@ namespace spider
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
         
-        g->vA[s->data].value(v->data) = args[3];
+        g->set_vertex_attribute(s->data, v->data, args[3]);
         return g;
     }
     Value* graph_get_vertex_attribute(std::vector<Value*> args)
@@ -552,10 +552,7 @@ namespace spider
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
-        if (g->vA[s->data].isKnown(v->data))
-            return g->vA[s->data].value(v->data);
-        else 
-            return new VoidValue();
+        return g->get_vertex_attribute(s->data, v->data);
     }
     
     Value* graph_vertex_list(std::vector<Value*> args)
@@ -564,4 +561,5 @@ namespace spider
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
+    
 }

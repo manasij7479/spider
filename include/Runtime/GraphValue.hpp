@@ -14,9 +14,9 @@ namespace spider
     public:
         typedef graph::AdjacencyList<int, int> Graph;
         GraphValue(Graph* g)
-            :Value(VType::Graph), data(g){};
+            :Value(VType::Graph), data(g){attribs = new DictValue;};
         GraphValue(bool dir = false)
-            :Value(VType::Graph), data(new Graph(dir)){};
+            :Value(VType::Graph), data(new Graph(dir)){attribs = new DictValue;};
         std::string show()
         {
             std::ostringstream out;
@@ -25,9 +25,25 @@ namespace spider
         }
         
         Graph* data;
-        std::map<std::string, graph::GraphAttribute<Graph, Value*>> gA;
-        std::map<std::string, graph::VertexAttribute<Graph, Value*>> vA;
-        std::map<std::string, graph::EdgeAttribute<Graph, Value*>> eA;
+        void set_vertex_attribute(std::string attrname, Graph::VertexType vertex, Value* value)
+        {
+            if (vattribs.find(attrname) == vattribs.end())
+                vattribs[attrname] = new VattrValue;
+            vattribs[attrname]->data[vertex] = value;
+        }
+        Value* get_vertex_attribute(std::string attrname, Graph::VertexType vertex)
+        {
+            if (vattribs.find(attrname) == vattribs.end())
+                return new VoidValue();
+            if (!vattribs[attrname]->isKnown(vertex))
+                return new VoidValue();
+            return vattribs[attrname]->data[vertex];
+        }
+        DictValue* getGraphAttribs(){return attribs;}
+    private:
+        DictValue* attribs;
+        std::map<std::string, VattrValue*> vattribs;
+//         std::map<std::string, graph::EdgeAttribute<Graph, Value*>> eA;
         
     };
 
