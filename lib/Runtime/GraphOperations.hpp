@@ -2,6 +2,7 @@
 #include "graph/util/generate.hpp"
 #include "graph/algorithm/operations.hpp"
 #include "graph/algorithm/enumeration.hpp"
+#include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/search.hpp"
 #include "graph/algorithm/mst.hpp"
 #include "Runtime/Type.hpp"
@@ -555,5 +556,12 @@ namespace spider
             return g->vA[s->data].value(v->data);
         else 
             return new VoidValue();
+    }
+    
+    Value* graph_vertex_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
 }
