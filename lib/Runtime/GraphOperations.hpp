@@ -539,7 +539,19 @@ namespace spider
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
         
-        g->set_vertex_attribute(s->data, v->data, args[3]);
+        g->setVertexAttribute(s->data, v->data, args[3]);
+        return g;
+    }
+    Value* graph_set_vertex_attribute_all(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Vattr);
+        
+        auto g = getg(args[0]);
+        auto s = gets(args[1]); 
+        g->setVertexAttribute(s->data, static_cast<VattrValue*>(args[2]));
         return g;
     }
     Value* graph_get_vertex_attribute(std::vector<Value*> args)
@@ -552,7 +564,7 @@ namespace spider
         auto g = getg(args[0]);
         auto s = gets(args[1]); 
         auto v = geti(args[2]);
-        return g->get_vertex_attribute(s->data, v->data);
+        return g->getVertexAttribute(s->data, v->data);
     }
     
     Value* graph_vertex_list(std::vector<Value*> args)

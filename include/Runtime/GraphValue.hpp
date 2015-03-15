@@ -25,13 +25,18 @@ namespace spider
         }
         
         Graph* data;
-        void set_vertex_attribute(std::string attrname, Graph::VertexType vertex, Value* value)
+        
+        void setVertexAttribute(std::string attrname, Graph::VertexType vertex, Value* value)
         {
             if (vattribs.find(attrname) == vattribs.end())
                 vattribs[attrname] = new VattrValue;
             vattribs[attrname]->data[vertex] = value;
         }
-        Value* get_vertex_attribute(std::string attrname, Graph::VertexType vertex)
+        void setVertexAttribute(std::string attrname, VattrValue* value)
+        {
+            vattribs[attrname] = value;
+        }
+        Value* getVertexAttribute(std::string attrname, Graph::VertexType vertex)
         {
             if (vattribs.find(attrname) == vattribs.end())
                 return new VoidValue();
@@ -40,6 +45,8 @@ namespace spider
             return vattribs[attrname]->data[vertex];
         }
         DictValue* getGraphAttribs(){return attribs;}
+        bool hasVertexAttribute(std::string attr) {return vattribs.find(attr) != vattribs.end();}
+        bool hasAttribute(std::string attr) {return attribs->data.find(attr) != attribs->data.end();}
     private:
         DictValue* attribs;
         std::map<std::string, VattrValue*> vattribs;
