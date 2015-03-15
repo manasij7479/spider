@@ -101,13 +101,35 @@ namespace spider
     }
     
     template <typename T>
-    inline Value* convertToValue(std::vector<T> data)
+    inline std::vector<Value*> convertToCompoundValue(const std::vector<T>& data)
     {
         std::vector<Value*> result(data.size());
         std::transform(data.begin(), data.end(), result.begin(), 
                     [](T x){return convertToValue(x);});
-        return new ListValue(result);
+        return result;
+        
     }
+    template <typename K , typename T>
+    inline std::map<K, Value*> convertToCompoundValue(const std::map<K, T>& data)
+    {
+        std::map<K, Value*> result;
+        for(auto p : data)
+            result.insert({p.first, convertToValue(p.second)});
+        return result;
+    }
+    
+    template <typename T>
+    inline Value* convertToValue(std::vector<T> data)
+    {
+        return new ListValue(convertToCompoundValue(data));
+    }
+    template <typename T>
+    inline Value* convertToValue(const std::map<std::string, T>& data)
+    {
+        return new DictValue(convertToCompoundValue(data));
+    }
+    
+    
     
 }
 #endif
