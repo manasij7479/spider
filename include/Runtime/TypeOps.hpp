@@ -68,6 +68,19 @@ namespace spider
     {
         return static_cast<FloatValue*>(v);
     }
+    inline ListValue* getl(Value* v)
+    {
+        return static_cast<ListValue*>(v);
+    }
+    inline DictValue* getd(Value* v)
+    {
+        return static_cast<DictValue*>(v);
+    }
+    inline VattrValue* getv(Value* v)
+    {
+        return static_cast<VattrValue*>(v);
+    }
+    
     
     template <typename T>
     inline Value* convertToValue(T t)

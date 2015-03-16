@@ -52,6 +52,7 @@ namespace spider
             GMAP(get_vertex_attribute),
             GMAP(vertex_list), GMAP(degree_map), GMAP(vertex_coloring),
             //List Functions
+            LMAP(create_list), LMAP(value_at),
             
             //Dict Fuctions
             DMAP(create_dict),

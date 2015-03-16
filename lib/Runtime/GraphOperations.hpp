@@ -584,8 +584,9 @@ namespace spider
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
-        graph::VertexAttribute<GraphValue::Graph, int> color = graph::VertexColorAssignment(*getg(args[0])->data);
-        return convertToValue(color.getData());
+        auto state = graph::WelshPowellColoring(*getg(args[0])->data);
+        std::vector<Value*> v = {convertToValue(state.getColorMap()), convertToValue(state.noOfColorsUsed())}; 
+        return convertToValue(v);
     }
     
 }

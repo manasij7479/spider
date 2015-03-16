@@ -29,6 +29,7 @@ namespace spider
             layout->generate(bounds);
             
             bool hasColor = layout->getGraphValue().hasVertexAttribute("color");
+            bool hasCn = layout->getGraphValue().hasAttribute("cn");
             
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
@@ -68,10 +69,12 @@ namespace spider
                 }
                 else if (op_useVertexColorAttrib && hasColor)
                 {
-                    
-                    auto&& list = QColor::colorNames();
                     int c = geti(layout->getGraphValue().getVertexAttribute("color", v))->data;
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(list.at(c))));
+                    int n = layout->getGraph().order();
+                    if (hasCn)
+                        n = geti(layout->getGraphValue().getGraphAttribs()->data["cn"])->data;
+                    auto col = genColor(c, n);
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(col)));
                 }
                 else
                 {
@@ -95,6 +98,12 @@ namespace spider
         bool op_displayEdgeCost;
         bool op_useGradient;
         bool op_useVertexColorAttrib;
+        QColor genColor(int i, int n)
+        {
+            QColor col;
+            col.setHsv(i* 360/n, 255, 255);
+            return col;
+        }
     public:
          bool& displayText(){return op_displayText;}
          bool& displayEdgeCost(){return op_displayEdgeCost;}
