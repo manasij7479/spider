@@ -7,6 +7,7 @@
 #include "Layout/NCircularLayout.hpp"
 #include "Layout/LinearLayout.hpp"
 #include "Layout/TreeLayout.hpp"
+#include "Layout/BinaryTreeLayout.hpp"
 #include "Layout/GridLayout.hpp"
 namespace spider
 {
@@ -60,6 +61,13 @@ namespace spider
             assert_type(args[2],VType::Integer);
             auto v = geti(args[2])->data;
             l = new TreeLayout(g, v);
+        }
+        else if(name == "binary_tree")
+        {
+            assert_size(args,3);
+            assert_type(args[2],VType::Integer);
+            auto v = geti(args[2])->data;
+            l = new BinaryTreeLayout(g, v);
         }
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");
         
