@@ -169,7 +169,7 @@ namespace spider
         auto callArgs = substituteArgs(value);
         if (functions.isFunction(fname) == false)
             return false;
-        auto result = functions.call(fname, callArgs, functions);
+        auto result = functions.call(fname, callArgs, functions, table);
         assignPrev(result);
         return true;
     }

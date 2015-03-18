@@ -15,7 +15,7 @@ namespace spider
         FunctionSystem();
         bool isFunction(std::string name);
 
-        Value* call(std::string name, std::vector<Value*> values, FunctionSystem& f);
+        Value* call(std::string name, std::vector<Value*> values, FunctionSystem& f, SymbolTable& table);
         void def(std::vector<std::string>, Statement* block);
     private:
         std::map<std::string, Function> FunctionMap;

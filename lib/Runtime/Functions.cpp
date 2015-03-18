@@ -66,13 +66,13 @@ namespace spider
         return (FunctionMap.find(name) != FunctionMap.end()) ||
                (UserFunctionMap.find(name) != UserFunctionMap.end());
     }
-    Value* FunctionSystem::call(std::string name, std::vector<Value*> values, FunctionSystem& f)
+    Value* FunctionSystem::call(std::string name, std::vector<Value*> values, FunctionSystem& f, SymbolTable& table)
     {
         if (! isFunction(name))
             throw std::runtime_error("Calling Function '"+name+"' Failed.\n");
         if (FunctionMap.find(name) != FunctionMap.end())
             return FunctionMap[name](values);
-        else return UserFunctionMap[name].call(values, f);
+        else return UserFunctionMap[name].call(values, f, table);
     }
     void FunctionSystem::def(std::vector<std::string> proto, Statement* block)
     {
