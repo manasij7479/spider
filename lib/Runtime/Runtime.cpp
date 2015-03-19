@@ -80,7 +80,8 @@ namespace spider
             assert_size(command, greater_eq(2));
             if (command[0] == "if")
             {
-                eval(std::vector<std::string>(command.begin()+1, command.end()));
+                if (command[1] != "_")
+                    eval(std::vector<std::string>(command.begin()+1, command.end()));
                 assert_type(prev, VType::Bool);
                 BoolValue* cond = getb(prev);
                 if (cond->data == true)
@@ -90,7 +91,8 @@ namespace spider
             {
                 while (true)
                 {
-                    eval(std::vector<std::string>(command.begin()+1, command.end()));
+                    if (command[1] != "_")
+                        eval(std::vector<std::string>(command.begin()+1, command.end()));
                     assert_type(prev, VType::Bool);
                     BoolValue* cond = getb(prev);
                     if (cond->data == false)
@@ -231,7 +233,7 @@ namespace spider
             return new FloatValue(std::stof(str.substr(1, str.length())));
         if (str[0] == 'i')
             return new IntegerValue(std::stoi(str.substr(1, str.length())));
-        else throw std::runtime_error("Can not parse Literal Value.\n");
+        else throw std::runtime_error("Can not parse Value : '" + str + "'.\n");
     }
     std::vector<Value*> Runtime::substituteArgs(std::vector<std::string> args)
     {
