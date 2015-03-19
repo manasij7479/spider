@@ -14,7 +14,7 @@ namespace spider
         LayoutPainter(QGraphicsView* v, QGraphicsScene* s):m_View(v), m_Scene(s)
         {
             op_displayText = true;
-            op_displayEdgeCost = false;
+            op_displayEdgeCost = true;
             op_useGradient = false;
             op_useVertexColorAttrib = true;
         }
@@ -39,12 +39,12 @@ namespace spider
                 if (op_displayEdgeCost)
                 {
                     auto text = new QGraphicsTextItem();
-                    int offx = 1, offy = 0;
-                    float slope = 1.0*(c[0].y - c[1].y)/(c[0].x + c[1].x);
-                    if (fabs(slope) < 1)
-                        offy += 10;
-                    else 
-                        offx += 10;
+                    int offx = 0, offy = 0;
+//                     float slope = 1.0*(c[0].y - c[1].y)/(c[0].x + c[1].x);
+//                     if (fabs(slope) < 1)
+//                         offy += 10;
+//                     else 
+//                         offx += 10;
                     text->setPos((c[0].x + c[1].x)/2 + offx, (c[0].y + c[1].y)/2 + offy);
                     text->setPlainText(std::to_string(std::get<2>(e)).c_str());
                     m_Scene->addItem(text);

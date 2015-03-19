@@ -21,7 +21,7 @@ namespace spider
         virtual void generate(Rect bounds)
         {
             std::map<int, std::vector<V>> vertexAtLevel;
-            int ecentricity = graph::EcentricityList<GraphValue::Graph>(*(g.data)).find(root)->second + 1;
+            int ecentricity = graph::EcentricityList<GraphValue::Graph>(*(g.data), false).find(root)->second + 1;
             int yinc = (bounds.max.y + bounds.min.y) / (ecentricity-1);
             std::map<V, bool> isVisited;
             for(auto i=g.data->begin();i!=g.data->end();++i)
