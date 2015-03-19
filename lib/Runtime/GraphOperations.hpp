@@ -81,6 +81,7 @@ namespace spider
     {
         return {
             {"empty", graph::gen::empty},
+            {"empty_directed", graph::gen::empty_directed},
             {"path", graph::gen::path},
             {"cycle", graph::gen::cycle},
             {"complete", graph::gen::complete},
