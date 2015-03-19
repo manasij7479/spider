@@ -20,3 +20,5 @@ add_executable(spider main/qtmain.cpp)
 qt5_use_modules(spider Widgets Core)
 target_link_libraries(spider Display Runtime)
 file(COPY resource DESTINATION .)
+
+add_subdirectory(example)
