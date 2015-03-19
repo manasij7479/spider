@@ -48,6 +48,10 @@ namespace spider
                 return it->second;
             return nullptr;
         }
+        void clear()
+        {
+            stack.clear();
+        }
     private:
         std::vector<Map> stack;
     };

@@ -32,6 +32,11 @@ namespace spider
             if(tryShow(std::vector<std::string>(args.begin()+1, args.end())) == false)
                 throw std::runtime_error("Object : '"+args[1]+"' does not exist.\n");
         }
+        else if (args[0] == "clear")
+        {
+            table.clear();
+            table.push();
+        }
         else if (args[0] == "break")
             breakflag = true;
         else if (args[0] == "let")
