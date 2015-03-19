@@ -46,7 +46,31 @@ namespace spider
         }
         g->data->insertEdge(leftchild, root, 2);
         new WindowUI(g, new BinaryTreeLayout(*g, leftchild));
+        return g;
+    }
+    Value* exp_tree_rot_left(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        GraphValue* g = getg(args[0]);
+        int root = geti(args[1])->data;
+        new WindowUI(g, new BinaryTreeLayout(*g, root));
         
+        auto p = right(g->data, root);
+        if (p.first == false)
+            return g; // can not rotate left, no right child
+        int rightchild = p.second;
+        
+        auto pright = left(g->data, rightchild);
+        g->data->removeEdge(root, rightchild);
+        if (pright.first)
+        {
+            g->data->removeEdge(rightchild, pright.second);
+            g->data->insertEdge(root, pright.second, 1);
+        }
+        g->data->insertEdge(rightchild, root, 1);
+        new WindowUI(g, new BinaryTreeLayout(*g, rightchild));
         return g;
     }
 }

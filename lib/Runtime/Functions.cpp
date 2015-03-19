@@ -63,7 +63,7 @@ namespace spider
             WMAP(display), WMAP(change_layout),
             
             //Experimental
-            EMAP(tree_rot_right)
+            EMAP(tree_rot_right), EMAP(tree_rot_left)
         };
     }
     bool FunctionSystem::isFunction(std::string name)
