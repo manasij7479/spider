@@ -69,6 +69,52 @@ namespace spider
             auto v = geti(args[2])->data;
             l = new BinaryTreeLayout(g, v);
         }
+        else if(name == "ncircular")
+        {
+            assert_size(args,3);
+            assert_type(args[2],VType::Integer);
+            auto n = geti(args[2])->data;
+            l = new NCircularLayout(g, n);
+        }
+        else if(name == "linear")
+        {
+            auto isVertical = false;
+            if(args.size() == 3)
+            {
+                assert_type(args[2],VType::Bool);
+                isVertical = getb(args[2])->data;
+            }
+            l = new LinearLayout(g, isVertical);
+        }
+        else if(name == "grid")
+        {
+            auto isCol = true;
+            assert_type(args[2],VType::Integer);
+            auto n = geti(args[2])->data;
+            if(args.size() == 4)
+            {
+                assert_type(args[3],VType::Bool);
+                isCol = geti(args[2])->data;
+            }
+            l = new GridLayout(g, n, isCol);
+        }
+        else if (name == "bipartite")
+        {
+            float fraction = 0.5; 
+            bool isVertical = true;
+            if (args.size() >=3)
+            {
+                assert_type(args[2], VType::Float);
+                fraction = getf(args[2])->data;
+            }
+            if (args.size() == 4)
+            {
+                assert_type(args[3], VType::Bool);
+                isVertical = getb(args[3])->data;
+            }
+            l = new BipartiteLayout(g, fraction, isVertical);
+        }
+        
         else throw std::runtime_error("Layout: '" + name + "' not found.\n");
         
         win->data->changeLayout(l);
