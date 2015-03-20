@@ -58,6 +58,10 @@ namespace spider
             if(tryCall(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
                 throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
         }
+        else if (args[0] == "_")
+        {
+            /*Do nothing, really*/
+        }
         else 
         { // make call keyword optional, may be removed later
             if (functions.isFunction(args[0]))
@@ -85,8 +89,7 @@ namespace spider
             assert_size(command, greater_eq(2));
             if (command[0] == "if")
             {
-                if (command[1] != "_")
-                    eval(std::vector<std::string>(command.begin()+1, command.end()));
+                eval(std::vector<std::string>(command.begin()+1, command.end()));
                 assert_type(prev, VType::Bool);
                 BoolValue* cond = getb(prev);
                 if (cond->data == true)
@@ -96,8 +99,7 @@ namespace spider
             {
                 while (true)
                 {
-                    if (command[1] != "_")
-                        eval(std::vector<std::string>(command.begin()+1, command.end()));
+                    eval(std::vector<std::string>(command.begin()+1, command.end()));
                     assert_type(prev, VType::Bool);
                     BoolValue* cond = getb(prev);
                     if (cond->data == false)
@@ -137,8 +139,7 @@ namespace spider
     
     bool Runtime::tryShow(std::vector<std::string> idf)
     {
-        if (idf[0] != "_")
-            eval(idf);
+        eval(idf);
         showCallback(prev->show());
 //             assignPrev(x);
         return true;

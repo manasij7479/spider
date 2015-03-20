@@ -21,7 +21,8 @@ namespace spider
         virtual void generate(Rect bounds)
         {
             std::map<int, std::vector<V>> vertexAtLevel;
-            int ecentricity = graph::EcentricityList<GraphValue::Graph>(*(g.data)).find(root)->second + 1;
+            std::map<V, int> xindex;
+            int ecentricity = graph::EcentricityList<GraphValue::Graph>(*(g.data), false).find(root)->second + 1;
             int yinc = (bounds.max.y + bounds.min.y) / (ecentricity-1);
             std::map<V, bool> isVisited;
             for(auto i=g.data->begin();i!=g.data->end();++i)
@@ -29,6 +30,7 @@ namespace spider
             
             points.value(root) = Point({(bounds.min.x+bounds.max.x)/2, bounds.min.y});
             vertexAtLevel[0].push_back(root);
+            xindex[root] = 0;
             isVisited[root] = true;
             
             for(int level=0; level<ecentricity-1; ++level)
@@ -39,22 +41,20 @@ namespace spider
                 for(int i=0; i<noVertexAtLevel; ++i)
                 {
                     int xinc = (bounds.max.x - bounds.min.x) / (pow(2, level+1) - 1);
-                    for(auto j=g.data->nbegin(vlist[i]); j!=g.data->nend(vlist[i]); ++j)
+                    auto elist = graph::OutVertexList<GraphValue::Graph>(*(g.data), vlist[i]);
+                    std::sort(elist.begin(),elist.end(),[&](V x,V y){return g.data->weight(vlist[i],x)<g.data->weight(vlist[i],y);});
+                    for(auto j=elist.begin(); j!=elist.end(); ++j)
                     {
-                        if(!isVisited[j->first])
+                        if(!isVisited[*j])
                         {
-                            if(j->second == 1)
-                            {
-                                points.value(j->first) = Point({bounds.min.x+(2*i)*xinc, bounds.min.y+(level+1)*yinc});
-                                vertexAtLevel[level+1].push_back(j->first);
-                                isVisited[j->first] = true;
-                            }
+                            if(g.data->weight(vlist[i],*j) == 1)
+                                xindex[*j] = 2*xindex[vlist[i]];
                             else
-                            {
-                                points.value(j->first) = Point({bounds.min.x+(2*i+1)*xinc, bounds.min.y+(level+1)*yinc});
-                                vertexAtLevel[level+1].push_back(j->first);
-                                isVisited[j->first] = true;
-                            }
+                                xindex[*j] = 2*xindex[vlist[i]] + 1;
+                            
+                            points.value(*j) = Point({bounds.min.x+xindex[*j]*xinc, bounds.min.y+(level+1)*yinc});
+                            vertexAtLevel[level+1].push_back(*j);
+                            isVisited[*j] = true;
                         }
                     }
                 }

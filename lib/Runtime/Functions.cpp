@@ -3,6 +3,7 @@
 #include "GraphOperations.hpp"
 #include "WindowOperations.hpp"
 #include "CompundTypeOperations.hpp"
+#include "ExperimentalOperations.hpp"
 
 #include "Runtime/Type.hpp"
 #include "Runtime/Statement.hpp"
@@ -17,6 +18,7 @@
 #define WMAP(x) {#x, win_##x}
 #define LMAP(x) {#x, list_##x}
 #define DMAP(x) {#x, dict_##x}
+#define EMAP(x) {#x, exp_##x}
 namespace spider
 {
     FunctionSystem::FunctionSystem()
@@ -58,7 +60,10 @@ namespace spider
             DMAP(create_dict),
             
             //Window Functions
-            WMAP(display), WMAP(change_layout)
+            WMAP(display), WMAP(change_layout),
+            
+            //Experimental
+            EMAP(tree_rot_right), EMAP(tree_rot_left)
         };
     }
     bool FunctionSystem::isFunction(std::string name)
