@@ -1,4 +1,10 @@
-#ifndef SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
+/**
+ * \brief TreeLayout.hpp - Header file that contains functions to generate Binary Tree Layout
+ * 
+ * Binary Tree Layout for drawing a graph- The layout starts at the root and plots the adjacent
+ * vertices in the form of tree datastructure. Each node can have a maximum of 2 child nodes 
+ * and a minimum of 0 child nodes
+ * **/#ifndef SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
 #define SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
 #include<cmath>
 #include<algorithm>
@@ -17,7 +23,11 @@ namespace spider
         {
             hasEdgeData = false;
         };
-        
+        /**
+         * \brief - generates x and y coordinates of each vertex
+         * 
+         * @param Rect bounds - Parameter, contains the x and y coordinates of the boundary of the drawing area
+         * **/
         virtual void generate(Rect bounds)
         {
             std::map<int, std::vector<V>> vertexAtLevel;

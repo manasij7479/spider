@@ -1,6 +1,7 @@
 /**
- * \brief TreeLayout.hpp - Header file that contains functions to generate
- * Tree Layout for drawing a graph. The layout starts at the root and plots the adjacent
+ * \brief TreeLayout.hpp - Header file that contains functions to generate Tree Layout.
+ * 
+ * Tree Layout for drawing a graph - The layout starts at the root and plots the adjacent
  * vertices in the form of tree datastructure.
  * **/
 #ifndef SPIDER_LAYOUT_TREELAYOUT_HPP
@@ -26,8 +27,7 @@ namespace spider
         /**
          * \brief - generates x and y coordinates of each vertex
          * 
-         * Rect bounds - Parameter, contains the x and y coordinates of 
-         * the boundary of the drawing area
+         * @param Rect bounds - Parameter, contains the x and y coordinates of the boundary of the drawing area
          * **/
         virtual void generate(Rect bounds)
         {

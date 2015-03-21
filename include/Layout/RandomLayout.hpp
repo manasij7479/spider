@@ -1,6 +1,8 @@
 /**
- * \brief RandomLayout.hpp - Header file that contains function to 
- * generate a Random centered Layout for drawing a graph
+ * \brief RandomLayout.hpp - Header file that contains function to generate a Random Layout.
+ * 
+ * Random Centered Layout for drawing a graph - The layout plots the nodes randomly, against a
+ * fixed center.
  * **/
 #ifndef SPIDER_RANDOM_LAYOUT_HPP
 #define SPIDER_RANDOM_LAYOUT_HPP
@@ -20,8 +22,7 @@ namespace spider
         /**
          * \brief - generates x and y coordinates of each vertex
          * 
-         * Rect bounds - Parameter, contains the x and y coordinates of 
-         * the boundary of the drawing area
+         * @param Rect bounds - Parameter, contains the x and y coordinates of the boundary of the drawing area
          * **/
         virtual void generate(Rect bounds)
         {

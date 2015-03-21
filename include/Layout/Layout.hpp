@@ -23,7 +23,7 @@ namespace spider
         /**
          * \brief - Returns attributes of vertex
          * 
-         * V v- Parameter, a vertex
+         * @param V v- Parameter, a vertex
         **/
         Point getVertex(V v)
         {
@@ -32,9 +32,9 @@ namespace spider
         /**
          * \brief - Returns the attributes of an edge between the vertex x and vetex y
          * 
-         * V x - First parameter, a vertex
+         * @param V x - First parameter, a vertex
          * 
-         * V y - Second parameter, a vertex        
+         * @param V y - Second parameter, a vertex        
         **/
         Curve getEdge(V x, V y)
         {
@@ -51,12 +51,12 @@ namespace spider
         EA getEdgeAttribute(){return curves;}
         /** \brief - assigns attributes of a vertex to points
          * 
-         * Va va - Parameter, attrbiute of a vertex
+         * @param Va va - Parameter, attrbiute of a vertex
          * **/
         void setVertexAttribute(VA va){points=va;}
         /** \brief - assigns attributes of an edge to curves
          * 
-         * EA ea - Parameter, attrbiute of an edge
+         * @param A ea - Parameter, attrbiute of an edge
          * **/
         void setEdgeAttribute(EA ea){curves = ea;}
     protected:

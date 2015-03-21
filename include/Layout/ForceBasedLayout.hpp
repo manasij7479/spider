@@ -1,6 +1,8 @@
 /**
- * \brief ForceBasedLayout.hpp - Header file that contains functions to generate
- * Force Based Layout for drawing a graph
+ * \brief ForceBasedLayout.hpp - Header file that contains functions to generate Force Based layout
+ * 
+ * Force Based Layout for drawing a graph - The Layout plots the nodes such that no two nodes are
+ * too cose to each other.
  * **/
 #ifndef SPIDER_FORCE_BASED_LAYOUT_HPP
 #define SPIDER_FORCE_BASED_LAYOUT_HPP
@@ -18,8 +20,7 @@ namespace spider
         /**
          * \brief - generates Vertex Attributes of each vertex
          * 
-         * Rect bounds - Parameter, contains the x and y coordinates of 
-         * the boundary of the drawing area
+         * @param Rect bounds - Parameter, contains the x and y coordinates of the boundary of the drawing area
          * **/
         void generate(Rect bounds)
         {
