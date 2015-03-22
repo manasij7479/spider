@@ -7,7 +7,7 @@ class OutputPane : public QWidget
     Q_OBJECT
 public:
     OutputPane();
-private slots:
+public slots:
     void append(const QString& s);
 private:
     QLabel* label;
