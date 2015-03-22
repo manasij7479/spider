@@ -25,8 +25,11 @@ private slots:
     void run(const QString& str);
     void create(GraphValue* g, Layout* l);
     void error(const QString& s);
+    void compile(const QString& str);
+    void triggerCompile();
 signals:
     void output(const QString&);
+    void textEmit(const QString&);
 private:
     void setupActions();
     spider::EditorWrapper* editor;

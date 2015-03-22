@@ -47,6 +47,8 @@ void MainWindow::setupActions()
 //     KStandardAction::open(this, SLOT(openFile()), actionCollection());
 //     KStandardAction::clear(this, SLOT(clear()), actionCollection());
     QAction* runAction = new QAction(QString("IR Execute"), this);
+    QAction* compileAction = new QAction(QString("Compile"), this);
+    
     QAction* openAction = new QAction(QString("Open"), this);
     QAction* saveAction = new QAction(QString("Save"), this);
     QMenuBar* mb = this->menuBar();
@@ -54,14 +56,19 @@ void MainWindow::setupActions()
     auto fileMenu = mb->addMenu("File");
     fileMenu->addAction(openAction);
     fileMenu->addAction(saveAction);
-    mb->addMenu("Run")->addAction(runAction);
+    
+    auto runMenu = mb->addMenu("Run");
+    runMenu->addAction(runAction);
+    runMenu->addAction(compileAction);
     
     
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
+    connect(compileAction, SIGNAL(triggered(bool)), this, SLOT(triggerCompile()));
     connect(openAction, SIGNAL(triggered(bool)), this, SLOT(openFile()));
     connect(saveAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
+    connect(this, SIGNAL(textEmit(const QString&)), this, SLOT(compile(const QString&)));
 }
 
 void MainWindow::clear()
@@ -137,3 +144,24 @@ void MainWindow::error(const QString& s)
     msgBox.setText(s);
     msgBox.exec();
 }
+void MainWindow::compile(const QString& str)
+{
+    std::cout << "Here" <<std::endl;;
+    QProcess process;
+    process.start("../spider-compiler/spc");
+    process.waitForStarted();
+    
+    process.write(str.toUtf8().constData());
+    process.closeWriteChannel();
+    process.waitForFinished();
+    QByteArray output;
+    output = process.readAllStandardOutput();
+    std::cout << output.toStdString() <<std::endl;
+    editor->getEditor()->setText(output);
+}
+void MainWindow::triggerCompile()
+{
+    emit textEmit((const QString&)editor->getEditor()->toPlainText());
+}
+
+
