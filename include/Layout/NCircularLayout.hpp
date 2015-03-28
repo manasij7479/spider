@@ -1,17 +1,27 @@
-/**
- * \brief NCircularLayout.hpp - Header file that contains functions to generate
- * NCircular Layout for drawing a graph. The layout has N number of concentric circles
- * on whose circumference the vertices are plotted at equal intervals.
- * **/
- #ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
+#ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
 #define SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief NCircularLayout.hpp - Header file that contains functions to generate NCircular Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief -  NCircular Layout for drawing a graph - The layout has N number of concentric circles
+     * on whose circumference the vertices are plotted at equal intervals. This layout is especially useful
+     * in plotting union of cycle graphs, Hypercube graph etc.
+     * **/
     class NCircularLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param int n_ - Second Parameter, the number of circles. 
+         * **/
         NCircularLayout(GraphValue& g, int n_):
         Layout(g),n(n_)
         {

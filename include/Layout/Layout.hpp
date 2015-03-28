@@ -1,23 +1,30 @@
-/**
- * \brief Layout.hpp - Header file that contains the attributes of layout of a graph
- * **/
-
 #ifndef SPIDER_LAYOUT_HPP
 #define SPIDER_LAYOUT_HPP
 #include "graph/structures/attribute.hpp"
 #include "Layout/Geometry.hpp"
 #include <random>
 #include "Runtime/GraphValue.hpp"
+/**
+ * \brief Layout.hpp - Header file that contains the attributes of layout of a graph
+ * **/
 namespace spider
 {
     class Layout
     {
-        typedef typename GraphValue::Graph::VertexType V;
-        typedef graph::VertexAttribute<GraphValue::Graph,Point> VA;
-        typedef graph::EdgeAttribute<GraphValue::Graph,Curve> EA;
+        typedef typename GraphValue::Graph::VertexType V; ///<Vertex
+        typedef graph::VertexAttribute<GraphValue::Graph,Point> VA;///<Vertex Attribute
+        typedef graph::EdgeAttribute<GraphValue::Graph,Curve> EA;///<Edge Attribute
         
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g_ - Parameter, a graph object and attributes
+         * **/
         Layout(GraphValue& g_):g(g_){};
+        /**
+         * \brief - Destructor
+         * **/
         virtual ~Layout(){}
         virtual void generate(Rect){}
         /**
@@ -46,6 +53,7 @@ namespace spider
         GraphValue::Graph& getGraph(){return *(g.data);}
         /** \brief - returns attribute of a Vertex **/
         GraphValue& getGraphValue(){return g;}
+        /** \brief - returns attribute of a vertex **/
         VA getVertexAttribute(){return points;}
         /** \brief - returns attribute of an edge **/
         EA getEdgeAttribute(){return curves;}

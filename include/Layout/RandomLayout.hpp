@@ -1,15 +1,25 @@
-/**
- * \brief RandomLayout.hpp - Header file that contains function to 
- * generate a Random centered Layout for drawing a graph
- * **/
 #ifndef SPIDER_RANDOM_LAYOUT_HPP
 #define SPIDER_RANDOM_LAYOUT_HPP
 #include "Layout/Layout.hpp"
+/**
+ * \brief RandomLayout.hpp - Header file that contains function to generate Random Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Random Layout for drawing a graph - This layout plots the vertices randomly.
+     * **/
     class RandomLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param float m = 2.5f - Second Parameter, Increasing this means the points will be spread out,
+         * but also increases the chances of lying out of bounds
+         * **/
         RandomLayout(GraphValue& g, float m = 2.5f):
             Layout(g),
             twister(rd()),
@@ -46,7 +56,7 @@ namespace spider
     private:
         std::random_device rd;
         std::mt19937 twister;
-        float modifier; //Increasing this means the points will be spread out , but also increases the chances of lying out of bounds
+        float modifier; 
         
     };
 }

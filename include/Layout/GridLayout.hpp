@@ -1,18 +1,31 @@
-/**
- * \brief GridLayout.hpp - Header file that contains functions to generate
- * Grid Layout for drawing a graph. The layout plots the vertices at equal distance
- * from all adjacent vertices to form a grid.
- * **/
  #ifndef SPIDER_LAYOUT_GRIDLAYOUT_HPP
 #define SPIDER_LAYOUT_GRIDLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief GridLayout.hpp - Header file that contains functions to generate Grid Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Grid Layout for drawing a graph. The layout plots the vertices at equal distance
+     * from all adjacent vertices to form a grid. This layout is especially useful in plotting graphs such as
+     * Grid Graph etc.
+     * **/
     class GridLayout : public Layout
     {
     public:
-        GridLayout(GraphValue& g,int n_,bool iscol_ = true):
+       /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param int n_ - Second Parameter, the number of rows or columns. 
+         * 
+         * @param bool iscol_ = true - Third Parameter, to check whether n_ is cloumn or not
+         * , default value true
+         * **/
+       GridLayout(GraphValue& g,int n_,bool iscol_ = true):
         Layout(g),n(n_),iscol(iscol_)
         {
             hasEdgeData = false;

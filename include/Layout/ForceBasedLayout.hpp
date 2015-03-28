@@ -1,18 +1,37 @@
-/**
- * \brief ForceBasedLayout.hpp - Header file that contains functions to generate
- * Force Based Layout for drawing a graph
- * **/
 #ifndef SPIDER_FORCE_BASED_LAYOUT_HPP
 #define SPIDER_FORCE_BASED_LAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "Layout/RandomLayout.hpp"
 #include "graph/algorithm/predicates.hpp"
 #include <iostream>
+/**
+ * \brief ForceBasedLayout.hpp - Header file that contains functions to generate Force Based Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Force Based Layout for drawing a graph - This layout plots the vertices in two-dimensional
+     * or three-dimensional space so that all the edges are of more or less equal length and there are as 
+     * few crossing edges as possible, by assigning forces among the set of edges and the set of nodes, based
+     * on their relative positions, and then using these forces either to simulate the motion of the edges and
+     * nodes or to minimize their energy. This layout can be used to plot all  grpahs.
+     * **/
     class ForceBasedLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param float gc_ = 3000 - Second Parameter, constant for attractive force, default value 3000
+         * 
+         * @param float kc_ = 1.0/1000 - Third Parameter, constant for repulsive force, 
+         * default value 1.0/1000
+         * 
+         * @param float errf_ = 0.1 - Fourth Parameter, error threshold,
+         * default value 0.1
+         * **/
         ForceBasedLayout(GraphValue& g, float gc_ = 3000, float kc_ = 1.0/1000, float errf_ = 0.1)
         :Layout(g), gc(gc_), kc(kc_), errf(errf_){};
         /**

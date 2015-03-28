@@ -1,22 +1,31 @@
-/**
- * \brief TreeLayout.hpp - Header file that contains functions to generate
- * Tree Layout for drawing a graph. The layout starts at the root and plots the adjacent
- * vertices in the form of tree datastructure.
- * **/
 #ifndef SPIDER_LAYOUT_TREELAYOUT_HPP
 #define SPIDER_LAYOUT_TREELAYOUT_HPP
 #include<algorithm>
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/enumeration.hpp"
+/**
+ * \brief TreeLayout.hpp - Header file that contains functions to generate Tree Layout.
+ * **/
 namespace spider
 {
     template <typename V>
     bool sortComparison(std::vector<V> i, std::vector<V> j) { return (i.size()<j.size()); }
-    
+    /**
+     * \brief - Tree Layout for drawing a graph. The layout starts at the root and plots the adjacent
+     * vertices in the form of tree datastructure. This layout is especially useful in plotting graphs
+     * such as any trees, star graph etc
+     * **/
     class TreeLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param typename GraphValue::Graph::VertexType v_ - Second Parameter, the root vertex. 
+         * **/
         TreeLayout(GraphValue& g, typename GraphValue::Graph::VertexType v_):
         Layout(g),v(v_)
         {

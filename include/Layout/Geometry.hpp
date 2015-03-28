@@ -1,12 +1,10 @@
-/**	\brief Geometry.hpp - Header file that has collection of functions related to 2dimensional
- * ccordinate geometry for drawing graphs
- * **/
-
 #ifndef SPIDER_LAYOUT_GEOMETRY_HPP
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>
 #include <cmath>
-//switch to glm if this proves insufficient and inextensible
+/**     \brief Geometry.hpp - Header file that has collection of functions related to 2dimensional
+ * ccordinate geometry for drawing graphs
+ * **/
 namespace spider
 {
     /**

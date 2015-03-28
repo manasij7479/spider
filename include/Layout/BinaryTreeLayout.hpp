@@ -5,13 +5,27 @@
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/enumeration.hpp"
+/**
+ * \brief TreeLayout.hpp - Header file that contains functions to generate Binary Tree Layout.
+ * **/
 namespace spider
 {
-    
+    /**
+    * \brief - Tree Layout for drawing a graph - The layout starts at the root and plots the adjacent
+    * vertices in the form of tree datastructure. This layout is especially useful in plotting graphs
+    * such as binary tress where left and right childs are distinguishable.
+    * **/
     class BinaryTreeLayout : public Layout
     {
     public:
         typedef typename GraphValue::Graph::VertexType V;
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param typename GraphValue::Graph::VertexType root_ - Second Parameter, the root vertex. 
+         * **/
         BinaryTreeLayout(GraphValue& g, typename GraphValue::Graph::VertexType root_):
         Layout(g),root(root_)
         {

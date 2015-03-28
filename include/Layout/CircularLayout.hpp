@@ -1,18 +1,28 @@
-/**
- * \brief CircularLayout.hpp - Header file that contains functions to generate
- * Circular Layout for drawing a graph. The layout has a circle
- * on whose circumference the vertex are plotted at equal intervals.
- * **/
 #ifndef SPIDER_CIRCULAR_LAYOUT_HPP
 #define SPIDER_CIRCULAR_LAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include <cmath>
 #include <iostream>
+/**
+ * \brief CircularLayout.hpp - Header file that contains functions to generate Circular Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Circular Layout for drawing a graph - The layout has a circle
+     * on whose circumference the vertex are plotted at equal intervals. 
+     * The layout is especially useful in plotting graphs such as
+     * Cycle graph, complete graph etc.
+     * This is the default layout for displaying a graph.
+     * **/
     class CircularLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - Parameter, a graph object and attributes
+         * **/
         CircularLayout(GraphValue& g):
             Layout(g)
             {

@@ -1,18 +1,33 @@
-/**
- * \brief BipartiteLayout.hpp - Header file that contains functions to generate
- * Bipartite Layout for drawing a graph. The layout plots vertices on two sides
- * of an imaginary demarcation such that no two vertices on the same side has an edge
- * between them.
- * **/
 #ifndef SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
 #define SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief BipartiteLayout.hpp - Header file that contains functions to generate Bipartite Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Bipartite Layout for drawing a graph - The layout plots vertices on two sides
+     * of an imaginary demarcation such that no two vertices on the same side has an edge
+     * between them. The vertices are plotted at equal distances.
+     * This layout is especially useful in plotting graphs such as
+     * Complete Bipartite graph etc.
+     * **/
     class BipartiteLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param float fraction_=0.5 - Second Parameter, the fraction of  number of vertices
+         * on the right side of the demarcation, default value 0.5
+         * 
+         * @param bool isVertical_=true - Third Parameter, to check if the vertices will be displayed
+         * vertically or horizontally, default value true
+         * **/
         BipartiteLayout(GraphValue& g, float fraction_=0.5, bool isVertical_=true):
         Layout(g),fraction(fraction_),isVertical(isVertical_)
         {

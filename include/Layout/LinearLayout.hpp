@@ -1,17 +1,28 @@
-/**
- * \brief LinearLayout.hpp - Header file that contains functions to generate
- * Linear Layout for drawing a graph. The layout plots the vertices along a straight
- * line at equal distance.
- * **/
 #ifndef SPIDER_LAYOUT_LINEARLAYOUT_HPP
 #define SPIDER_LAYOUT_LINEARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief LinearLayout.hpp - Header file that contains functions to generate Linear Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - Linear Layout for drawing a graph. The layout plots the vertices along a straight
+     * line at equal distance. Thios layout is especially useful in plotting graphs such as
+     * Path Graphs etc.
+    * **/
     class LinearLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param bool isVertical_ = false_ - Second Parameter, to check if the vertices will be displayed
+         * vertically or horizontally, default value true
+         * **/
         LinearLayout(GraphValue& g, bool isVertical_ = false):
         Layout(g),isVertical(isVertical_)
         {

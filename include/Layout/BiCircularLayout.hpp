@@ -1,17 +1,32 @@
-/**
- * \brief BiCircularLayout.hpp - Header file that contains functions to generate
- * BiCircular Layout for drawing a graph. The layout has two concentric circles
- * on whose circumference the vertex are plotted at equal intervals.
- * **/
- #ifndef SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
+#ifndef SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
 #define SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief BiCircularLayout.hpp - Header file that contains functions to generate BiCicrcular Layout.
+ * **/
 namespace spider
 {
+    /**
+     * \brief - BiCircular Layout for drawing a graph - The layout has two concentric circles
+     * on whose circumference the vertex are plotted at equal intervals. 
+     * This layout is especially useful in plotting graphs such as petersen graph,
+     * desargues graph, dodecahedron graph etc.
+     * **/
     class BiCircularLayout : public Layout
     {
     public:
+        /**
+         * \brief - Constructor
+         * 
+         * @param GraphValue& g - First Parameter, a graph object and attributes
+         * 
+         * @param float inner_count_fraction_=0.5 - Second Parameter, fraction of number of vertices
+         * in the inner circles, default value 0.5
+         * 
+         * @param float in_rad_fraction_=0.5 - Third Parameter, ratio of inner radius to outer radius, 
+         * default value 0.5
+         * **/
         BiCircularLayout(GraphValue& g,float inner_count_fraction_=0.5,float in_rad_fraction_=0.5):
         Layout(g),inner_count_fraction(inner_count_fraction_),in_rad_fraction(in_rad_fraction_)
         {
