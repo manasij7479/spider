@@ -48,6 +48,7 @@ void MainWindow::setupActions()
 //     KStandardAction::clear(this, SLOT(clear()), actionCollection());
     QAction* runAction = new QAction(QString("IR Execute"), this);
     QAction* compileAction = new QAction(QString("Compile"), this);
+    QAction* compileRunAction = new QAction(QString("Compile and Run"), this);
     
     QAction* openAction = new QAction(QString("Open"), this);
     QAction* saveAction = new QAction(QString("Save"), this);
@@ -60,15 +61,18 @@ void MainWindow::setupActions()
     auto runMenu = mb->addMenu("Run");
     runMenu->addAction(runAction);
     runMenu->addAction(compileAction);
+    runMenu->addAction(compileRunAction);
     
     
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
     connect(compileAction, SIGNAL(triggered(bool)), this, SLOT(triggerCompile()));
+    connect(compileRunAction, SIGNAL(triggered(bool)), this, SLOT(triggerCompileRun()));
     connect(openAction, SIGNAL(triggered(bool)), this, SLOT(openFile()));
     connect(saveAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
-    connect(this, SIGNAL(textEmit(const QString&)), this, SLOT(compile(const QString&)));
+    connect(this, SIGNAL(textEmitC(const QString&)), this, SLOT(compile(const QString&)));
+    connect(this, SIGNAL(textEmitR(const QString&)), this, SLOT(compile_run(const QString&)));
 }
 
 void MainWindow::clear()
@@ -158,7 +162,11 @@ void MainWindow::compile(const QString& str)
 }
 void MainWindow::triggerCompile()
 {
-    emit textEmit((const QString&)editor->getEditor()->toPlainText());
+    emit textEmitC((const QString&)editor->getEditor()->toPlainText());
+}
+void MainWindow::triggerCompileRun()
+{
+    emit textEmitR((const QString&)editor->getEditor()->toPlainText());
 }
 std::pair<QByteArray, QByteArray> MainWindow::compile_driver(const QString& in)
 {
