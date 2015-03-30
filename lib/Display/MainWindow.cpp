@@ -158,8 +158,14 @@ void MainWindow::compile(const QString& str)
     output = process.readAllStandardOutput();
     QByteArray error = process.readAllStandardError();
 //     std::cout << output.toStdString() <<std::endl;
-    editor->getEditor()->setText(output);
-    editor->getOutputPane()->append(error);
+//     editor->getEditor()->setText(output);
+    if (error.isEmpty())
+    {
+        auto newwin = new MainWindow();
+        newwin->editor->getEditor()->setText(output);
+        newwin->show();
+    }
+    else editor->getOutputPane()->append(error);
 }
 void MainWindow::triggerCompile()
 {
