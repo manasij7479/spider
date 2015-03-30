@@ -148,7 +148,7 @@ void MainWindow::compile(const QString& str)
 {
     std::cout << "Here" <<std::endl;;
     QProcess process;
-    process.start("../spider-compiler/spc");
+    process.start("../spider-compiler/spc - -");
     process.waitForStarted();
     
     process.write(str.toUtf8().constData());
