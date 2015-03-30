@@ -146,19 +146,8 @@ void MainWindow::error(const QString& s)
 }
 void MainWindow::compile(const QString& str)
 {
-    std::cout << "Here" <<std::endl;;
-    QProcess process;
-    process.start("../spider-compiler/spc - -");
-    process.waitForStarted();
-    
-    process.write(str.toUtf8().constData());
-    process.closeWriteChannel();
-    process.waitForFinished();
-    QByteArray output;
-    output = process.readAllStandardOutput();
-    QByteArray error = process.readAllStandardError();
-//     std::cout << output.toStdString() <<std::endl;
-//     editor->getEditor()->setText(output);
+    QByteArray output, error;
+    std::tie(output, error) = compile_driver(str);
     if (error.isEmpty())
     {
         auto newwin = new MainWindow();
@@ -171,5 +160,28 @@ void MainWindow::triggerCompile()
 {
     emit textEmit((const QString&)editor->getEditor()->toPlainText());
 }
+std::pair<QByteArray, QByteArray> MainWindow::compile_driver(const QString& in)
+{
+    QProcess process;
+    process.start("../spider-compiler/spc - -");
+    process.waitForStarted();
+    
+    process.write(in.toUtf8().constData());
+    process.closeWriteChannel();
+    process.waitForFinished();
+    QByteArray output;
+    output = process.readAllStandardOutput();
+    QByteArray error = process.readAllStandardError();
+    return {output, error};
+}
 
+void MainWindow::compile_run(const QString& str)
+{
+    QByteArray output, error;
+    std::tie(output, error) = compile_driver(str);
+    if (error.isEmpty())
+        run(output);
+    else
+        editor->getOutputPane()->append(error);
+}
 
