@@ -5,12 +5,21 @@
 #include <vector>
 #include <functional>
 #include <QtWidgets>
+/**
+ * \brief Type.hpp - header file that contains all the datatyped defined in the language
+ * **/
 namespace spider
 {
+	/**
+	 * \brief Value contains the different datatypes that will be supported by the language.
+	 * It maps the names of the datatypes to their types. It does not define any functionality
+	 * of the datatypes.
+	 * **/
     class Value : public QObject
     {
         Q_OBJECT
     public:
+    /**\brief - contains all the names of the different datatype **/
         enum class Type 
         {
             Void,
@@ -19,10 +28,20 @@ namespace spider
             List, Dict,
             Vattr, Eattr
         };
+        /**
+         * \brief - Constructor
+         * 
+         * @param Type t - Parameter, a datatype supported by the language
+         * **/
         Value(Type t):type(t){};
+        /** \brief - Destructor **/
         virtual ~Value(){}
+        /** \brief - function to show "<Empty Value>" **/
         virtual std::string show() {return "<Empty Value>";};
         Type type;
+        /**
+         * \brief - to map datatype name to the actual datatype
+         * **/
         static std::map<std::string, Type> NameToTypeMap()
         {
             return  
@@ -39,7 +58,9 @@ namespace spider
                 //Add the rest as needed
             };
         }
-        
+        /**
+         * \brief - to map the actual datatype to the datatype name
+         * **/
         static std::map<Type, std::string> TypeToNameMap()
         {
             return 
@@ -56,11 +77,16 @@ namespace spider
                 //Add the rest as needed
             };
         }
+        /** \brief - to neglect previous changes **/
         void changeCallback(){emit changed();}
     signals:
         void changed();
     };
     using VType = Value::Type;
+    /**
+     * \brief IntegerValue returns the value of an integer declared
+     * using the Integer datatype supported by the language
+     * **/
     class IntegerValue : public Value
     {
     public:
@@ -71,7 +97,10 @@ namespace spider
         }
         int data;
     };
-    
+    /**
+     * \brief BoolValue returns the value of an integer declared
+     * using the Boolean datatype supported by the language
+     * **/
     class BoolValue : public Value
     {
     public:
@@ -84,7 +113,10 @@ namespace spider
         }
         bool data;
     };
-    
+    /**
+     * \brief StringValue returns the value of an integer declared
+     * using the String datatype supported by the language
+     * **/
     class StringValue : public Value
     {
     public:
@@ -95,6 +127,10 @@ namespace spider
         }
         std::string data;
     };
+    /**
+     * \brief FloatValue returns the value of an integer declared
+     * using the Float datatype supported by the language
+     * **/
     class FloatValue : public Value
     {
     public:
@@ -105,7 +141,11 @@ namespace spider
         }
         float data;
     };
-    
+    /**
+     * \brief VoidValue returns nothing. It is a class declared to tackle
+     * all Void variables declared using the Void datatype supported by the
+     * language.
+     * **/
     class VoidValue: public Value //contains nothing
     {
     public:

@@ -6,11 +6,27 @@
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/TypeOps.hpp"
 #include "graph/algorithm/collections.hpp"
+/**
+ * \brief LayoutPainter.hpp - Header File that helps in drawing different
+ * visualization aspects
+ * **/
 namespace spider
 {
+	/**
+	 * \brief - Layout Painter retrives coordinate data for each vertex and
+	 * draws it on the screen. It is the basic framework to render coordinate
+	 * data on screen.
+	 * **/
     class LayoutPainter
     {
     public:
+		/**
+		 * \brief - Constructor
+		 * 
+		 * @param QGraphicsView* v - First Parameter, a graphic view attribute of Qt
+		 * 
+		 * @param QGraphicsScene* s - Second Parameter, a graphic scene attribute of Qt
+		 * **/
         LayoutPainter(QGraphicsView* v, QGraphicsScene* s):m_View(v), m_Scene(s)
         {
             op_displayText = true;
@@ -18,6 +34,15 @@ namespace spider
             op_useGradient = false;
             op_useVertexColorAttrib = true;
         }
+        /**
+         * \brief - A function to draw the graph and its attributes on screen
+         * 
+         * @param Layout* layout - First Parameter, the layout to be used to plot a graph
+         * 
+         * @param int w - Second Parameter, the width of the screen
+         * 
+         * @param int h - Third Parameter, the height of the screen
+         * **/
         virtual void draw(Layout* layout, int w, int h)
         {
             m_Scene->setSceneRect(0, 0, w, h);
@@ -105,9 +130,9 @@ namespace spider
             return col;
         }
     public:
-         bool& displayText(){return op_displayText;}
-         bool& displayEdgeCost(){return op_displayEdgeCost;}
-         bool& useGradient(){return op_useGradient;}
-         bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}
+         bool& displayText(){return op_displayText;}///<to display text on screen
+         bool& displayEdgeCost(){return op_displayEdgeCost;}///<to display edge cost above edges
+         bool& useGradient(){return op_useGradient;}///<to use gradients
+         bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}///<to use vertex coloring attribute
     };
 }
