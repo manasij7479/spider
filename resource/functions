@@ -3,3 +3,5 @@ function generate=(graph g);
 function display(graph g)=(window w);
 function change_layout=(window w);
 function clear;
+
+function add(int a)(int b)=(int c);

@@ -1,0 +1,5 @@
+import "resource/functions";
+function +(int a)(int b)=(int c)
+{
+    auto c = add(a b);
+}

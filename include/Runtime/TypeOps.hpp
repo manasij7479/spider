@@ -9,7 +9,7 @@ namespace spider
 {
     inline void assert_type(Value* x, VType t)
     {
-        if (x->type != t)
+        if ( t != VType::Any && x->type != t)
             throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     template <typename T>
