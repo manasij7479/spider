@@ -17,7 +17,8 @@ namespace spider
             Integer, String, Bool, Float,
             Graph, Window,
             List, Dict,
-            Vattr, Eattr, Any
+            Vattr, Eattr, 
+            Any, Function
         };
         Value(Type t):type(t){};
         virtual ~Value(){}
@@ -36,7 +37,8 @@ namespace spider
                 {"list", Type::List},
                 {"dict", Type::Dict},
                 {"vattr", Type::Vattr},
-                {"any", Type::Any}
+                {"any", Type::Any},
+                {"function", Type::Function}
                 //Add the rest as needed
             };
         }
@@ -54,7 +56,8 @@ namespace spider
                 { Type::List, "list"},
                 { Type::Dict, "dict"},
                 { Type::Vattr, "vattr"},
-                { Type::Any, "any"}
+                { Type::Any, "any"},
+                { Type::Function, "function"}
                 //Add the rest as needed
             };
         }

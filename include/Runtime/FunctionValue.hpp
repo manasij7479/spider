@@ -9,12 +9,13 @@ namespace spider
     class Statement;
     class FunctionSystem;
     class SymbolTable;
-    class FunctionValue
+    class FunctionValue : public Value
     {
     public:
-        FunctionValue(){};
+        FunctionValue():Value(VType::Function){};
         FunctionValue(std::vector<std::string> proto, Statement* block_);
-        Value* call(std::vector<Value*> args, FunctionSystem& f, SymbolTable& table);
+        Value* call(std::vector<Value*> args, SymbolTable& table);
+        std::string show(){return "Placeholder:" + name;}
     private:
         std::string name;
         Statement* block;

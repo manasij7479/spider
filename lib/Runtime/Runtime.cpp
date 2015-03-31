@@ -5,9 +5,10 @@
 #include "Runtime/WindowValue.hpp"
 #include "Runtime/TypeOps.hpp"
 #include "Runtime/ListValue.hpp"
+#include "Runtime/FunctionValue.hpp"
 namespace spider
 {
-    Runtime::Runtime(SymbolTable t, FunctionSystem f, bool nested_mode_) : table(t), functions(f)
+    Runtime::Runtime(SymbolTable t, bool nested_mode_) : table(t)
     {
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
@@ -19,10 +20,6 @@ namespace spider
         showCallback = f;
     }
 
-    FunctionSystem& Runtime::getFunctions()
-    {
-        return functions;
-    }
     void Runtime::eval(std::vector<std::string> args)
     {
         Value* v = nullptr;
@@ -64,7 +61,8 @@ namespace spider
         }
         else 
         { // make call keyword optional, may be removed later
-            if (functions.isFunction(args[0]))
+            auto f = table.get(args[0]);
+            if (f!= nullptr && f->type == VType::Function)
             {
                 if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
@@ -113,7 +111,10 @@ namespace spider
                 }
             }
             else if (command[0] == "function")
-                functions.def(command, stmt.getTail());
+            {
+//                 functions.def(command, stmt.getTail());
+                table.insert(command[1], new FunctionValue(command, stmt.getTail()));
+            }
         }
         else if (stmt.isBlock() == false)
             eval(stmt.getSingle());
@@ -175,9 +176,12 @@ namespace spider
     bool Runtime::tryCall(std::string fname, std::vector<std::string> value)
     {
         auto callArgs = substituteArgs(value);
-        if (functions.isFunction(fname) == false)
+        auto f = table.get(fname);
+        if (f == nullptr)
             return false;
-        auto result = functions.call(fname, callArgs, functions, table);
+        if (f->type != VType::Function)
+            return false;
+        auto result = static_cast<FunctionValue*>(f)->call(callArgs, table);
         assignPrev(result);
         return true;
     }

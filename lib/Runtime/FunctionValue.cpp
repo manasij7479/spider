@@ -3,7 +3,7 @@
 #include "Runtime/TypeOps.hpp"
 namespace spider
 {
-    FunctionValue::FunctionValue(std::vector<std::string> proto, Statement* block_)
+    FunctionValue::FunctionValue(std::vector<std::string> proto, Statement* block_) : Value(VType::Function)
     {
         block = block_;
         assert_size(proto, greater_eq(4));// function keyword, name, return var, return
@@ -16,7 +16,7 @@ namespace spider
         for (uint i = 4; i < proto.size(); i+=2)
             formal_params.push_back({proto[i], n_t_map[proto[i+1]]});
     }
-    Value* FunctionValue::call(std::vector<Value*> args, FunctionSystem& f, SymbolTable& table)
+    Value* FunctionValue::call(std::vector<Value*> args, SymbolTable& table)
     {
         assert_size(args, formal_params.size());
         table.push();
@@ -25,7 +25,7 @@ namespace spider
             assert_type(args[i], formal_params[i].second);
             table.insert(formal_params[i].first, args[i]);
         }
-        Runtime nested(table, f, true);
+        Runtime nested(table, true);
         nested.eval(*block);
         Value* result = nested.getFromSymbolTable(return_idf.first);
         if (result == nullptr)
