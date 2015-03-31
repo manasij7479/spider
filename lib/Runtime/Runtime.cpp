@@ -62,7 +62,7 @@ namespace spider
         else 
         { // make call keyword optional, may be removed later
             auto f = table.get(args[0]);
-            if (f!= nullptr && f->type == VType::Function)
+            if ((f!= nullptr && f->type == VType::Function) || getInbuiltFunctions().find(args[0]) != getInbuiltFunctions().end())
             {
                 if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
@@ -175,13 +175,19 @@ namespace spider
     
     bool Runtime::tryCall(std::string fname, std::vector<std::string> value)
     {
-        auto callArgs = substituteArgs(value);
+        Value* result;
         auto f = table.get(fname);
-        if (f == nullptr)
+        if (f != nullptr && f->type == VType::Function)
+            result = static_cast<FunctionValue*>(f)->call(substituteArgs(value), table);
+        else
+        {
+            auto& map = getInbuiltFunctions();
+            auto it = map.find(fname);
+            if (it != map.end())
+                result = (it->second)(substituteArgs(value));
+        }
+        if (result == nullptr)
             return false;
-        if (f->type != VType::Function)
-            return false;
-        auto result = static_cast<FunctionValue*>(f)->call(callArgs, table);
         assignPrev(result);
         return true;
     }

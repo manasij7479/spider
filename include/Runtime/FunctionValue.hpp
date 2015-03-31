@@ -7,8 +7,10 @@
 namespace spider
 {
     class Statement;
-    class FunctionSystem;
     class SymbolTable;
+    typedef std::function<Value*(std::vector<Value*>)> Function;
+    std::map< std::string, Function >& getInbuiltFunctions();
+    
     class FunctionValue : public Value
     {
     public:
