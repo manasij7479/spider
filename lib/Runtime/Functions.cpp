@@ -81,6 +81,6 @@ namespace spider
     }
     void FunctionSystem::def(std::vector<std::string> proto, Statement* block)
     {
-        UserFunctionMap[proto[1]] = UserFunction(proto, block);
+        UserFunctionMap[proto[1]] = FunctionValue(proto, block);
     }
 }

@@ -1,9 +1,9 @@
-#include "Runtime/UserFunction.hpp"
+#include "Runtime/FunctionValue.hpp"
 #include "Runtime/Runtime.hpp"
 #include "Runtime/TypeOps.hpp"
 namespace spider
 {
-    UserFunction::UserFunction(std::vector<std::string> proto, Statement* block_)
+    FunctionValue::FunctionValue(std::vector<std::string> proto, Statement* block_)
     {
         block = block_;
         assert_size(proto, greater_eq(4));// function keyword, name, return var, return
@@ -16,7 +16,7 @@ namespace spider
         for (uint i = 4; i < proto.size(); i+=2)
             formal_params.push_back({proto[i], n_t_map[proto[i+1]]});
     }
-    Value* UserFunction::call(std::vector<Value*> args, FunctionSystem& f, SymbolTable& table)
+    Value* FunctionValue::call(std::vector<Value*> args, FunctionSystem& f, SymbolTable& table)
     {
         assert_size(args, formal_params.size());
         table.push();

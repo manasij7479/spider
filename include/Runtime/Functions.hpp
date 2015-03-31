@@ -3,7 +3,7 @@
 #include <functional>
 #include <map>
 #include <vector>
-#include "Runtime/UserFunction.hpp"
+#include "Runtime/FunctionValue.hpp"
 namespace spider
 {
     class SymbolTable;
@@ -19,7 +19,7 @@ namespace spider
         void def(std::vector<std::string>, Statement* block);
     private:
         std::map<std::string, Function> FunctionMap;
-        std::map<std::string, UserFunction> UserFunctionMap;
+        std::map<std::string, FunctionValue> UserFunctionMap;
     };
     
 
