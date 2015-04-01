@@ -35,5 +35,14 @@ namespace spider
         std::pair<std::string, VType> return_idf;
         Runtime* RT;
     };
+    
+    class InbuiltFunction : public FunctionValue
+    {
+    public:
+        InbuiltFunction(std::string name_, Function f_);
+        Value* call(std::vector<Value*> args);
+    private:
+        Function f;
+    };
 }
 #endif

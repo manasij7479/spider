@@ -105,5 +105,14 @@ namespace spider
         RT->getSymbolTable()->pop();
         return result;
     }
+    
+    InbuiltFunction::InbuiltFunction(std::string name_, Function f_): FunctionValue(name_), f(f_)
+    {
         
+    }
+    Value* InbuiltFunction::call(std::vector< Value* > args)
+    {
+        return f(args);
+    }
+
 }

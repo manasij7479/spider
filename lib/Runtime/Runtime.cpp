@@ -14,6 +14,9 @@ namespace spider
         breakflag = false;
         nested_mode = nested_mode_;
         showCallback = [](std::string s){std::cout<<s<<std::endl;};
+        
+        for (auto function: getInbuiltFunctions())
+            table.insert(function.first, new InbuiltFunction(function.first, function.second));
     }
     void Runtime::setShowCallback(std::function<void(std::string)> f)
     {
@@ -179,13 +182,6 @@ namespace spider
         auto f = table.get(fname);
         if (f != nullptr && f->type == VType::Function)
             result = static_cast<FunctionValue*>(f)->call(substituteArgs(value));
-        else
-        {
-            auto& map = getInbuiltFunctions();
-            auto it = map.find(fname);
-            if (it != map.end())
-                result = (it->second)(substituteArgs(value));
-        }
         if (result == nullptr)
             return false;
         assignPrev(result);
