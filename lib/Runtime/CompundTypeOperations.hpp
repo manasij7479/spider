@@ -29,5 +29,19 @@ namespace spider
         assert_size(ldata, greater(i), "List index out of bounds");
         return ldata[i];
     }
+    
+    Value* list_map(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::List);
+        assert_type(args[1], VType::Function);
+        
+        std::vector<Value*> result;
+        auto l = getl(args[0]);
+        auto f = getfn(args[1]);
+        for (auto v : l->data)
+            result.push_back(f->call({v}, *new SymbolTable()));
+        return new ListValue(result);
+    }
 }
  

@@ -54,7 +54,7 @@ namespace spider
             GMAP(get_vertex_attribute),
             GMAP(vertex_list), GMAP(degree_map), GMAP(vertex_coloring),
             //List Functions
-            LMAP(create_list), LMAP(value_at),
+            LMAP(create_list), LMAP(value_at), LMAP(map),
             
             //Dict Fuctions
             DMAP(create_dict),
@@ -90,11 +90,15 @@ namespace spider
             table.insert(formal_params[i].first, args[i]);
         }
         Runtime nested(table, true);
+        nested.setShowCallback([](std::string s){std::cerr << s;}); // temporary workaround
         nested.eval(*block);
         Value* result = nested.getFromSymbolTable(return_idf.first);
-        if (result == nullptr)
-            throw std::runtime_error("Null return.\n");
-        assert_type(result, return_idf.second);
+        if (return_idf.second != VType::Void)
+        {
+            if (result == nullptr)
+                throw std::runtime_error("Null return.\n");
+            assert_type(result, return_idf.second);
+        }
 //         std::cout << result->show() <<std::endl;
         table.pop();
         return result;

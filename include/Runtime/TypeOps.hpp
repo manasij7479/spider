@@ -4,6 +4,7 @@
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
 #include "Runtime/ListValue.hpp"
+#include "Runtime/FunctionValue.hpp"
 #include <algorithm>
 namespace spider
 {
@@ -80,7 +81,10 @@ namespace spider
     {
         return static_cast<VattrValue*>(v);
     }
-    
+    inline FunctionValue* getfn(Value* v)
+    {
+        return static_cast<FunctionValue*>(v);
+    }
     
     template <typename T>
     inline Value* convertToValue(T t)
