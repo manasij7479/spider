@@ -113,7 +113,7 @@ namespace spider
             else if (command[0] == "function")
             {
 //                 functions.def(command, stmt.getTail());
-                table.insert(command[1], new FunctionValue(command, stmt.getTail()));
+                table.insert(command[1], new UserDefinedFunction(command, stmt.getTail(), &table));
             }
         }
         else if (stmt.isBlock() == false)
@@ -178,7 +178,7 @@ namespace spider
         Value* result;
         auto f = table.get(fname);
         if (f != nullptr && f->type == VType::Function)
-            result = static_cast<FunctionValue*>(f)->call(substituteArgs(value), table);
+            result = static_cast<FunctionValue*>(f)->call(substituteArgs(value));
         else
         {
             auto& map = getInbuiltFunctions();

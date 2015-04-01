@@ -40,7 +40,7 @@ namespace spider
         auto l = getl(args[0]);
         auto f = getfn(args[1]);
         for (auto v : l->data)
-            result.push_back(f->call({v}, *new SymbolTable()));
+            result.push_back(f->call({v}));
         return new ListValue(result);
     }
 }

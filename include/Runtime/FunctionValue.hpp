@@ -14,15 +14,25 @@ namespace spider
     class FunctionValue : public Value
     {
     public:
-        FunctionValue():Value(VType::Function){};
-        FunctionValue(std::vector<std::string> proto, Statement* block_);
-        Value* call(std::vector<Value*> args, SymbolTable& table);
+        FunctionValue(std::string name_) : Value(VType::Function) , name(name_){};
+        
+        virtual Value* call(std::vector<Value*> args)=0;
         std::string show(){return "Placeholder:" + name;}
     private:
         std::string name;
+        
+    };
+    
+    class UserDefinedFunction : public FunctionValue
+    {
+    public:
+        UserDefinedFunction(std::vector<std::string> proto, Statement* block_, SymbolTable* table_);
+        Value* call(std::vector<Value*> args);
+    private:
         Statement* block;
         std::vector<std::pair<std::string, VType>> formal_params;
         std::pair<std::string, VType> return_idf;
+        SymbolTable* table;
     };
 }
 #endif
