@@ -14,6 +14,8 @@ namespace spider
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
         void setShowCallback(std::function<void(std::string)> f);
+        SymbolTable* getSymbolTable(){return &table;}
+        void setNestedMode(bool b){nested_mode = b;}
     private:
         bool tryShow(std::vector<std::string> idf);
         bool tryDeclare(std::string idf, std::vector<std::string> value);

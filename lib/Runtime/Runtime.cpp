@@ -113,14 +113,14 @@ namespace spider
             else if (command[0] == "function")
             {
 //                 functions.def(command, stmt.getTail());
-                table.insert(command[1], new UserDefinedFunction(command, stmt.getTail(), &table));
+                table.insert(command[1], new UserDefinedFunction(command, stmt.getTail(), this));
             }
         }
         else if (stmt.isBlock() == false)
             eval(stmt.getSingle());
         else 
         {
-            if (!nested_mode )
+            if (!nested_mode) // in case of nested mode, caller manually pushes and pops the context
                 table.push(); // for local variables
             for (auto inner_stmt : stmt.getBlock())
             {
@@ -130,7 +130,7 @@ namespace spider
                 eval(*inner_stmt);
             }
             if (!nested_mode)
-            table.pop();
+                table.pop();
         }
     }
     Value* Runtime::getFromSymbolTable(std::string name)

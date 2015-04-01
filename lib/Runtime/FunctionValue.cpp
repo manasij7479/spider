@@ -67,8 +67,8 @@ namespace spider
         };
         return result;
     }
-    UserDefinedFunction::UserDefinedFunction(std::vector<std::string> proto, Statement* block_, SymbolTable* table_) 
-        : FunctionValue(proto[1]), table(table_)
+    UserDefinedFunction::UserDefinedFunction(std::vector< std::string > proto, Statement* block_, Runtime* runtime) 
+        : FunctionValue(proto[1]), RT(runtime)
     {
         block = block_;
         assert_size(proto, greater_eq(4));// function keyword, name, return var, return
@@ -83,16 +83,18 @@ namespace spider
     Value* UserDefinedFunction::call(std::vector<Value*> args)
     {
         assert_size(args, formal_params.size());
-        table->push();
+        RT->getSymbolTable()->push();
         for(uint i = 0; i < args.size(); ++i)
         {
             assert_type(args[i], formal_params[i].second);
-            table->insert(formal_params[i].first, args[i]);
+            RT->getSymbolTable()->insert(formal_params[i].first, args[i]);
         }
-        Runtime nested(*table, true);
-        nested.setShowCallback([](std::string s){std::cerr << s;}); // temporary workaround
-        nested.eval(*block);
-        Value* result = nested.getFromSymbolTable(return_idf.first);
+//         Runtime nested(*table, true);
+//         nested.setShowCallback([](std::string s){std::cerr << s;}); // temporary workaround
+        RT->setNestedMode(true);
+        RT->eval(*block);
+        RT->setNestedMode(false);
+        Value* result = RT->getFromSymbolTable(return_idf.first);
         if (return_idf.second != VType::Void)
         {
             if (result == nullptr)
@@ -100,7 +102,7 @@ namespace spider
             assert_type(result, return_idf.second);
         }
 //         std::cout << result->show() <<std::endl;
-        table->pop();
+        RT->getSymbolTable()->pop();
         return result;
     }
         
