@@ -101,6 +101,7 @@ namespace spider
                 throw std::runtime_error("Null return.\n");
             assert_type(result, return_idf.second);
         }
+        else result = new VoidValue();
 //         std::cout << result->show() <<std::endl;
         RT->getSymbolTable()->pop();
         return result;
