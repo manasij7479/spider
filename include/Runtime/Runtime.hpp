@@ -5,8 +5,14 @@
 #include "Runtime/Functions.hpp"
 #include "Runtime/Statement.hpp"
 #include <functional>
+/**
+ * \brief Runtime.hpp - basic runtime header file
+ * **/
 namespace spider
 {
+	/**
+	 * \brief - 
+	 * **/
     class Runtime
     {
     public:
