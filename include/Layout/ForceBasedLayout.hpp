@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-/**
- * \brief ForceBasedLayout.hpp - Header file that contains functions to generate Force Based layout
- * 
- * Force Based Layout for drawing a graph - The Layout plots the nodes such that no two nodes are
- * too cose to each other.
- * **/
->>>>>>> master
 #ifndef SPIDER_FORCE_BASED_LAYOUT_HPP
 #define SPIDER_FORCE_BASED_LAYOUT_HPP
 #include "Layout/Layout.hpp"
@@ -14,7 +5,10 @@
 #include "graph/algorithm/predicates.hpp"
 #include <iostream>
 /**
- * \brief ForceBasedLayout.hpp - Header file that contains functions to generate Force Based Layout.
+ * \brief ForceBasedLayout.hpp - Header file that contains functions to generate Force Based layout
+ * 
+ * Force Based Layout for drawing a graph - The Layout plots the nodes such that no two nodes are
+ * too cose to each other.
  * **/
 namespace spider
 {

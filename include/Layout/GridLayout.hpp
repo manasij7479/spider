@@ -1,18 +1,12 @@
-<<<<<<< HEAD
-=======
-/**
- * \brief GridLayout.hpp - Header file that contains functions to generate Grid Layout.
- * 
- * Grid Layout for drawing a graph - The layout plots the vertices at equal distance
- * from all adjacent vertices to form a grid.
- * **/
->>>>>>> master
  #ifndef SPIDER_LAYOUT_GRIDLAYOUT_HPP
 #define SPIDER_LAYOUT_GRIDLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 /**
  * \brief GridLayout.hpp - Header file that contains functions to generate Grid Layout.
+ * 
+ * Grid Layout for drawing a graph - The layout plots the vertices at equal distance
+ * from all adjacent vertices to form a grid.
  * **/
 namespace spider
 {

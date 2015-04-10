@@ -1,19 +1,14 @@
-<<<<<<< HEAD
-=======
-/**
- * \brief CircularLayout.hpp - Header file that contains functions to generate Circular Layout.
- * 
- * Circular Layout for drawing a graph - The layout has a circle
- * on whose circumference the vertex are plotted at equal intervals.
- * **/
->>>>>>> master
 #ifndef SPIDER_CIRCULAR_LAYOUT_HPP
 #define SPIDER_CIRCULAR_LAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include <cmath>
 #include <iostream>
+
 /**
  * \brief CircularLayout.hpp - Header file that contains functions to generate Circular Layout.
+ * 
+ * Circular Layout for drawing a graph - The layout has a circle
+ * on whose circumference the vertex are plotted at equal intervals.
  * **/
 namespace spider
 {

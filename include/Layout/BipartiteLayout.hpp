@@ -1,19 +1,14 @@
-<<<<<<< HEAD
-=======
+#ifndef SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
+#define SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
+#include "Layout/Layout.hpp"
+#include "graph/algorithm/collections.hpp"
+
 /**
  * \brief BipartiteLayout.hpp - Header file that contains functions to generate Bipartite Layout.
  * 
  * Bipartite Layout for drawing a graph - The layout plots vertices on two sides
  * of an imaginary demarcation such that no two vertices on the same side has an edge
  * between them.
- * **/
->>>>>>> master
-#ifndef SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
-#define SPIDER_LAYOUT_BIPARTITELAYOUT_HPP
-#include "Layout/Layout.hpp"
-#include "graph/algorithm/collections.hpp"
-/**
- * \brief BipartiteLayout.hpp - Header file that contains functions to generate Bipartite Layout.
  * **/
 namespace spider
 {

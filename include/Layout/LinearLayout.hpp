@@ -1,18 +1,12 @@
-<<<<<<< HEAD
-=======
-/**
- * \brief LinearLayout.hpp - Header file that contains functions to generate Linear Layout.
- * 
- * Linear Layout for drawing a graph - The layout plots the vertices along a straight
- * line at equal distance.
- * **/
->>>>>>> master
 #ifndef SPIDER_LAYOUT_LINEARLAYOUT_HPP
 #define SPIDER_LAYOUT_LINEARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 /**
  * \brief LinearLayout.hpp - Header file that contains functions to generate Linear Layout.
+ * 
+ * Linear Layout for drawing a graph - The layout plots the vertices along a straight
+ * line at equal distance.
  * **/
 namespace spider
 {

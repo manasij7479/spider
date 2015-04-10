@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-/**
- * \brief TreeLayout.hpp - Header file that contains functions to generate Tree Layout.
- * 
- * Tree Layout for drawing a graph - The layout starts at the root and plots the adjacent
- * vertices in the form of tree datastructure.
- * **/
->>>>>>> master
 #ifndef SPIDER_LAYOUT_TREELAYOUT_HPP
 #define SPIDER_LAYOUT_TREELAYOUT_HPP
 #include<algorithm>
@@ -15,6 +6,9 @@
 #include "graph/algorithm/enumeration.hpp"
 /**
  * \brief TreeLayout.hpp - Header file that contains functions to generate Tree Layout.
+ * 
+ * Tree Layout for drawing a graph - The layout starts at the root and plots the adjacent
+ * vertices in the form of tree datastructure.
  * **/
 namespace spider
 {

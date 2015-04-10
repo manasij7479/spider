@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-/**	\brief Geometry.hpp - Header file that has collection of functions related to 2dimensional
- * cordinate geometry for drawing graphs
- * **/
-
->>>>>>> master
 #ifndef SPIDER_LAYOUT_GEOMETRY_HPP
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>

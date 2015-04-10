@@ -1,18 +1,17 @@
-/**
- * \brief TreeLayout.hpp - Header file that contains functions to generate Binary Tree Layout
- * 
- * Binary Tree Layout for drawing a graph- The layout starts at the root and plots the adjacent
- * vertices in the form of tree datastructure. Each node can have a maximum of 2 child nodes 
- * and a minimum of 0 child nodes
- * **/#ifndef SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
+#ifndef SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
 #define SPIDER_LAYOUT_BINARYTREELAYOUT_HPP
 #include<cmath>
 #include<algorithm>
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 #include "graph/algorithm/enumeration.hpp"
+
 /**
- * \brief TreeLayout.hpp - Header file that contains functions to generate Binary Tree Layout.
+ * \brief TreeLayout.hpp - Header file that contains functions to generate Binary Tree Layout
+ * 
+ * Binary Tree Layout for drawing a graph- The layout starts at the root and plots the adjacent
+ * vertices in the form of tree datastructure. Each node can have a maximum of 2 child nodes 
+ * and a minimum of 0 child nodes
  * **/
 namespace spider
 {

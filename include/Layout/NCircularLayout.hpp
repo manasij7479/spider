@@ -1,19 +1,12 @@
-<<<<<<< HEAD
 #ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
-=======
-/**
- * \brief NCircularLayout.hpp - Header file that contains functions to generate NCircular Layout.
- * 
- * NCircular Layout for drawing a graph - The layout has N number of concentric circles
- * on whose circumference the vertices are plotted at equal intervals.
- * **/
- #ifndef SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
->>>>>>> master
 #define SPIDER_LAYOUT_NCIRCULARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
 /**
  * \brief NCircularLayout.hpp - Header file that contains functions to generate NCircular Layout.
+ * 
+ * NCircular Layout for drawing a graph - The layout has N number of concentric circles
+ * on whose circumference the vertices are plotted at equal intervals.
  * **/
 namespace spider
 {

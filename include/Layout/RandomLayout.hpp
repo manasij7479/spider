@@ -1,17 +1,11 @@
-<<<<<<< HEAD
-=======
+#ifndef SPIDER_RANDOM_LAYOUT_HPP
+#define SPIDER_RANDOM_LAYOUT_HPP
+#include "Layout/Layout.hpp"
 /**
  * \brief RandomLayout.hpp - Header file that contains function to generate a Random Layout.
  * 
  * Random Centered Layout for drawing a graph - The layout plots the nodes randomly, against a
  * fixed center.
- * **/
->>>>>>> master
-#ifndef SPIDER_RANDOM_LAYOUT_HPP
-#define SPIDER_RANDOM_LAYOUT_HPP
-#include "Layout/Layout.hpp"
-/**
- * \brief RandomLayout.hpp - Header file that contains function to generate Random Layout.
  * **/
 namespace spider
 {
