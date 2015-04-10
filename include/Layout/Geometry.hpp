@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+/**	\brief Geometry.hpp - Header file that has collection of functions related to 2dimensional
+ * cordinate geometry for drawing graphs
+ * **/
+
+>>>>>>> master
 #ifndef SPIDER_LAYOUT_GEOMETRY_HPP
 #define SPIDER_LAYOUT_GEOMETRY_HPP
 #include <vector>
@@ -57,9 +64,9 @@ namespace spider
     /**
      * \brief - Returns the square of distance between two points 'a' and 'b'
      * 
-     * Point a - First parameter, the first point
+     * @param Point a - First parameter, the first point
      * 
-     * Point b - Second parameter, the second point
+     * @param Point b - Second parameter, the second point
      * **/
     
     inline float distsquare(Point a, Point b)
@@ -72,9 +79,9 @@ namespace spider
      /**
      * \brief - Returns the distance between two points 'a' and 'b'
      * 
-     * Point a - First parameter, the first point
+     * @param Point a - First parameter, the first point
      * 
-     * Point b - Second parameter, the second point
+     * @param Point b - Second parameter, the second point
      * **/
     
     inline float Distance(Point a, Point b)

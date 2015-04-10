@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 #ifndef SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
+=======
+/**
+ * \brief BiCircularLayout.hpp - Header file that contains functions to generate BiCircular Layout
+ * 
+ * BiCircular Layout for drawing a graph - The layout has two concentric circles
+ * on whose circumference the vertex are plotted at equal intervals.
+ * **/
+ #ifndef SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
+>>>>>>> master
 #define SPIDER_LAYOUT_BICIRCULARLAYOUT_HPP
 #include "Layout/Layout.hpp"
 #include "graph/algorithm/collections.hpp"
@@ -36,8 +46,7 @@ namespace spider
         /**
          * \brief - generates x and y coordinates of each vertex
          * 
-         * Rect bounds - Parameter, contains the x and y coordinates of 
-         * the boundary of the drawing area
+         * @param Rect bounds - Parameter, contains the x and y coordinates of the boundary of the drawing area
          * **/
         virtual void generate(Rect bounds)
         {
