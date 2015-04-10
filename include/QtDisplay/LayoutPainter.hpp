@@ -50,8 +50,8 @@ namespace spider
                         startindex = 0;
                         endindex = 1;
                     }
-                    int m=15,n=1;
                     dist = sqrt(powl(c[0].x - c[1].x, 2) + powl(c[0].y - c[1].y, 2));
+                    int m=dist-20,n=20;
                     startx = ((dist-10)*c[startindex].x + 10*c[endindex].x)/dist;
                     starty = ((dist-10)*c[startindex].y + 10*c[endindex].y)/dist;
                     endx = (m*c[startindex].x + n*c[endindex].x)/(m+n);
