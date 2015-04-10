@@ -116,6 +116,7 @@ void MainWindow::saveFile()
 
 void MainWindow::run(const QString& text)
 {
+    std::cerr << text.toStdString();
     std::istringstream in(text.toStdString());
     try
     {
@@ -124,9 +125,12 @@ void MainWindow::run(const QString& text)
     //         std::cout << ">> ";
             spider::Statement input(in);
 
-                if (! input.isEmpty())
-                    rt->eval(input);
-                else break;
+            if (! input.isEmpty())
+            {
+                std::cerr <<  "EVAL\n";
+                rt->eval(input);
+            }
+            else break;
         }
     }
     catch (std::exception& e)
