@@ -2,6 +2,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QColor>
+#include<cmath>
 #include "Layout/Layout.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/TypeOps.hpp"
@@ -35,6 +36,35 @@ namespace spider
             {
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
                 m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
+                
+                if(layout->getGraph().isDirected())
+                {
+                    int startindex,endindex,dist,startx,starty,endx,endy;
+                    if(graph::isAdjacent(layout->getGraph(), std::get<0>(e), std::get<1>(e)))
+                    {
+                        startindex = 1;
+                        endindex =0;
+                    }
+                    else
+                    {
+                        startindex = 0;
+                        endindex = 1;
+                    }
+                    int m=15,n=1;
+                    dist = sqrt(powl(c[0].x - c[1].x, 2) + powl(c[0].y - c[1].y, 2));
+                    startx = ((dist-10)*c[startindex].x + 10*c[endindex].x)/dist;
+                    starty = ((dist-10)*c[startindex].y + 10*c[endindex].y)/dist;
+                    endx = (m*c[startindex].x + n*c[endindex].x)/(m+n);
+                    endy = (m*c[startindex].y + n*c[endindex].y)/(m+n);
+                    QLineF edge(c[startindex].x,c[startindex].y,c[endindex].x,c[endindex].y);
+                    QLineF dir1(startx,starty,endx,endy);
+                    QLineF dir2(startx,starty,endx,endy);
+                    dir1.setAngle(edge.angle()+45);
+                    dir2.setAngle(edge.angle()-45);
+                    std::cout<<dir1.p1().x()<<" "<<dir1.p1().y()<<std::endl;
+                    m_Scene->addLine(dir1);
+                    m_Scene->addLine(dir2);
+                }
                 
                 if (op_displayEdgeCost)
                 {
