@@ -36,6 +36,7 @@ namespace spider
         {
             table.clear();
             table.push();
+            prev = nullptr;
         }
         else if (args[0] == "break")
             breakflag = true;

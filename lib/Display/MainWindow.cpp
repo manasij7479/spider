@@ -36,8 +36,7 @@ MainWindow::MainWindow(QWidget *)
     this->setMinimumHeight(400);
     this->setMinimumWidth(600);
 //     show ();
-    rt = new spider::Runtime();
-    rt->setShowCallback([&](std::string s){emit output(s.c_str());});
+
     
 }
 
@@ -116,19 +115,20 @@ void MainWindow::saveFile()
 
 void MainWindow::run(const QString& text)
 {
-    std::cerr << text.toStdString();
+    spider::Runtime rt;
+    rt.setShowCallback([&](std::string s){emit output(s.c_str());});
+    
+//     std::cerr << text.toStdString();
     std::istringstream in(text.toStdString());
     try
     {
         while (true)
         {
-    //         std::cout << ">> ";
             spider::Statement input(in);
 
             if (! input.isEmpty())
             {
-                std::cerr <<  "EVAL\n";
-                rt->eval(input);
+                rt.eval(input);
             }
             else break;
         }

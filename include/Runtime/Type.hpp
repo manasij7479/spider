@@ -38,7 +38,7 @@ namespace spider
                 {"dict", Type::Dict},
                 {"vattr", Type::Vattr},
                 {"any", Type::Any},
-                {"function", Type::Function}
+                {"func", Type::Function}
                 //Add the rest as needed
             };
         }
@@ -57,7 +57,7 @@ namespace spider
                 { Type::Dict, "dict"},
                 { Type::Vattr, "vattr"},
                 { Type::Any, "any"},
-                { Type::Function, "function"}
+                { Type::Function, "func"}
                 //Add the rest as needed
             };
         }

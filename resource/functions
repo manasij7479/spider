@@ -13,5 +13,7 @@ function mod(int a)(int b)=(int c);
 function greater(int a)(int b)=(bool c);
 function lesser(int a)(int b)=(bool c);
 
-function create_list=(any a);
+function create_list=(list a);
+function map(list l)(func f)=(list m);
+
 
