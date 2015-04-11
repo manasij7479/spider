@@ -18,7 +18,7 @@ namespace spider
     /**
      * \brief - Class to control and display the different components of visualization window.
      * 
-     * The different components consists of the graph displaying componenet, tool bar and menu bar.
+     * The different components consists of the graph displaying component, tool bar and menu bar.
      * The tool bar supports functions like zoom in, zoom out, rotate left, rotate right, fit to page.
      * **/
     class WindowUI : public QWidget
