@@ -45,6 +45,11 @@ namespace spider
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
+                if (std::get<0>(e) == std::get<1>(e))
+                {
+                    m_Scene->addEllipse(c[0].x -10 , c[0].y -40, 20, 40);
+                    continue;
+                }
                 if (op_edgeColoring)
                 {
                     int color = ecstate->getColorMap()[std::make_pair(std::get<0>(e),std::get<1>(e))];
@@ -76,7 +81,7 @@ namespace spider
                     QLineF dir2(startx,starty,endx,endy);
                     dir1.setAngle(edge.angle()+45);
                     dir2.setAngle(edge.angle()-45);
-                    std::cout<<dir1.p1().x()<<" "<<dir1.p1().y()<<std::endl;
+//                     std::cout<<dir1.p1().x()<<" "<<dir1.p1().y()<<std::endl;
                     m_Scene->addLine(dir1);
                     m_Scene->addLine(dir2);
                 }

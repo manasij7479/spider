@@ -128,7 +128,7 @@ namespace spider
 //     bool& useVertexColoring(){return op_vertexColoring;}
 //     bool& useEdgeColoring(){return op_edgeColoring;}
     
-    Value* win_display_text(std::vector<Value*> args)
+    Value* win_display_vertex_name(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Window);
@@ -150,7 +150,7 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
-    Value* win_use_gradient(std::vector<Value*> args)
+    Value* win_display_gradient(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Window);
@@ -161,7 +161,7 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
-    Value* win_use_vertex_coloring(std::vector<Value*> args)
+    Value* win_display_vertex_coloring(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Window);
@@ -172,7 +172,7 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
-    Value* win_use_edge_coloring(std::vector<Value*> args)
+    Value* win_display_edge_coloring(std::vector<Value*> args)
     {
         assert_size(args, 2);
         assert_type(args[0], VType::Window);
