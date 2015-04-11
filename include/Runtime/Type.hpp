@@ -19,7 +19,7 @@ namespace spider
     {
         Q_OBJECT
     public:
-    /**\brief - contains all the names of the different datatype **/
+    /** \brief - contains all the names of the different datatype **/
         enum class Type 
         {
             Void,

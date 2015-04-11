@@ -6,12 +6,12 @@
 #include "Runtime/Statement.hpp"
 #include <functional>
 /**
- * \brief Runtime.hpp - basic runtime header file
+ * \brief Runtime.hpp - header file to execute intermediate code.
  * **/
 namespace spider
 {
 	/**
-	 * \brief - 
+	 * \brief - Class to execute intermediate code and throw error messages.
 	 * **/
     class Runtime
     {

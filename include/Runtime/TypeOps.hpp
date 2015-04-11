@@ -53,21 +53,42 @@ namespace spider
         if (predicate(args.size()) == false)
             throw std::runtime_error("Size Mismatch."+reason+"\n");
     }
-	/**
-	 * \brief - 
-	 * **/
+    /**
+    * \brief - function that returns a std::function. The returned function checks if a given number is greater than
+    * int 'i'.
+    * 
+    * @param int i - Parameter, the number to be checked.
+    * **/
     inline std::function<bool(uint)> greater(int i)
     {
         return [i](int x){return x > i;};
     }
+    /**
+    * \brief - function that returns a std::function. The returned function checks if a given number is lesser than
+    * int 'i'.
+    * 
+    * @param int i - Parameter, the number to be checked.
+    * **/
     inline std::function<bool(uint)> lesser(int i)
     {
         return [i](int x){return x < i;};
     }
+    /**
+    * \brief - function that returns a std::function. The returned function checks if a given number is greater than or
+    * equal to int 'i'.
+    * 
+    * @param int i - Parameter, the number to be checked.
+    * **/
     inline std::function<bool(uint)> greater_eq(int i)
     {
         return [i](int x){return x >= i;};
     }
+    /**
+    * \brief - function that returns a std::function. The returned function checks if a given number is lesser than or
+    * equal to int 'i'.
+    * 
+    * @param int i - Parameter, the number to be checked.
+    * **/
     inline std::function<bool(uint)> lesser_eq(int i)
     {
         return [i](int x){return x <= i;};
@@ -173,12 +194,24 @@ namespace spider
         return static_cast<VattrValue*>(v);
     }
     
-    
+    /**
+     * \brief - function to throw an error message in case a type T is encountered which cannot be converted
+     * to data types supported by SPIDER compiler.
+     * 
+     * @param T t - Parameter, data of an unknown data type T
+     * **/
     template <typename T>
     inline Value* convertToValue(T t)
     {
         throw std::runtime_error("Can not convert '" + std::string(typeid(T).name()) + "' to Value.\n");
     }
+    /**
+     * \brief - to return values of types that are supported by SPIDER compiler and needs no conversion.
+     * 
+     * @param Value* data - Parameter, a value
+     * 
+     * @returns Value* - Value for data
+     * **/
     template <>
     inline Value* convertToValue<Value*>(Value* data)
     {
@@ -232,7 +265,13 @@ namespace spider
     {
         return new StringValue(data);
     }
-    
+    /**
+     * \brief - converts any std::vector<T> to std::vector<Value*>
+     * 
+     * @param const std::vector<T>& data - Parameter, a const std::vector<T>
+     * 
+     * @returns std::vector<Value*> - std::vector<Value*> for data
+     * **/
     template <typename T>
     inline std::vector<Value*> convertToCompoundValue(const std::vector<T>& data)
     {
@@ -240,8 +279,14 @@ namespace spider
         std::transform(data.begin(), data.end(), result.begin(), 
                     [](T x){return convertToValue(x);});
         return result;
-        
     }
+     /**
+     * \brief - converts any std::map<K, Value*> to std::vector<Value*>
+     * 
+     * @param const std::map<K, T>& data - Parameter, a std::map<K, T>& data
+     * 
+     * @returns std::map<K, Value*> - std::map<K, Value*> for data
+     * **/
     template <typename K , typename T>
     inline std::map<K, Value*> convertToCompoundValue(const std::map<K, T>& data)
     {
