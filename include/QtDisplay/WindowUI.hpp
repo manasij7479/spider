@@ -64,6 +64,7 @@ namespace spider
 	 * @returns LayoutPainter* - attributes of Layout Painter.
 	 * **/
         LayoutPainter* getLayoutPainter(){return lp;}
+        void changeCallback(){emit change();}
     private slots:
         void change();
         void zoom_in();

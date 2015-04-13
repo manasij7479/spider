@@ -4,6 +4,7 @@
 #include "Runtime/GraphValue.hpp"
 #include "Runtime/WindowValue.hpp"
 #include "Runtime/ListValue.hpp"
+#include "Runtime/FunctionValue.hpp"
 #include <algorithm>
 namespace spider
 {
@@ -18,7 +19,7 @@ namespace spider
 	 * **/
     inline void assert_type(Value* x, VType t)
     {
-        if (x->type != t)
+        if ( t != VType::Any && x->type != t)
             throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     /**
@@ -193,7 +194,11 @@ namespace spider
     {
         return static_cast<VattrValue*>(v);
     }
-    
+        inline FunctionValue* getfn(Value* v)
+    {
+        return static_cast<FunctionValue*>(v);
+    }
+
     /**
      * \brief - function to throw an error message in case a type T is encountered which cannot be converted
      * to data types supported by SPIDER compiler.

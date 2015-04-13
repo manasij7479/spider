@@ -28,7 +28,8 @@ namespace spider
                     in >> close;
                     if (close == '}')
                     {
-                        //maybe get the whole line here?
+                        //Get the whole line here so that next statement read is not forced to be empty
+                        split_get(in); // ignore
                         break;
                     }
                     else

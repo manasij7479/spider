@@ -26,7 +26,8 @@ namespace spider
             Integer, String, Bool, Float,
             Graph, Window,
             List, Dict,
-            Vattr, Eattr
+            Vattr, Eattr, 
+            Any, Function
         };
         /**
          * \brief - Constructor
@@ -54,7 +55,9 @@ namespace spider
                 {"window", Type::Window},
                 {"list", Type::List},
                 {"dict", Type::Dict},
-                {"vattr", Type::Vattr}
+                {"vattr", Type::Vattr},
+                {"any", Type::Any},
+                {"func", Type::Function}
                 //Add the rest as needed
             };
         }
@@ -73,7 +76,9 @@ namespace spider
                 { Type::Window, "window"},
                 { Type::List, "list"},
                 { Type::Dict, "dict"},
-                { Type::Vattr, "vattr"}
+                { Type::Vattr, "vattr"},
+                { Type::Any, "any"},
+                { Type::Function, "func"}
                 //Add the rest as needed
             };
         }

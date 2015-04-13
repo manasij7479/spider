@@ -2,7 +2,6 @@
 #define SPIDER_RUNTIME_HPP
 #include "Runtime/Type.hpp"
 #include "Runtime/SymbolTable.hpp"
-#include "Runtime/Functions.hpp"
 #include "Runtime/Statement.hpp"
 #include <functional>
 /**
@@ -16,12 +15,13 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime(spider::SymbolTable t = SymbolTable(), spider::FunctionSystem f = FunctionSystem(), bool nested_mode_ = false);
+        Runtime(spider::SymbolTable t = SymbolTable(), bool nested_mode_ = false);
         void eval(std::vector<std::string> args);
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
-        FunctionSystem& getFunctions();
         void setShowCallback(std::function<void(std::string)> f);
+        SymbolTable* getSymbolTable(){return &table;}
+        void setNestedMode(bool b){nested_mode = b;}
     private:
         bool tryShow(std::vector<std::string> idf);
         bool tryDeclare(std::string idf, std::vector<std::string> value);
@@ -37,7 +37,7 @@ namespace spider
         Value* prev;
         Value* prev_to_prev;
         SymbolTable table;
-        FunctionSystem functions;
+//         FunctionSystem functions;
         bool breakflag;
         bool nested_mode;
         std::function<void(std::string)> showCallback;

@@ -1,0 +1,19 @@
+function show(any a);
+
+function generate=(graph g);
+function display(graph g)=(window w);
+function change_layout=(window w);
+function clear;
+
+function add(int a)(int b)=(int c);
+function sub(int a)(int b)=(int c);
+function mul(int a)(int b)=(int c);
+function div(int a)(int b)=(int c);
+function mod(int a)(int b)=(int c);
+function greater(int a)(int b)=(bool c);
+function lesser(int a)(int b)=(bool c);
+
+function create_list=(list a);
+function map(list l)(func f)=(list m);
+
+

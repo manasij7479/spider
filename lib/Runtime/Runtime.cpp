@@ -5,24 +5,24 @@
 #include "Runtime/WindowValue.hpp"
 #include "Runtime/TypeOps.hpp"
 #include "Runtime/ListValue.hpp"
+#include "Runtime/FunctionValue.hpp"
 namespace spider
 {
-    Runtime::Runtime(SymbolTable t, FunctionSystem f, bool nested_mode_) : table(t), functions(f)
+    Runtime::Runtime(SymbolTable t, bool nested_mode_) : table(t)
     {
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
         nested_mode = nested_mode_;
         showCallback = [](std::string s){std::cout<<s<<std::endl;};
+        
+        for (auto function: getInbuiltFunctions())
+            table.insert(function.first, new InbuiltFunction(function.first, function.second));
     }
     void Runtime::setShowCallback(std::function<void(std::string)> f)
     {
         showCallback = f;
     }
 
-    FunctionSystem& Runtime::getFunctions()
-    {
-        return functions;
-    }
     void Runtime::eval(std::vector<std::string> args)
     {
         Value* v = nullptr;
@@ -36,6 +36,7 @@ namespace spider
         {
             table.clear();
             table.push();
+            prev = nullptr;
         }
         else if (args[0] == "break")
             breakflag = true;
@@ -64,7 +65,8 @@ namespace spider
         }
         else 
         { // make call keyword optional, may be removed later
-            if (functions.isFunction(args[0]))
+            auto f = table.get(args[0]);
+            if ((f!= nullptr && f->type == VType::Function) || getInbuiltFunctions().find(args[0]) != getInbuiltFunctions().end())
             {
                 if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
@@ -113,13 +115,16 @@ namespace spider
                 }
             }
             else if (command[0] == "function")
-                functions.def(command, stmt.getTail());
+            {
+//                 functions.def(command, stmt.getTail());
+                table.insert(command[1], new UserDefinedFunction(command, stmt.getTail(), this));
+            }
         }
         else if (stmt.isBlock() == false)
             eval(stmt.getSingle());
         else 
         {
-            if (!nested_mode )
+            if (!nested_mode) // in case of nested mode, caller manually pushes and pops the context
                 table.push(); // for local variables
             for (auto inner_stmt : stmt.getBlock())
             {
@@ -129,7 +134,7 @@ namespace spider
                 eval(*inner_stmt);
             }
             if (!nested_mode)
-            table.pop();
+                table.pop();
         }
     }
     Value* Runtime::getFromSymbolTable(std::string name)
@@ -174,10 +179,12 @@ namespace spider
     
     bool Runtime::tryCall(std::string fname, std::vector<std::string> value)
     {
-        auto callArgs = substituteArgs(value);
-        if (functions.isFunction(fname) == false)
+        Value* result;
+        auto f = table.get(fname);
+        if (f != nullptr && f->type == VType::Function)
+            result = static_cast<FunctionValue*>(f)->call(substituteArgs(value));
+        if (result == nullptr)
             return false;
-        auto result = functions.call(fname, callArgs, functions, table);
         assignPrev(result);
         return true;
     }
