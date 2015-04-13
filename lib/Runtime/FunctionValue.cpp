@@ -60,7 +60,9 @@ namespace spider
             DMAP(create_dict),
             
             //Window Functions
-            WMAP(display), WMAP(change_layout),
+            WMAP(display), WMAP(change_layout), WMAP(display_vertex_name),
+            WMAP(display_edge_cost), WMAP(display_vertex_coloring),
+            WMAP(display_edge_coloring), WMAP(display_gradient),
             
             //Experimental
             EMAP(tree_rot_right), EMAP(tree_rot_left)

@@ -25,6 +25,7 @@ namespace spider
         }
         bool eventFilter(QObject *obj, QEvent *event);
         LayoutPainter* getLayoutPainter(){return lp;}
+        void changeCallback(){emit change();}
     private slots:
         void change();
         void zoom_in();

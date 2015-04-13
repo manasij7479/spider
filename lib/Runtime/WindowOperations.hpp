@@ -9,6 +9,7 @@
 #include "Layout/TreeLayout.hpp"
 #include "Layout/BinaryTreeLayout.hpp"
 #include "Layout/GridLayout.hpp"
+#include <QtDisplay/LayoutPainter.hpp>
 namespace spider
 {
     typedef GraphValue::Graph GT;
@@ -120,4 +121,67 @@ namespace spider
         win->data->changeLayout(l);
         return win;
     }
+//     bool& displayText(){return op_displayText;}
+//     bool& displayEdgeCost(){return op_displayEdgeCost;}
+//     bool& useGradient(){return op_useGradient;}
+//     bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}
+//     bool& useVertexColoring(){return op_vertexColoring;}
+//     bool& useEdgeColoring(){return op_edgeColoring;}
+    
+    Value* win_display_vertex_name(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Bool);
+        auto win = getw(args[0]);
+        auto b = getb(args[1]);
+        win->data->getLayoutPainter()->displayText() = b->data;
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_display_edge_cost(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Bool);
+        auto win = getw(args[0]);
+        auto b = getb(args[1]);
+        win->data->getLayoutPainter()->displayEdgeCost() = b->data;
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_display_gradient(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Bool);
+        auto win = getw(args[0]);
+        auto b = getb(args[1]);
+        win->data->getLayoutPainter()->useGradient() = b->data;
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_display_vertex_coloring(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Bool);
+        auto win = getw(args[0]);
+        auto b = getb(args[1]);
+        win->data->getLayoutPainter()->useVertexColoring() = b->data;
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_display_edge_coloring(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Bool);
+        auto win = getw(args[0]);
+        auto b = getb(args[1]);
+        win->data->getLayoutPainter()->useEdgeColoring() = b->data;
+        win->data->changeCallback();
+        return win;
+    }
+    
 }
