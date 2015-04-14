@@ -101,6 +101,11 @@ namespace spider
             {"desargues", graph::gen::desargues},
             {"mobius_kantor", graph::gen::mobius_kantor},
             {"dodecahedron", graph::gen::dodecahedron},
+            {"heawood",graph::gen::heawood},
+            {"pappus",graph::gen::pappus},
+            {"franklin",graph::gen::franklin},
+            {"diamond",graph::gen::diamond},
+            {"tietze",graph::gen::tietze},
             {"nauru", graph::gen::nauru},
         };
     }
