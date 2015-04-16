@@ -139,17 +139,18 @@ namespace spider
             for (auto v : graph::VertexList(layout->getGraph()))
             {
                 Point p = layout->getVertex(v);
-                if (op_useGradient)
-                {
-                    radial.setCenter(p.x, p.y);
-                    radial.setFocalPoint(p.x, p.y);
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
-                }
-                else if (op_vertexColoring)
+                    
+                if (op_vertexColoring)
                 {
                     
                     auto col = genColor(vcstate->getColorMap()[v], vcstate->noOfColorsUsed());
                     m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(col)));
+                }
+                else if (op_useGradient)
+                {
+                    radial.setCenter(p.x, p.y);
+                    radial.setFocalPoint(p.x, p.y);
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
                 }
                 else
                 {
