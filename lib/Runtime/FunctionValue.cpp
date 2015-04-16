@@ -66,6 +66,7 @@ namespace spider
             WMAP(display), WMAP(change_layout), WMAP(display_vertex_name),
             WMAP(display_edge_cost), WMAP(display_vertex_coloring),
             WMAP(display_edge_coloring), WMAP(display_gradient),
+            WMAP(mark_vertex),
             
             //Experimental
             EMAP(tree_rot_right), EMAP(tree_rot_left)

@@ -87,10 +87,12 @@ namespace spider
                 {
                     m_Scene->addEllipse(c[0].x -10 , c[0].y -40, 20, 40);
                     continue;
+                    //FIXME: Coloring is skipped
                 }
-                if (op_edgeColoring)
+                auto p = std::make_pair(std::get<0>(e), std::get<1>(e));
+                if (edgeColors.find(p) != edgeColors.end())
                 {
-                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(edgeColors[std::make_pair(std::get<0>(e), std::get<1>(e))]));
+                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(edgeColors[p]));
                 }
                 else
                     m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
@@ -149,7 +151,7 @@ namespace spider
             {
                 Point p = layout->getVertex(v);
                     
-                if (op_vertexColoring)
+                if (vertexColors.find(v) != vertexColors.end())
                 {
                     m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(vertexColors[v]));
                 }
@@ -172,6 +174,14 @@ namespace spider
                 }
             }
             
+        }
+        void markVertex(int vertex, std::string col)
+        {
+            vertexColors[vertex] = QColor(col.c_str());
+        }
+        void markEdge(int x, int y, std::string col)
+        {
+            edgeColors[std::make_pair(x, y)] = QColor(col.c_str());
         }
         virtual ~LayoutPainter(){}
     private:

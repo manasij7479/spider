@@ -183,5 +183,18 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
-    
+    Value* win_mark_vertex(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::String);
+        
+        auto win = getw(args[0]);
+        auto v = geti(args[1]);
+        auto s = gets(args[2]);
+        win->data->getLayoutPainter()->markVertex(v->data, s->data);
+        win->data->changeCallback();
+        return win;
+    }
 }
