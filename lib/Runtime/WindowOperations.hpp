@@ -197,4 +197,21 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
+    
+    Value* win_mark_edge(std::vector<Value*> args)
+    {
+        assert_size(args, 4);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
+        assert_type(args[3], VType::String);
+        
+        auto win = getw(args[0]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
+        auto s = gets(args[3]);
+        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
+        win->data->changeCallback();
+        return win;
+    }
 }
