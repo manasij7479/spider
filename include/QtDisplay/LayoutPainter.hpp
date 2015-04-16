@@ -37,9 +37,6 @@ namespace spider
             op_useGradient = true;
             op_vertexColoring = false;
             op_edgeColoring = false;
-            
-            vcstate = nullptr;
-            ecstate = nullptr;
         }
         /**
          * \brief - A function to draw the graph and its attributes on screen
@@ -64,12 +61,25 @@ namespace spider
 //             bool hasCn = layout->getGraphValue().hasAttribute("cn");
             
             
-            if (op_edgeColoring && ecstate == nullptr)
-                ecstate = new graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>(graph::minEdgeColoring(layout->getGraph()));
-            
-            if (op_vertexColoring && vcstate == nullptr)
-                vcstate = new graph::ColorState<graph::AdjacencyList<int, int>, int> (graph::WelshPowellColoring(layout->getGraph()));
-            
+            if (op_edgeColoring)
+            {
+                auto ecstate = graph::minEdgeColoring(layout->getGraph());
+                for (auto e : graph::EdgeList(layout->getGraph(), false))
+                {
+                    auto p = std::make_pair(std::get<0>(e),std::get<1>(e));
+                    int color = ecstate.getColorMap()[p];
+                    edgeColors[p] = genColor(color, ecstate.noOfColorsUsed());
+                }
+            }
+            if (op_vertexColoring)
+            {
+                auto vcstate =graph::WelshPowellColoring(layout->getGraph());
+                for (auto v : graph::VertexList(layout->getGraph()))
+                {
+                    int color = vcstate.getColorMap()[v];
+                    vertexColors[v] = genColor(color, vcstate.noOfColorsUsed());
+                }
+            }
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
@@ -80,8 +90,7 @@ namespace spider
                 }
                 if (op_edgeColoring)
                 {
-                    int color = ecstate->getColorMap()[std::make_pair(std::get<0>(e),std::get<1>(e))];
-                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(genColor(color, ecstate->noOfColorsUsed())));
+                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(edgeColors[std::make_pair(std::get<0>(e), std::get<1>(e))]));
                 }
                 else
                     m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
@@ -142,9 +151,7 @@ namespace spider
                     
                 if (op_vertexColoring)
                 {
-                    
-                    auto col = genColor(vcstate->getColorMap()[v], vcstate->noOfColorsUsed());
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(col)));
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(vertexColors[v]));
                 }
                 else if (op_useGradient)
                 {
@@ -182,8 +189,8 @@ namespace spider
             col.setHsv(i* 360/n, 255, 255);
             return col;
         }
-        graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>* ecstate;
-        graph::ColorState<graph::AdjacencyList<int, int>, int>* vcstate;
+        std::map<int, QColor> vertexColors;
+        std::map<std::pair<int, int>, QColor> edgeColors;
     public:
          bool& displayText(){return op_displayText;}
          bool& displayEdgeCost(){return op_displayEdgeCost;}
