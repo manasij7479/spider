@@ -190,7 +190,6 @@ namespace spider
         bool op_displayText;
         bool op_displayEdgeCost;
         bool op_useGradient;
-        bool op_useVertexColorAttrib;
         bool op_vertexColoring;
         bool op_edgeColoring;
         QColor genColor(int i, int n)
@@ -202,11 +201,10 @@ namespace spider
         std::map<int, QColor> vertexColors;
         std::map<std::pair<int, int>, QColor> edgeColors;
     public:
-         bool& displayText(){return op_displayText;}
-         bool& displayEdgeCost(){return op_displayEdgeCost;}
-         bool& useGradient(){return op_useGradient;}
-         bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}
-         bool& useVertexColoring(){return op_vertexColoring;}
-         bool& useEdgeColoring(){return op_edgeColoring;}
+         void setDisplayText(bool b){op_displayText = b;}
+         void setDisplayEdgeCost(bool b){op_displayEdgeCost = b;}
+         void setUseGradient(bool b){op_useGradient = b;}
+         void setVertexColoring(bool b){vertexColors.clear();op_vertexColoring = b;}
+         void setEdgeColoring(bool b){edgeColors.clear()op_edgeColoring = b;}
     };
 }
