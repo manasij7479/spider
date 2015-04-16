@@ -270,6 +270,13 @@ namespace spider
     {
         return new StringValue(data);
     }
+    
+    template <>
+    inline Value* convertToValue<std::tuple<int, int, int>>(std::tuple<int, int, int> data)
+    {
+        return new ListValue({convertToValue(std::get<0>(data)), convertToValue(std::get<1>(data)), convertToValue(std::get<2>(data))});
+    }
+    
     /**
      * \brief - converts any std::vector<T> to std::vector<Value*>
      * 
@@ -336,7 +343,7 @@ namespace spider
     {
         return new VattrValue(convertToCompoundValue(data));
     }
-    
+
     
     
 }

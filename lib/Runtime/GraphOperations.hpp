@@ -574,11 +574,67 @@ namespace spider
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
+    Value* graph_edge_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto el = graph::EdgeList(*getg(args[0])->data);
+        return convertToValue(el);
+    }
+    Value* graph_sorted_edge_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto el = graph::sortedEdgeList(*getg(args[0])->data);
+        return convertToValue(el);
+    }
     Value* graph_degree_map(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::DegreeMap(*getg(args[0])->data));
+    }
+    
+    Value* graph_degree_sequence(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::DegreeSequence(*getg(args[0])->data));
+    }
+    Value* graph_centre(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::Centre(*getg(args[0])->data));
+    }
+    
+    Value* graph_periphery(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::Periphery(*getg(args[0])->data));
+    }
+    Value* graph_neighbors(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        return convertToValue(graph::OutVertexList(*getg(args[0])->data, geti(args[1])->data));
+    }
+    
+    Value* graph_in_vertex_list(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        return convertToValue(graph::InVertexList(*getg(args[0])->data, geti(args[1])->data));
+    }
+    
+    Value* graph_eulerian_path(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::EulerianPath(*getg(args[0])->data));
     }
     
     Value* graph_vertex_coloring(std::vector<Value*> args)

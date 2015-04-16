@@ -53,6 +53,9 @@ namespace spider
             GMAP(set_vertex_attribute), GMAP(set_vertex_attribute_all),
             GMAP(get_vertex_attribute),
             GMAP(vertex_list), GMAP(degree_map), GMAP(vertex_coloring),
+            GMAP(edge_list),GMAP(sorted_edge_list),GMAP(degree_sequence),
+            GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
+            GMAP(eulerian_path),
             //List Functions
             LMAP(create_list), LMAP(value_at), LMAP(map),
             
