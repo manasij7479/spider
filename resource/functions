@@ -1,9 +1,73 @@
 function show(any a);
+function clear;
 
 function generate=(graph g);
+function insert_vertex(graph g)(int v)=(graph g);
+function remove_vertex(graph g)(int v)=(graph g);
+function insert_edge(graph g)(int v1)(int v2)=(graph g);
+function remove_edge(graph g)(int v1)(int v2)=(graph g);
+
+function order(graph g)=(int result);
+function size(graph g)=(int result);
+function nregular(graph g)=(int result);
+function radius(graph g)=(int result);
+function diameter(graph g)=(int result);
+function density(graph g)=(int result);
+function degree(graph g)(int v)=(int result);
+function in_degree(graph g)(int v=(int result);
+function out_degree(graph g)(int v=(int result);
+
+function is_vertex(graph g)(int v)=(bool result);
+function is_adjacent(graph g)(int x)(int y=(bool result);
+function is_subgraph(graph g)(graph h)=(bool result);
+function is_spanning_subgraph(graph g)(graph h)=(bool result);
+function is_vertex_pair_connected(graph g)=(bool result);
+function is_component(graph g)(graph h)=(bool result);
+function is_complement(graph g)(graph h)=(bool result);
+
+function is_connected(graph g)=(bool result);
+function is_regular(graph g)=(bool result);
+function is_eulerian(graph g)=(bool result);
+function is_semi_eulerian(graph g)=(bool result);
+function is_complete(graph g)=(bool result);
+function is_cyclic(graph g)=(bool result);
+
+function is_edgeless(graph g)=(bool result);
+
+function is_sparse(graph g)=(bool result);
+function is_tree(graph g)=(bool result);
+function is_empty(graph g)=(bool result);
+
+function is_centre(graph g)(int v)=(bool result);
+function is_periphery(graph g)(int v)=(bool result);
+
+function dfs_animate(graph g)(int v)=(graph result);
+function bfs_animate(graph g)(int v)=(graph result);
+function kruskal_animate(graph g)=(graph result);
+
+function vertex_list(graph g)=(list result);
+function edge_list(graph g)=(list result);
+function sorted_edge_list(graph g)=(list result);
+function degree_sequence(graph g)=(list result)
+function centre(graph g)=(list result)
+function periphery(graph g)=(list result)
+function eulerian_path(graph g)=(list result)
+
+function neighbors(graph g)(int v)=(list result);
+function in_vertex_list(graph g)(int v)=(list result);
+
+function union(graph g)(graph h)=(graph result);
+function intersection(graph g)(graph h)=(graph result);
+function join(graph g)(graph h)=(graph result);
+function symmetric_difference(graph g)(graph h)=(graph result);
+function cartesian_product(graph g)(graph h)=(graph result);
+function complement(graph g)=(graph result);
+function edge_deletion_subgraph(graph g)(int x)(int y)=(graph result);
+function vertex_deletion_subgraph(graph g)(int v)=(graph result);
+function edge_contraction_minor(graph g)(int x)(int y)=(graph result);
+
 function display(graph g)=(window w);
 function change_layout=(window w);
-function clear;
 
 function add(int a)(int b)=(int c);
 function sub(int a)(int b)=(int c);

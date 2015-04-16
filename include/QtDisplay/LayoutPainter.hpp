@@ -205,6 +205,6 @@ namespace spider
          void setDisplayEdgeCost(bool b){op_displayEdgeCost = b;}
          void setUseGradient(bool b){op_useGradient = b;}
          void setVertexColoring(bool b){vertexColors.clear();op_vertexColoring = b;}
-         void setEdgeColoring(bool b){edgeColors.clear()op_edgeColoring = b;}
+         void setEdgeColoring(bool b){edgeColors.clear();op_edgeColoring = b;}
     };
 }
