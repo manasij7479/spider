@@ -15,21 +15,21 @@
  * **/
 namespace spider
 {
-	/**
-	 * \brief - Layout Painter retrives coordinate data for each vertex and
-	 * draws it on the screen. It is the basic framework to render coordinate
-	 * data on screen.
-	 * **/
+    /**
+        * \brief - Layout Painter retrives coordinate data for each vertex and
+        * draws it on the screen. It is the basic framework to render coordinate
+        * data on screen.
+        * **/
     class LayoutPainter
     {
     public:
-		/**
-		 * \brief - Constructor
-		 * 
-		 * @param QGraphicsView* v - First Parameter, a graphic view attribute of Qt
-		 * 
-		 * @param QGraphicsScene* s - Second Parameter, a graphic scene attribute of Qt
-		 * **/
+    /**
+        * \brief - Constructor
+        * 
+        * @param QGraphicsView* v - First Parameter, a graphic view attribute of Qt
+        * 
+        * @param QGraphicsScene* s - Second Parameter, a graphic scene attribute of Qt
+        * **/
         LayoutPainter(QGraphicsView* v, QGraphicsScene* s):m_View(v), m_Scene(s)
         {
             op_displayText = true;
@@ -37,6 +37,9 @@ namespace spider
             op_useGradient = true;
             op_vertexColoring = false;
             op_edgeColoring = false;
+            
+            vcstate = nullptr;
+            ecstate = nullptr;
         }
         /**
          * \brief - A function to draw the graph and its attributes on screen
@@ -60,11 +63,11 @@ namespace spider
 //             bool hasColor = layout->getGraphValue().hasVertexAttribute("color");
 //             bool hasCn = layout->getGraphValue().hasAttribute("cn");
             
-            graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>* ecstate;
-            if (op_edgeColoring)
+            
+            if (op_edgeColoring && ecstate == nullptr)
                 ecstate = new graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>(graph::minEdgeColoring(layout->getGraph()));
-            graph::ColorState<graph::AdjacencyList<int, int>, int>* vcstate;
-            if (op_vertexColoring)
+            
+            if (op_vertexColoring && vcstate == nullptr)
                 vcstate = new graph::ColorState<graph::AdjacencyList<int, int>, int> (graph::WelshPowellColoring(layout->getGraph()));
             
             for (auto e : graph::EdgeList(layout->getGraph(), false))
@@ -178,6 +181,8 @@ namespace spider
             col.setHsv(i* 360/n, 255, 255);
             return col;
         }
+        graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>* ecstate;
+        graph::ColorState<graph::AdjacencyList<int, int>, int>* vcstate;
     public:
          bool& displayText(){return op_displayText;}
          bool& displayEdgeCost(){return op_displayEdgeCost;}
