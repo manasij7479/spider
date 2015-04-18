@@ -51,7 +51,10 @@ function sorted_edge_list(graph g)=(list result);
 function degree_sequence(graph g)=(list result);
 function centre(graph g)=(list result);
 function periphery(graph g)=(list result);
-function eulerian_path(graph g)=(list result);
+function eulerian_trail(graph g)=(list result);
+function eulerian_circuit(graph g)=(list result);
+function hamiltonian_cycle(graph g)=(list result);
+function hamiltonian_path(graph g)=(list result);
 
 function neighbors(graph g)(int v)=(list result);
 function in_vertex_list(graph g)(int v)=(list result);
