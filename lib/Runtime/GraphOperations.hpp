@@ -630,11 +630,32 @@ namespace spider
         return convertToValue(graph::InVertexList(*getg(args[0])->data, geti(args[1])->data));
     }
     
-    Value* graph_eulerian_path(std::vector<Value*> args)
+    Value* graph_eulerian_trail(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
-        return convertToValue(graph::EulerianPath(*getg(args[0])->data));
+        return convertToValue(graph::EulerianTrail(*getg(args[0])->data));
+    }
+    
+    Value* graph_eulerian_circuit(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::EulerianCircuit(*getg(args[0])->data));
+    }
+    
+    Value* graph_hamiltonian_path(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::HamiltonianPath(*getg(args[0])->data));
+    }
+    
+    Value* graph_hamiltonian_cycle(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::HamiltonianCycle(*getg(args[0])->data));
     }
     
     Value* graph_vertex_coloring(std::vector<Value*> args)
