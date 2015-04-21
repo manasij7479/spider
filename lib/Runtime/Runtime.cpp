@@ -14,13 +14,23 @@ namespace spider
         breakflag = false;
         nested_mode = nested_mode_;
         showCallback = [](std::string s){std::cout<<s<<std::endl;};
-        
+        readCallback = [](std::string s)
+        {
+            std::cout<< s << std::endl;
+            std::string result;
+            std::cin>>result;
+            return result;
+        };
         for (auto function: getInbuiltFunctions())
             table.insert(function.first, new InbuiltFunction(function.first, function.second));
     }
     void Runtime::setShowCallback(std::function<void(std::string)> f)
     {
         showCallback = f;
+    }
+    void Runtime::setReadCallback(std::function< std::string(std::string) > f)
+    {
+        readCallback = f;
     }
 
     void Runtime::eval(std::vector<std::string> args)
@@ -31,6 +41,11 @@ namespace spider
             assert_size(args, greater_eq(2));
             if(tryShow(std::vector<std::string>(args.begin()+1, args.end())) == false)
                 throw std::runtime_error("Object : '"+args[1]+"' does not exist.\n");
+        }
+        else if (args[0] == "read")
+        {
+            assert_size(args, 2);
+            tryRead(args[1]);
         }
         else if (args[0] == "clear")
         {
@@ -265,5 +280,12 @@ namespace spider
         }
         return result;
     }
-    
+    void Runtime::tryRead(std::string idf)
+    {
+        Value* v = table.get(idf);
+        if (v == nullptr)
+            throw std::runtime_error("Object '"+idf+"' does not exist ");
+        else v->read(readCallback("Value for "+idf+":"));
+    }
+
 }

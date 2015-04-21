@@ -39,6 +39,7 @@ namespace spider
         virtual ~Value(){}
         /** \brief - function to show "<Empty Value>" **/
         virtual std::string show() {return "<Empty Value>";};
+        virtual void read(std::string s){throw std::runtime_error("Read operation not supported.");};
         Type type;
         /**
          * \brief - to map datatype name to the actual datatype
@@ -100,6 +101,10 @@ namespace spider
         {
             return std::to_string(data);
         }
+        void read(std::string s)
+        {
+            data = std::stoi(s);
+        }
         int data;
     };
     /**
@@ -116,6 +121,12 @@ namespace spider
                 return "true";
             else return "false";
         }
+        void read(std::string s)
+        {
+            if (s == "true")
+                data = true;
+            else data = false;
+        }
         bool data;
     };
     /**
@@ -130,6 +141,10 @@ namespace spider
         {
             return data;
         }
+        void read(std::string s)
+        {
+            data = s;
+        }
         std::string data;
     };
     /**
@@ -143,6 +158,10 @@ namespace spider
         std::string show()
         {
             return std::to_string(data);
+        }
+        void read(std::string s)
+        {
+            data = std::stof(s);
         }
         float data;
     };

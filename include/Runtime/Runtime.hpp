@@ -20,10 +20,12 @@ namespace spider
         void eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
         void setShowCallback(std::function<void(std::string)> f);
+        void setReadCallback(std::function<std::string(std::string)> f);
         SymbolTable* getSymbolTable(){return &table;}
         void setNestedMode(bool b){nested_mode = b;}
     private:
         bool tryShow(std::vector<std::string> idf);
+        void tryRead(std::string idf);
         bool tryDeclare(std::string idf, std::vector<std::string> value);
         bool tryAssign(std::string idf, std::vector<std::string> value);
         
@@ -41,6 +43,7 @@ namespace spider
         bool breakflag;
         bool nested_mode;
         std::function<void(std::string)> showCallback;
+        std::function<std::string(std::string)> readCallback;
 ///TODO: Idea for List impl.
 //Remove most construct* functions
 //Make substituteArgs more sophisticated and return a LIstValue*
