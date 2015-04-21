@@ -131,7 +131,14 @@ void MainWindow::run(const QString& text)
         clearFlag = false;
     }
     rt->setShowCallback([&](std::string s){emit output(s.c_str());});
-    
+    rt->setReadCallback([this](std::string s)
+    {
+        bool ok;
+        std::string result = QInputDialog::getText(this, tr("Input!"),
+                                         QString(s.c_str()), QLineEdit::Normal,
+                                         "", &ok).toStdString();
+        return result;
+    });
 //     std::cerr << text.toStdString();
     std::istringstream in(text.toStdString());
     try
