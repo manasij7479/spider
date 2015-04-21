@@ -36,8 +36,8 @@ MainWindow::MainWindow(QWidget *)
     this->setMinimumHeight(400);
     this->setMinimumWidth(600);
 //     show ();
-
-    
+    clearFlag = false;
+    rt = nullptr;
 }
 
 void MainWindow::setupActions()
@@ -51,7 +51,10 @@ void MainWindow::setupActions()
     
     QAction* openAction = new QAction(QString("Open"), this);
     QAction* saveAction = new QAction(QString("Save"), this);
+    QAction *clearAction = new QAction(QString("Clear"), this);
     QMenuBar* mb = this->menuBar();
+    
+    
     
     auto fileMenu = mb->addMenu("File");
     fileMenu->addAction(openAction);
@@ -62,11 +65,15 @@ void MainWindow::setupActions()
     runMenu->addAction(compileAction);
     runMenu->addAction(compileRunAction);
     
+    auto optionsMenu = mb->addMenu("Options");
+    optionsMenu->addAction(clearAction);
+    
     
     connect(editor, SIGNAL(run(const QString&)), this, SLOT(run(const QString&)));
     connect(runAction, SIGNAL(triggered(bool)), editor, SLOT(ktrun()));
     connect(compileAction, SIGNAL(triggered(bool)), this, SLOT(triggerCompile()));
     connect(compileRunAction, SIGNAL(triggered(bool)), this, SLOT(triggerCompileRun()));
+    connect(clearAction, SIGNAL(triggered(bool)), this, SLOT(setClear()));
     connect(openAction, SIGNAL(triggered(bool)), this, SLOT(openFile()));
     connect(saveAction, SIGNAL(triggered(bool)), this, SLOT(saveFile()));
     connect(this, SIGNAL(output(QString)), editor->getOutputPane(), SLOT(append(QString)));
@@ -115,8 +122,15 @@ void MainWindow::saveFile()
 
 void MainWindow::run(const QString& text)
 {
-    spider::Runtime rt;
-    rt.setShowCallback([&](std::string s){emit output(s.c_str());});
+    if (rt == nullptr)
+        rt = new spider::Runtime();
+    if (clearFlag == true)
+    {
+        delete rt;
+        rt = new spider::Runtime();
+        clearFlag = false;
+    }
+    rt->setShowCallback([&](std::string s){emit output(s.c_str());});
     
 //     std::cerr << text.toStdString();
     std::istringstream in(text.toStdString());
@@ -128,7 +142,7 @@ void MainWindow::run(const QString& text)
 
             if (! input.isEmpty())
             {
-                rt.eval(input);
+                rt->eval(input);
             }
             else break;
         }
@@ -196,4 +210,9 @@ void MainWindow::compile_run(const QString& str)
     else
         editor->getOutputPane()->append(error);
 }
+void MainWindow::setClear()
+{
+    clearFlag = true;
+}
+
 

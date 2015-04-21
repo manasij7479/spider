@@ -29,6 +29,7 @@ private slots:
     void compile_run(const QString& str);
     void triggerCompile();
     void triggerCompileRun();
+    void setClear();
 signals:
     void output(const QString&);
     void textEmitC(const QString&);
@@ -39,6 +40,7 @@ private:
     spider::EditorWrapper* editor;
     spider::Runtime* rt;
 //     QGridLayout* layout;
+    bool clearFlag;
 };
 
 extern MainWindow* mainWin;    
