@@ -97,7 +97,7 @@ function lesser(int a)(int b)=(bool c);
 
 function create_list=(list a);
 function map(list l)(func f)=(list result);
-function value_at(list l)(int i)=(int value);
+function value_at(list l)(int i)=(any value);
 function lsize(list l)=(int i);
 function for_each(list l)(func f)(list a)=(list result);
 
