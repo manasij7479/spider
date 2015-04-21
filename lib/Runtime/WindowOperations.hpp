@@ -197,6 +197,21 @@ namespace spider
         win->data->changeCallback();
         return win;
     }
+    Value* win_mark_vertex_v2(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Integer);
+        
+        
+        auto win = getw(args[0]);
+        auto v = geti(args[2]);
+        auto s = gets(args[1]);
+        win->data->getLayoutPainter()->markVertex(v->data, s->data);
+        win->data->changeCallback();
+        return win;
+    }
     
     Value* win_mark_edge(std::vector<Value*> args)
     {
@@ -210,6 +225,21 @@ namespace spider
         auto x = geti(args[1]);
         auto y = geti(args[2]);
         auto s = gets(args[3]);
+        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_mark_edge_v2(std::vector<Value*> args)
+    {
+        assert_size(args, 4);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::List);
+                
+        auto win = getw(args[0]);
+        auto x = geti(getl(args[2])->data[0]);
+        auto y = geti(getl(args[2])->data[1]);
+        auto s = gets(args[1]);
         win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
         win->data->changeCallback();
         return win;

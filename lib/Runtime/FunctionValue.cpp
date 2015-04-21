@@ -57,7 +57,7 @@ namespace spider
             GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
             GMAP(eulerian_trail),GMAP(eulerian_circuit),GMAP(hamiltonian_path),GMAP(hamiltonian_cycle),
             //List Functions
-            LMAP(create_list), LMAP(value_at), LMAP(map),
+            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(size), LMAP(for_each),
             
             //Dict Fuctions
             DMAP(create_dict),
@@ -66,7 +66,7 @@ namespace spider
             WMAP(display), WMAP(change_layout), WMAP(display_vertex_name),
             WMAP(display_edge_cost), WMAP(display_vertex_coloring),
             WMAP(display_edge_coloring), WMAP(display_gradient),
-            WMAP(mark_vertex), WMAP(mark_edge),
+            WMAP(mark_vertex), WMAP(mark_edge),WMAP(mark_vertex_v2), WMAP(mark_edge_v2),
             
             //Experimental
             EMAP(tree_rot_right), EMAP(tree_rot_left)

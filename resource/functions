@@ -78,6 +78,8 @@ function display_vertex_coloring(window w)(bool b)=(window result);
 function display_edge_coloring(window w)(bool b)=(window result);
 function mark_vertex(window w)(int v)(string col)=(window result);
 function mark_edge(window w)(int x)(int y)(string col)=(window result);
+function mark_vertex_v2(window w)(string col)(int v)=(window result);
+function mark_edge_v2(window w)(string col)(list e)=(window result);
 
 function add(int a)(int b)=(int c);
 function sub(int a)(int b)=(int c);
@@ -88,6 +90,9 @@ function greater(int a)(int b)=(bool c);
 function lesser(int a)(int b)=(bool c);
 
 function create_list=(list a);
-function map(list l)(func f)=(list m);
+function map(list l)(func f)=(list result);
+function value_at(list l)(int i)=(any value);
+function size(list l)=(int i);
+function for_each(list l)(func f)(list a)=(list result);
 
 
