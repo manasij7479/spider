@@ -578,7 +578,58 @@ namespace spider
         dfs();
         return gv;
     }
-    
+    Value* graph_dfs_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 5);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Function);
+        assert_type(args[3], VType::List);
+        assert_type(args[4], VType::String);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        
+        auto f = getfn(args[2]);
+        auto callargs = getl(args[3]);
+        std::string cb = gets(args[4])->data;
+        
+        g->insertVertex(s);
+        graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
+        
+        auto f1 = [&](int x) -> bool
+        {
+            callargs->data.push_back(convertToValue(x));
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        auto f2 = [&](int x, int y) -> bool
+        {
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        if (cb == "p1")
+            dfs.setp1(f1);
+        if (cb == "p2")
+            dfs.setp2(f1);
+        if (cb == "p3")
+            dfs.setp3(f2);
+        dfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            if (cb == "p4")
+                f2(x, y);
+            return true;
+        });
+        dfs();
+        return gv;
+    }
     Value* graph_kruskal_animate(std::vector<Value*> args)
     {
         assert_size(args, 1);
