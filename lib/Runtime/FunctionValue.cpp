@@ -59,7 +59,7 @@ namespace spider
             GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
             GMAP(eulerian_trail),GMAP(eulerian_circuit),GMAP(hamiltonian_path),GMAP(hamiltonian_cycle),
             //List Functions
-            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(size), LMAP(for_each),
+            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(lsize), LMAP(for_each),
             
             //Dict Fuctions
             DMAP(create_dict),

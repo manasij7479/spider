@@ -8,3 +8,23 @@ kruskal_cb
         mark_edge_v2
         create_list(window "red")
 );
+
+
+import "resource/functions";
+auto g=generate("complete" 5);
+auto w = display(g);
+auto path =eulerian_circuit(g);
+auto n = lsize(path);
+auto i=0;
+while(lesser(i 'n sub 1))
+{
+        auto j = 'i add 1;
+        mark_edge
+        (
+                w
+                value_at(path i)
+                value_at(path j)
+                "red"
+         );
+        i = j;
+}

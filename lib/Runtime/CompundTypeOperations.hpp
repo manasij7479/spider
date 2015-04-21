@@ -61,7 +61,7 @@ namespace spider
         }
         return new ListValue(result);
     }
-    Value* list_size(std::vector<Value*> args)
+    Value* list_lsize(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::List);
