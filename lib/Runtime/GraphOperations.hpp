@@ -474,17 +474,65 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-//         new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
-//         bfs.setp4([&](int x,int y)
-//         {
-//             g->insertVertex(y);
-//             g->insertEdge(x, y, 1);
-//             gv->changeCallback();
-//             QApplication::processEvents();
-//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-//             return true;
-//         });
+        bfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            return true;
+        });
+        bfs();
+        return gv;
+    }
+    Value* graph_bfs_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 5);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Function);
+        assert_type(args[3], VType::List);
+        assert_type(args[4], VType::String);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        
+        auto f = getfn(args[2]);
+        auto callargs = getl(args[3]);
+        std::string cb = gets(args[4])->data;
+        
+        g->insertVertex(s);
+        graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
+        
+        auto f1 = [&](int x) -> bool
+        {
+            callargs->data.push_back(convertToValue(x));
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        auto f2 = [&](int x, int y) -> bool
+        {
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        if (cb == "p1")
+            bfs.setp1(f1);
+        if (cb == "p2")
+            bfs.setp2(f1);
+        if (cb == "p3")
+            bfs.setp3(f2);
+        bfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            if (cb == "p4")
+                f2(x, y);
+            return true;
+        });
         bfs();
         return gv;
     }
@@ -520,17 +568,13 @@ namespace spider
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
         g->insertVertex(s);
-//         new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
         graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
-//         dfs.setp4([&](int x,int y)
-//         {
-//             g->insertVertex(y);
-//             g->insertEdge(x, y, 1);
-//             gv->changeCallback();
-//             QApplication::processEvents();
-//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-//             return true;
-//         });
+        dfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            return true;
+        });
         dfs();
         return gv;
     }
@@ -563,9 +607,9 @@ namespace spider
 //         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
         auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
         {
-//             g->insertVertex(x);
-//             g->insertVertex(y);
-//             g->insertEdge(x, y, w);
+            g->insertVertex(x);
+            g->insertVertex(y);
+            g->insertEdge(x, y, w);
 //             gv->changeCallback();
 //             QApplication::processEvents();
 //             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -587,6 +631,9 @@ namespace spider
 //         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
         auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
         {
+            g->insertVertex(x);
+            g->insertVertex(y);
+            g->insertEdge(x, y, w);
             auto listval = getl(convertToValue(std::vector<int>{x,y}));
             callargs->data.push_back(listval);
             f->call(callargs->data);

@@ -43,6 +43,8 @@ function is_periphery(graph g)(int v)=(bool result);
 
 function dfs_animate(graph g)(int v)=(graph result);
 function bfs_animate(graph g)(int v)=(graph result);
+function bfs(graph g)(int v)=(graph result);
+function bfs_cb(graph g)(int v)(func f)(list extra)(string cb)=(graph result);
 function kruskal_animate(graph g)=(graph result);
 function kruskal(graph g)=(graph result);
 function kruskal_cb(graph g)(func f)(list extra)=(graph result);
