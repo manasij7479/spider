@@ -135,7 +135,7 @@ namespace spider
         assert_type(args[1], VType::Bool);
         auto win = getw(args[0]);
         auto b = getb(args[1]);
-        win->data->getLayoutPainter()->displayText() = b->data;
+        win->data->getLayoutPainter()->setDisplayText(b->data);
         win->data->changeCallback();
         return win;
     }
@@ -146,7 +146,7 @@ namespace spider
         assert_type(args[1], VType::Bool);
         auto win = getw(args[0]);
         auto b = getb(args[1]);
-        win->data->getLayoutPainter()->displayEdgeCost() = b->data;
+        win->data->getLayoutPainter()->setDisplayEdgeCost(b->data);
         win->data->changeCallback();
         return win;
     }
@@ -157,7 +157,7 @@ namespace spider
         assert_type(args[1], VType::Bool);
         auto win = getw(args[0]);
         auto b = getb(args[1]);
-        win->data->getLayoutPainter()->useGradient() = b->data;
+        win->data->getLayoutPainter()->setUseGradient(b->data);
         win->data->changeCallback();
         return win;
     }
@@ -168,7 +168,7 @@ namespace spider
         assert_type(args[1], VType::Bool);
         auto win = getw(args[0]);
         auto b = getb(args[1]);
-        win->data->getLayoutPainter()->useVertexColoring() = b->data;
+        win->data->getLayoutPainter()->setVertexColoring(b->data);
         win->data->changeCallback();
         return win;
     }
@@ -179,9 +179,69 @@ namespace spider
         assert_type(args[1], VType::Bool);
         auto win = getw(args[0]);
         auto b = getb(args[1]);
-        win->data->getLayoutPainter()->useEdgeColoring() = b->data;
+        win->data->getLayoutPainter()->setEdgeColoring(b->data);
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_mark_vertex(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::String);
+        
+        auto win = getw(args[0]);
+        auto v = geti(args[1]);
+        auto s = gets(args[2]);
+        win->data->getLayoutPainter()->markVertex(v->data, s->data);
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_mark_vertex_v2(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::Integer);
+        
+        
+        auto win = getw(args[0]);
+        auto v = geti(args[2]);
+        auto s = gets(args[1]);
+        win->data->getLayoutPainter()->markVertex(v->data, s->data);
         win->data->changeCallback();
         return win;
     }
     
+    Value* win_mark_edge(std::vector<Value*> args)
+    {
+        assert_size(args, 4);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
+        assert_type(args[3], VType::String);
+        
+        auto win = getw(args[0]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
+        auto s = gets(args[3]);
+        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
+        win->data->changeCallback();
+        return win;
+    }
+    Value* win_mark_edge_v2(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Window);
+        assert_type(args[1], VType::String);
+        assert_type(args[2], VType::List);
+                
+        auto win = getw(args[0]);
+        auto x = geti(getl(args[2])->data[0]);
+        auto y = geti(getl(args[2])->data[1]);
+        auto s = gets(args[1]);
+        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
+        win->data->changeCallback();
+        return win;
+    }
 }

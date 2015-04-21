@@ -48,13 +48,18 @@ namespace spider
             GMAP(is_complete), GMAP(is_sparse), GMAP(is_empty), GMAP(is_edgeless),
             GMAP(is_tree), GMAP(is_centre), GMAP(is_periphery), GMAP(is_eulerian), 
             GMAP(is_semi_eulerian), GMAP(is_component), GMAP(is_regular), 
-            GMAP(bfs_animate), GMAP(dfs_animate), GMAP(kruskal_animate),
+            GMAP(bfs_animate), GMAP(bfs), GMAP(bfs_cb), 
+            GMAP(dfs_animate), GMAP(dfs), GMAP(dfs_cb),
+            GMAP(kruskal_animate),GMAP(kruskal),GMAP(kruskal_cb),
             GMAP(set_graph_attribute), GMAP(get_graph_attribute),
             GMAP(set_vertex_attribute), GMAP(set_vertex_attribute_all),
             GMAP(get_vertex_attribute),
             GMAP(vertex_list), GMAP(degree_map), GMAP(vertex_coloring),
+            GMAP(edge_list),GMAP(sorted_edge_list),GMAP(degree_sequence),
+            GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
+            GMAP(eulerian_trail),GMAP(eulerian_circuit),GMAP(hamiltonian_path),GMAP(hamiltonian_cycle),
             //List Functions
-            LMAP(create_list), LMAP(value_at), LMAP(map),
+            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(size), LMAP(for_each),
             
             //Dict Fuctions
             DMAP(create_dict),
@@ -63,6 +68,7 @@ namespace spider
             WMAP(display), WMAP(change_layout), WMAP(display_vertex_name),
             WMAP(display_edge_cost), WMAP(display_vertex_coloring),
             WMAP(display_edge_coloring), WMAP(display_gradient),
+            WMAP(mark_vertex), WMAP(mark_edge),WMAP(mark_vertex_v2), WMAP(mark_edge_v2),
             
             //Experimental
             EMAP(tree_rot_right), EMAP(tree_rot_left)

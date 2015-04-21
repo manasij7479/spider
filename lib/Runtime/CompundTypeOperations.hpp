@@ -43,5 +43,29 @@ namespace spider
             result.push_back(f->call({v}));
         return new ListValue(result);
     }
+    Value* list_for_each(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::List);
+        assert_type(args[1], VType::Function);
+        assert_type(args[2], VType::List);
+        std::vector<Value*> result;
+        auto l = getl(args[0]);
+        auto f = getfn(args[1]);
+        auto callargs = getl(args[2]);
+        for (auto v : l->data)
+        {
+            callargs->data.push_back(v);
+            result.push_back(f->call(callargs->data));
+            callargs->data.pop_back();
+        }
+        return new ListValue(result);
+    }
+    Value* list_size(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::List);
+        return new IntegerValue(getl(args[0])->data.size());
+    }
 }
  

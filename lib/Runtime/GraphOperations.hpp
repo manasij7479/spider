@@ -470,6 +470,77 @@ namespace spider
         bfs();
         return gv;
     }
+    Value* graph_bfs(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        g->insertVertex(s);
+        graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
+        bfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            return true;
+        });
+        bfs();
+        return gv;
+    }
+    Value* graph_bfs_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 5);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Function);
+        assert_type(args[3], VType::List);
+        assert_type(args[4], VType::String);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        
+        auto f = getfn(args[2]);
+        auto callargs = getl(args[3]);
+        std::string cb = gets(args[4])->data;
+        
+        g->insertVertex(s);
+        graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
+        
+        auto f1 = [&](int x) -> bool
+        {
+            callargs->data.push_back(convertToValue(x));
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        auto f2 = [&](int x, int y) -> bool
+        {
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        if (cb == "p1")
+            bfs.setp1(f1);
+        if (cb == "p2")
+            bfs.setp2(f1);
+        if (cb == "p3")
+            bfs.setp3(f2);
+        bfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            if (cb == "p4")
+                f2(x, y);
+            return true;
+        });
+        bfs();
+        return gv;
+    }
     Value* graph_dfs_animate(std::vector<Value*> args)
     {
         assert_size(args, 2);
@@ -493,6 +564,77 @@ namespace spider
         dfs();
         return gv;
     }
+    Value* graph_dfs(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        g->insertVertex(s);
+        graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
+        dfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            return true;
+        });
+        dfs();
+        return gv;
+    }
+    Value* graph_dfs_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 5);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Function);
+        assert_type(args[3], VType::List);
+        assert_type(args[4], VType::String);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        
+        auto f = getfn(args[2]);
+        auto callargs = getl(args[3]);
+        std::string cb = gets(args[4])->data;
+        
+        g->insertVertex(s);
+        graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
+        
+        auto f1 = [&](int x) -> bool
+        {
+            callargs->data.push_back(convertToValue(x));
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        auto f2 = [&](int x, int y) -> bool
+        {
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            return true;
+        };
+        if (cb == "p1")
+            dfs.setp1(f1);
+        if (cb == "p2")
+            dfs.setp2(f1);
+        if (cb == "p3")
+            dfs.setp3(f2);
+        dfs.setp4([&](int x,int y)
+        {
+            g->insertVertex(y);
+            g->insertEdge(x, y, 1);
+            if (cb == "p4")
+                f2(x, y);
+            return true;
+        });
+        dfs();
+        return gv;
+    }
     Value* graph_kruskal_animate(std::vector<Value*> args)
     {
         assert_size(args, 1);
@@ -508,6 +650,52 @@ namespace spider
             gv->changeCallback();
             QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        return gv;
+    }
+    Value* graph_kruskal(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+//         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
+        {
+            g->insertVertex(x);
+            g->insertVertex(y);
+            g->insertEdge(x, y, w);
+//             gv->changeCallback();
+//             QApplication::processEvents();
+//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        return gv;
+    }
+    Value* graph_kruskal_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Function);
+        assert_type(args[2], VType::List);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto f = getfn(args[1]);
+        auto callargs = getl(args[2]);
+//         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
+        {
+            g->insertVertex(x);
+            g->insertVertex(y);
+            g->insertEdge(x, y, w);
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            QApplication::processEvents();
+            //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
         return gv;
@@ -579,11 +767,88 @@ namespace spider
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
+    Value* graph_edge_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto el = graph::EdgeList(*getg(args[0])->data);
+        return convertToValue(el);
+    }
+    Value* graph_sorted_edge_list(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto el = graph::sortedEdgeList(*getg(args[0])->data);
+        return convertToValue(el);
+    }
     Value* graph_degree_map(std::vector<Value*> args)
     {
         assert_size(args, 1);
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::DegreeMap(*getg(args[0])->data));
+    }
+    
+    Value* graph_degree_sequence(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::DegreeSequence(*getg(args[0])->data));
+    }
+    Value* graph_centre(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::Centre(*getg(args[0])->data));
+    }
+    
+    Value* graph_periphery(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::Periphery(*getg(args[0])->data));
+    }
+    Value* graph_neighbors(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        return convertToValue(graph::OutVertexList(*getg(args[0])->data, geti(args[1])->data));
+    }
+    
+    Value* graph_in_vertex_list(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        return convertToValue(graph::InVertexList(*getg(args[0])->data, geti(args[1])->data));
+    }
+    
+    Value* graph_eulerian_trail(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::EulerianTrail(*getg(args[0])->data));
+    }
+    
+    Value* graph_eulerian_circuit(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::EulerianCircuit(*getg(args[0])->data));
+    }
+    
+    Value* graph_hamiltonian_path(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::HamiltonianPath(*getg(args[0])->data));
+    }
+    
+    Value* graph_hamiltonian_cycle(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        return convertToValue(graph::HamiltonianCycle(*getg(args[0])->data));
     }
     
     Value* graph_vertex_coloring(std::vector<Value*> args)

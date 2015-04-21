@@ -15,21 +15,21 @@
  * **/
 namespace spider
 {
-	/**
-	 * \brief - Layout Painter retrives coordinate data for each vertex and
-	 * draws it on the screen. It is the basic framework to render coordinate
-	 * data on screen.
-	 * **/
+    /**
+        * \brief - Layout Painter retrives coordinate data for each vertex and
+        * draws it on the screen. It is the basic framework to render coordinate
+        * data on screen.
+        * **/
     class LayoutPainter
     {
     public:
-		/**
-		 * \brief - Constructor
-		 * 
-		 * @param QGraphicsView* v - First Parameter, a graphic view attribute of Qt
-		 * 
-		 * @param QGraphicsScene* s - Second Parameter, a graphic scene attribute of Qt
-		 * **/
+    /**
+        * \brief - Constructor
+        * 
+        * @param QGraphicsView* v - First Parameter, a graphic view attribute of Qt
+        * 
+        * @param QGraphicsScene* s - Second Parameter, a graphic scene attribute of Qt
+        * **/
         LayoutPainter(QGraphicsView* v, QGraphicsScene* s):m_View(v), m_Scene(s)
         {
             op_displayText = true;
@@ -60,13 +60,26 @@ namespace spider
 //             bool hasColor = layout->getGraphValue().hasVertexAttribute("color");
 //             bool hasCn = layout->getGraphValue().hasAttribute("cn");
             
-            graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>* ecstate;
-            if (op_edgeColoring)
-                ecstate = new graph::ColorState<graph::AdjacencyList<int, int>, std::pair<int, int>>(graph::minEdgeColoring(layout->getGraph()));
-            graph::ColorState<graph::AdjacencyList<int, int>, int>* vcstate;
-            if (op_vertexColoring)
-                vcstate = new graph::ColorState<graph::AdjacencyList<int, int>, int> (graph::WelshPowellColoring(layout->getGraph()));
             
+            if (op_edgeColoring)
+            {
+                auto ecstate = graph::minEdgeColoring(layout->getGraph());
+                for (auto e : graph::EdgeList(layout->getGraph(), false))
+                {
+                    auto p = std::make_pair(std::get<0>(e),std::get<1>(e));
+                    int color = ecstate.getColorMap()[p];
+                    edgeColors[p] = genColor(color, ecstate.noOfColorsUsed());
+                }
+            }
+            if (op_vertexColoring)
+            {
+                auto vcstate =graph::WelshPowellColoring(layout->getGraph());
+                for (auto v : graph::VertexList(layout->getGraph()))
+                {
+                    int color = vcstate.getColorMap()[v];
+                    vertexColors[v] = genColor(color, vcstate.noOfColorsUsed());
+                }
+            }
             for (auto e : graph::EdgeList(layout->getGraph(), false))
             {
                 Curve c = layout->getEdge(std::get<0>(e),std::get<1>(e));
@@ -74,11 +87,12 @@ namespace spider
                 {
                     m_Scene->addEllipse(c[0].x -10 , c[0].y -40, 20, 40);
                     continue;
+                    //FIXME: Coloring is skipped
                 }
-                if (op_edgeColoring)
+                auto p = std::make_pair(std::get<0>(e), std::get<1>(e));
+                if (edgeColors.find(p) != edgeColors.end())
                 {
-                    int color = ecstate->getColorMap()[std::make_pair(std::get<0>(e),std::get<1>(e))];
-                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(genColor(color, ecstate->noOfColorsUsed())));
+                    m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y, QPen(edgeColors[p]));
                 }
                 else
                     m_Scene->addLine(c[0].x, c[0].y, c[1].x, c[1].y);
@@ -136,17 +150,16 @@ namespace spider
             for (auto v : graph::VertexList(layout->getGraph()))
             {
                 Point p = layout->getVertex(v);
-                if (op_useGradient)
+                    
+                if (vertexColors.find(v) != vertexColors.end())
+                {
+                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(vertexColors[v]));
+                }
+                else if (op_useGradient)
                 {
                     radial.setCenter(p.x, p.y);
                     radial.setFocalPoint(p.x, p.y);
                     m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20, QPen(), QBrush(radial));
-                }
-                else if (op_vertexColoring)
-                {
-                    
-                    auto col = genColor(vcstate->getColorMap()[v], vcstate->noOfColorsUsed());
-                    m_Scene->addEllipse(p.x - 10, p.y - 10, 20, 20 , QPen(), QBrush(QColor(col)));
                 }
                 else
                 {
@@ -162,6 +175,14 @@ namespace spider
             }
             
         }
+        void markVertex(int vertex, std::string col)
+        {
+            vertexColors[vertex] = QColor(col.c_str());
+        }
+        void markEdge(int x, int y, std::string col)
+        {
+            edgeColors[std::make_pair(x, y)] = QColor(col.c_str());
+        }
         virtual ~LayoutPainter(){}
     private:
         QGraphicsView* m_View;
@@ -169,7 +190,6 @@ namespace spider
         bool op_displayText;
         bool op_displayEdgeCost;
         bool op_useGradient;
-        bool op_useVertexColorAttrib;
         bool op_vertexColoring;
         bool op_edgeColoring;
         QColor genColor(int i, int n)
@@ -178,12 +198,13 @@ namespace spider
             col.setHsv(i* 360/n, 255, 255);
             return col;
         }
+        std::map<int, QColor> vertexColors;
+        std::map<std::pair<int, int>, QColor> edgeColors;
     public:
-         bool& displayText(){return op_displayText;}
-         bool& displayEdgeCost(){return op_displayEdgeCost;}
-         bool& useGradient(){return op_useGradient;}
-         bool& useVertexColorAttrib(){return op_useVertexColorAttrib;}
-         bool& useVertexColoring(){return op_vertexColoring;}
-         bool& useEdgeColoring(){return op_edgeColoring;}
+         void setDisplayText(bool b){op_displayText = b;}
+         void setDisplayEdgeCost(bool b){op_displayEdgeCost = b;}
+         void setUseGradient(bool b){op_useGradient = b;}
+         void setVertexColoring(bool b){vertexColors.clear();op_vertexColoring = b;}
+         void setEdgeColoring(bool b){edgeColors.clear();op_edgeColoring = b;}
     };
 }
