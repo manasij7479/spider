@@ -465,6 +465,29 @@ namespace spider
         bfs();
         return gv;
     }
+    Value* graph_bfs(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        g->insertVertex(s);
+//         new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
+        graph::BreadthFirstSearch<GraphValue::Graph> bfs(*getg(args[0])->data, s);
+//         bfs.setp4([&](int x,int y)
+//         {
+//             g->insertVertex(y);
+//             g->insertEdge(x, y, 1);
+//             gv->changeCallback();
+//             QApplication::processEvents();
+//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//             return true;
+//         });
+        bfs();
+        return gv;
+    }
     Value* graph_dfs_animate(std::vector<Value*> args)
     {
         assert_size(args, 2);
@@ -488,6 +511,30 @@ namespace spider
         dfs();
         return gv;
     }
+    Value* graph_dfs(std::vector<Value*> args)
+    {
+        assert_size(args, 2);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto s = geti(args[1])->data;
+        g->insertVertex(s);
+//         new WindowValue(gv, new TreeLayout(*gv, s));// FIXME: Leak
+        graph::DepthFirstSearch<GraphValue::Graph> dfs(*getg(args[0])->data, s);
+//         dfs.setp4([&](int x,int y)
+//         {
+//             g->insertVertex(y);
+//             g->insertEdge(x, y, 1);
+//             gv->changeCallback();
+//             QApplication::processEvents();
+//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//             return true;
+//         });
+        dfs();
+        return gv;
+    }
+    
     Value* graph_kruskal_animate(std::vector<Value*> args)
     {
         assert_size(args, 1);
@@ -503,6 +550,49 @@ namespace spider
             gv->changeCallback();
             QApplication::processEvents();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        return gv;
+    }
+    Value* graph_kruskal(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::Graph);
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+//         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
+        {
+//             g->insertVertex(x);
+//             g->insertVertex(y);
+//             g->insertEdge(x, y, w);
+//             gv->changeCallback();
+//             QApplication::processEvents();
+//             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            return true;
+        });
+        return gv;
+    }
+    Value* graph_kruskal_cb(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Function);
+        assert_type(args[2], VType::List);
+        
+        auto g = new GraphValue::Graph();
+        auto gv = new GraphValue(g);
+        auto f = getfn(args[1]);
+        auto callargs = getl(args[2]);
+//         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
+        auto state = graph::Kruskal(*getg(args[0])->data, [&](int x,int y, int w)
+        {
+            auto listval = getl(convertToValue(std::vector<int>{x,y}));
+            callargs->data.push_back(listval);
+            f->call(callargs->data);
+            callargs->data.pop_back();
+            QApplication::processEvents();
+            //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return true;
         });
         return gv;

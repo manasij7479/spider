@@ -231,7 +231,7 @@ namespace spider
     }
     Value* win_mark_edge_v2(std::vector<Value*> args)
     {
-        assert_size(args, 4);
+        assert_size(args, 3);
         assert_type(args[0], VType::Window);
         assert_type(args[1], VType::String);
         assert_type(args[2], VType::List);
