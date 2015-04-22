@@ -4,7 +4,7 @@ function clear;
 function generate=(graph g);
 function insert_vertex(graph g)(int v)=(graph g);
 function remove_vertex(graph g)(int v)=(graph g);
-function insert_edge(graph g)(int v1)(int v2)=(graph g);
+function insert_edge(graph g)(int v1)(int v2)(int cost)=(graph g);
 function remove_edge(graph g)(int v1)(int v2)=(graph g);
 
 function order(graph g)=(int result);
@@ -75,6 +75,8 @@ function edge_deletion_subgraph(graph g)(int x)(int y)=(graph result);
 function vertex_deletion_subgraph(graph g)(int v)=(graph result);
 function edge_contraction_minor(graph g)(int x)(int y)=(graph result);
 
+function dijkstra_path(graph g)(int v1)(int v2)=(list result);
+
 function display(graph g)=(window w);
 function change_layout=(window w);
 function display_vertex_name(window w)(bool b)=(window result);
@@ -98,7 +100,7 @@ function lesser(int a)(int b)=(bool c);
 function create_list=(list a);
 function map(list l)(func f)=(list result);
 function value_at(list l)(int i)=(any value);
-function size(list l)=(int i);
+function lsize(list l)=(int i);
 function for_each(list l)(func f)(list a)=(list result);
-
+function gen_pairs(list l)=(list result);
 

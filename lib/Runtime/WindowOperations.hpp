@@ -224,7 +224,9 @@ namespace spider
         auto win = getw(args[0]);
         auto x = geti(args[1]);
         auto y = geti(args[2]);
+//         std::cerr << x->data << "\t" << y->data << std::endl;
         auto s = gets(args[3]);
+//         if (x->data > y->data) std::swap(x, y); //FIXME: Workaround for deadly pair bug
         win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
         win->data->changeCallback();
         return win;
@@ -239,8 +241,9 @@ namespace spider
         auto win = getw(args[0]);
         auto x = geti(getl(args[2])->data[0]);
         auto y = geti(getl(args[2])->data[1]);
+//         if (x->data > y->data) std::swap(x, y); //FIXME: Workaround for deadly pair bug
         auto s = gets(args[1]);
-        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data);
+        win->data->getLayoutPainter()->markEdge(x->data, y->data , s->data, !win->data->getGraph()->data->isDirected());
         win->data->changeCallback();
         return win;
     }

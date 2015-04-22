@@ -16,8 +16,8 @@ namespace spider
     {
     public:
         Runtime(spider::SymbolTable t = SymbolTable(), bool nested_mode_ = false);
-        void eval(std::vector<std::string> args);
-        void eval(Statement& stmt);
+        SymbolTable::Map eval(std::vector<std::string> args);
+        SymbolTable::Map eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
         void setShowCallback(std::function<void(std::string)> f);
         void setReadCallback(std::function<std::string(std::string)> f);

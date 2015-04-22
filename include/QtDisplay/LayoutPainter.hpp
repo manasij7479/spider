@@ -179,9 +179,12 @@ namespace spider
         {
             vertexColors[vertex] = QColor(col.c_str());
         }
-        void markEdge(int x, int y, std::string col)
+        void markEdge(int x, int y, std::string col, bool undirected = true)
         {
+            
             edgeColors[std::make_pair(x, y)] = QColor(col.c_str());
+            if (undirected)
+                edgeColors[std::make_pair(y, x)] = QColor(col.c_str());
         }
         virtual ~LayoutPainter(){}
     private:

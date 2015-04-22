@@ -58,8 +58,10 @@ namespace spider
             GMAP(edge_list),GMAP(sorted_edge_list),GMAP(degree_sequence),
             GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
             GMAP(eulerian_trail),GMAP(eulerian_circuit),GMAP(hamiltonian_path),GMAP(hamiltonian_cycle),
+            GMAP(dijkstra_path),
             //List Functions
-            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(size), LMAP(for_each),
+            LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(lsize), LMAP(for_each),
+            LMAP(gen_pairs),
             
             //Dict Fuctions
             DMAP(create_dict),
@@ -91,6 +93,7 @@ namespace spider
     Value* UserDefinedFunction::call(std::vector<Value*> args)
     {
         assert_size(args, formal_params.size());
+//         std::cerr << "Calling P+\n";
         RT->getSymbolTable()->push();
         for(uint i = 0; i < args.size(); ++i)
         {
@@ -99,10 +102,15 @@ namespace spider
         }
 //         Runtime nested(*table, true);
 //         nested.setShowCallback([](std::string s){std::cerr << s;}); // temporary workaround
-        RT->setNestedMode(true);
-        RT->eval(*block);
-        RT->setNestedMode(false);
-        Value* result = RT->getFromSymbolTable(return_idf.first);
+//         RT->setNestedMode(true);
+        auto map = RT->eval(*block);
+//         RT->setNestedMode(false);
+        auto it = map.find(return_idf.first);
+        Value* result = nullptr;
+        if (it != map.end())
+            result = it->second;
+//         RT->getSymbolTable()->dump();
+//         std::cout << return_idf.first << std::endl;
         if (return_idf.second != VType::Void)
         {
             if (result == nullptr)
@@ -111,6 +119,7 @@ namespace spider
         }
         else result = new VoidValue();
 //         std::cout << result->show() <<std::endl;
+//         std::cerr << "Calling P-\n";
         RT->getSymbolTable()->pop();
         return result;
     }
