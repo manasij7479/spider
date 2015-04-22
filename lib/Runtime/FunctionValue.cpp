@@ -58,6 +58,7 @@ namespace spider
             GMAP(edge_list),GMAP(sorted_edge_list),GMAP(degree_sequence),
             GMAP(centre), GMAP(periphery), GMAP(neighbors), GMAP(in_vertex_list),
             GMAP(eulerian_trail),GMAP(eulerian_circuit),GMAP(hamiltonian_path),GMAP(hamiltonian_cycle),
+            GMAP(dijkstra_path),
             //List Functions
             LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(lsize), LMAP(for_each),
             

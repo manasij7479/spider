@@ -855,4 +855,25 @@ namespace spider
         return convertToValue(v);
     }
     
+    Value* graph_dijkstra_path(std::vector<Value*> args)
+    {
+        assert_size(args, 3);
+        assert_type(args[0], VType::Graph);
+        assert_type(args[1], VType::Integer);
+        assert_type(args[2], VType::Integer);
+        
+        auto g = getg(args[0]);
+        auto x = geti(args[1]);
+        auto y = geti(args[2]);
+        
+        auto&& result = graph::DijkstraPath(*g->data, x->data);
+        for(auto p : result)
+        {
+            std::cout << p.first <<":";
+            for(auto v: p.second)
+                std::cout << v << ' ';
+            std::cout << std::endl;
+        }
+        return convertToValue(result[y->data]);
+    }
 }
