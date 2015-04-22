@@ -32,6 +32,12 @@ namespace spider
         assert_type(args[1], VType::Integer);
         return new IntegerValue(geti(args[0])->data * geti(args[1])->data);
     }
+    Value* int_pow(std::vector<Value*> args)
+    {
+        assert_type(args[0], VType::Integer);
+        assert_type(args[1], VType::Integer);
+        return new IntegerValue(std::pow(geti(args[0])->data, geti(args[1])->data));
+    }
     Value* int_mod(std::vector<Value*> args)
     {
         assert_type(args[0], VType::Integer);
