@@ -8,7 +8,7 @@ namespace spider
         int result = 0;
         for (auto i : args)
         {
-            assert_type(i, VType::Integer);
+            assert_type(i, VType::Integer, "add");
             auto iv = geti(i);
             result += iv->data;
         }
@@ -16,30 +16,33 @@ namespace spider
     }
     Value* int_sub(std::vector<Value*> args)
     {
-        assert_type(args[0], VType::Integer);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Integer, VType::Integer}, "sub");
         return new IntegerValue(geti(args[0])->data - geti(args[1])->data);
     }
     Value* int_div(std::vector<Value*> args)
     {
+        assert_size(args, 2);
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
         return new IntegerValue(geti(args[0])->data / geti(args[1])->data);
     }
     Value* int_mul(std::vector<Value*> args)
     {
+        assert_size(args, 2);
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
         return new IntegerValue(geti(args[0])->data * geti(args[1])->data);
     }
     Value* int_pow(std::vector<Value*> args)
     {
+        assert_size(args, 2);
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
         return new IntegerValue(std::pow(geti(args[0])->data, geti(args[1])->data));
     }
     Value* int_mod(std::vector<Value*> args)
     {
+        assert_size(args, 2);
         assert_type(args[0], VType::Integer);
         assert_type(args[1], VType::Integer);
         return new IntegerValue(geti(args[0])->data % geti(args[1])->data);
@@ -129,20 +132,30 @@ namespace spider
     }
     Value* float_subf(std::vector<Value*> args)
     {
+        assert_size(args, 2);
         assert_type(args[0], VType::Float);
         assert_type(args[1], VType::Float);
         return new FloatValue(getf(args[0])->data - getf(args[1])->data);
     }
     Value* float_mulf(std::vector<Value*> args)
     {
-        assert_type(args[0], VType::Float);
-        assert_type(args[1], VType::Float);
+        assert_size(args, 2, "mulf");
+        assert_type(args[0], VType::Float, "mulf");
+        assert_type(args[1], VType::Float, "mulf");
         return new FloatValue(getf(args[0])->data * getf(args[1])->data);
     }
     Value* float_divf(std::vector<Value*> args)
     {
-        assert_type(args[0], VType::Float);
-        assert_type(args[1], VType::Float);
+        assert_size(args, 2, "divf");
+        assert_type(args[0], VType::Float, "divf");
+        assert_type(args[1], VType::Float, "divf");
         return new FloatValue(getf(args[0])->data / getf(args[1])->data);
+    }
+    Value* float_powf(std::vector<Value*> args)
+    {
+        assert_size(args, 2, "powf");
+        assert_type(args[0], VType::Float, "powf");
+        assert_type(args[1], VType::Float, "powf");
+        return new FloatValue(std::pow(getf(args[0])->data, getf(args[1])->data));
     }
 }

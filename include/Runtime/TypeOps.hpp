@@ -17,10 +17,10 @@ namespace spider
 	 * 
 	 * @param Vtype t - Second Parameter, expected type
 	 * **/
-    inline void assert_type(Value* x, VType t)
+    inline void assert_type(Value* x, VType t, std::string err_prefix = "")
     {
         if ( t != VType::Any && x->type != t)
-            throw std::runtime_error("Type Mismatch: Expected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
+            throw std::runtime_error("Type Mismatch: \n From: "+err_prefix+"\nExpected: '"+Value::TypeToNameMap()[t]+"'. Got: '"+Value::TypeToNameMap()[x->type]+"' \n");
     }
     /**
      * \brief - to check for size mismatch.
@@ -34,10 +34,19 @@ namespace spider
      * @param std::string reason  - Third Parameter, default value "<>"
      * **/
     template <typename T>
-    void assert_size(std::vector<T> args, uint size, std::string reason = "<>")
+    void assert_size(std::vector<T> args, uint size, std::string reason = "")
     {
         if (args.size() != size)
-            throw std::runtime_error("Size Mismatch."+reason+"\n");
+            throw std::runtime_error("Size Mismatch.\nFrom: "+reason+"\nExpected :"+std::to_string(size)+", got: "+std::to_string(args.size()));
+    }
+    
+    inline void assert_arg_list(std::vector<Value*> args, int size, std::vector<VType> types, std::string err_prefix = "")
+    {
+        assert_size(args, size, err_prefix);
+        for (int i = 0; i < std::min(args.size(), types.size()); ++i)
+        {
+            assert_type(args[i], types[i], err_prefix);
+        }
     }
     /**
      * \brief - to check for size mismatch.
