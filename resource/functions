@@ -94,8 +94,22 @@ function sub(int a)(int b)=(int c);
 function mul(int a)(int b)=(int c);
 function div(int a)(int b)=(int c);
 function mod(int a)(int b)=(int c);
+function pow(int a)(int b)=(int c);
 function greater(int a)(int b)=(bool c);
 function lesser(int a)(int b)=(bool c);
+function lesser(int a)(int b)=(bool c);
+function equal(int a)(int b)=(bool c);
+
+
+function addf(float a)(float b)=(float c);
+function subf(float a)(float b)=(float c);
+function mulf(float a)(float b)=(float c);
+function divf(float a)(float b)=(float c);
+function modf(float a)(float b)=(float c);
+function greaterf(float a)(float b)=(bool c);
+function lesserf(float a)(float b)=(bool c);
+function equalf(float a)(float b)=(bool c);
+
 
 function create_list=(list a);
 function map(list l)(func f)=(list result);
