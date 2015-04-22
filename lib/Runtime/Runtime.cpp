@@ -83,7 +83,9 @@ namespace spider
             auto f = table.get(args[0]);
             if ((f!= nullptr && f->type == VType::Function) || getInbuiltFunctions().find(args[0]) != getInbuiltFunctions().end())
             {
-                if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
+                if (args.size() == 1)
+                    assignPrev(f);
+                else if(tryCall(args[0], std::vector<std::string>(args.begin()+1, args.end())) == false)
                     throw std::runtime_error("Calling Function '"+args[0]+"' Failed.\n");
             }
             else if ((v = table.get(args[0])) != nullptr)

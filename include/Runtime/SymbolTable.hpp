@@ -103,19 +103,18 @@ namespace spider
 	 * **/
         void dump()
         {
-//             std::cerr << "TABLE START\n";
-//             for (auto&& map: stack)
-//             {
-//                 std::cerr <<"START SCOPE\n";
-//                 for (auto p: map)
-//                 {
-//                     if (p.second->type != VType::Function)
-//                     std::cerr << p.first << '\t' << p.second->show()<< std::endl;
-//                 }
-//                 std::cerr <<"END SCOPE\n";
-//             }
-//             std::cerr <<"END TABLE\n";
-//                 
+            std::cerr << "TABLE START\n";
+            for (auto&& map: stack)
+            {
+                std::cerr <<"START SCOPE\n";
+                for (auto p: map)
+                {
+                    if (p.second->type != VType::Function)
+                    std::cerr << p.first << '\t' << p.second->show()<< std::endl;
+                }
+                std::cerr <<"END SCOPE\n";
+            }
+            std::cerr <<"END TABLE\n";
         }
         Map top()
         {

@@ -94,7 +94,7 @@ namespace spider
     {
         assert_size(args, formal_params.size());
 //         std::cerr << "Calling P+\n";
-        RT->getSymbolTable()->push();
+//         RT->getSymbolTable()->push();
         for(uint i = 0; i < args.size(); ++i)
         {
             assert_type(args[i], formal_params[i].second);
@@ -103,6 +103,8 @@ namespace spider
 //         Runtime nested(*table, true);
 //         nested.setShowCallback([](std::string s){std::cerr << s;}); // temporary workaround
 //         RT->setNestedMode(true);
+//         std::cerr <<"DBG: "<< getName()<<"\n";
+//         RT->getSymbolTable()->dump();
         auto map = RT->eval(*block);
 //         RT->setNestedMode(false);
         auto it = map.find(return_idf.first);
@@ -120,7 +122,7 @@ namespace spider
         else result = new VoidValue();
 //         std::cout << result->show() <<std::endl;
 //         std::cerr << "Calling P-\n";
-        RT->getSymbolTable()->pop();
+//         RT->getSymbolTable()->pop();
         return result;
     }
     

@@ -19,6 +19,7 @@ namespace spider
         
         virtual Value* call(std::vector<Value*> args)=0;
         std::string show(){return "Placeholder:" + name;}
+        std::string getName(){return name;}
     private:
         std::string name;
         
