@@ -1,0 +1,15 @@
+import "resource/functions";
+auto g=generate("empty_directed");
+insert_vertex(g 1);
+insert_vertex(g 2);
+insert_vertex(g 3);
+insert_vertex(g 4);
+insert_edge(g 1 2 1);
+insert_edge(g 1 4 2);
+insert_edge(g 3 4 1);
+insert_edge(g 3 2 2);
+insert_edge(g 3 1 2);
+insert_edge(g 4 4 1);
+insert_edge(g 2 1 1);
+auto w = display(g);
+display_edge_cost(w true);
