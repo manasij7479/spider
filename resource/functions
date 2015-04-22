@@ -75,6 +75,8 @@ function edge_deletion_subgraph(graph g)(int x)(int y)=(graph result);
 function vertex_deletion_subgraph(graph g)(int v)=(graph result);
 function edge_contraction_minor(graph g)(int x)(int y)=(graph result);
 
+function dijkstra_path(graph g)(int v1)(int v2)=(list result);
+
 function display(graph g)=(window w);
 function change_layout=(window w);
 function display_vertex_name(window w)(bool b)=(window result);
@@ -100,5 +102,5 @@ function map(list l)(func f)=(list result);
 function value_at(list l)(int i)=(any value);
 function lsize(list l)=(int i);
 function for_each(list l)(func f)(list a)=(list result);
-
+function gen_pairs(list l)=(list result);
 

@@ -67,5 +67,19 @@ namespace spider
         assert_type(args[0], VType::List);
         return new IntegerValue(getl(args[0])->data.size());
     }
+    //TODO filter
+    Value* list_gen_pairs(std::vector<Value*> args)
+    {
+        assert_size(args, 1);
+        assert_type(args[0], VType::List);
+        std::vector<Value*> result;
+        auto vec = getl(args[0])->data;
+        for (int i = 0; i < vec.size() - 1; ++i)
+        {
+            auto v = std::vector<Value*>{convertToValue(vec[i]),convertToValue(vec[i+1])};
+            result.push_back(new ListValue(v));
+        }
+        return new ListValue(result);
+    }
 }
  

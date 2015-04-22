@@ -61,6 +61,7 @@ namespace spider
             GMAP(dijkstra_path),
             //List Functions
             LMAP(create_list), LMAP(value_at), LMAP(map), LMAP(lsize), LMAP(for_each),
+            LMAP(gen_pairs),
             
             //Dict Fuctions
             DMAP(create_dict),

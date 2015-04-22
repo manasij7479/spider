@@ -867,13 +867,6 @@ namespace spider
         auto y = geti(args[2]);
         
         auto&& result = graph::DijkstraPath(*g->data, x->data);
-        for(auto p : result)
-        {
-            std::cout << p.first <<":";
-            for(auto v: p.second)
-                std::cout << v << ' ';
-            std::cout << std::endl;
-        }
         return convertToValue(result[y->data]);
     }
 }
