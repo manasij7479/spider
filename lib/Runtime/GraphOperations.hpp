@@ -17,9 +17,7 @@ namespace spider
 {
     Value* graph_insert_vertex(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "insert_vertex");
         auto g = getg(args[0]);
         auto v = geti(args[1]);
         g->data->insertVertex(v->data);
@@ -28,9 +26,7 @@ namespace spider
     }
     Value* graph_remove_vertex(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "remove_vertex");
         auto g = getg(args[0]);
         auto v = geti(args[1]);
         g->data->removeVertex(v->data);
@@ -39,11 +35,7 @@ namespace spider
     }
     Value* graph_insert_edge(std::vector<Value*> args)
     {
-        assert_size(args, 4);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
-        assert_type(args[3], VType::Integer);
+        assert_arg_list(args, 4, {VType::Graph, VType::Integer, VType::Integer, VType::Integer}, "insert_edge");
         auto g = getg(args[0]);
         auto x = static_cast<IntegerValue*>(args[1]);
         auto y = static_cast<IntegerValue*>(args[2]);
@@ -56,10 +48,7 @@ namespace spider
     
     Value* graph_remove_edge(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "remove_edge");
         auto g = getg(args[0]);
         auto x = geti(args[1]);
         auto y = geti(args[2]);
@@ -72,8 +61,7 @@ namespace spider
     
     Value* graph_order(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "order");
         return new IntegerValue(getg(args[0])->data->order());
     }
     typedef std::function<GraphValue::Graph(std::vector<int>, int)> F;
@@ -127,9 +115,7 @@ namespace spider
     
     Value* graph_union(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "union");
         
         auto g = new GraphValue::Graph(graph::Union(*(getg(args[0])->data), *(getg(args[1])->data)));
         return new GraphValue(g);
@@ -138,10 +124,7 @@ namespace spider
     
     Value* graph_intersection(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
-        
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "intersection");
         auto g = new GraphValue::Graph(graph::intersection(*(getg(args[0])->data), *(getg(args[1])->data)));
         return new GraphValue(g);
     }
@@ -149,9 +132,7 @@ namespace spider
     
     Value* graph_join(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "join");
         
         auto g = new GraphValue::Graph(graph::join(*(getg(args[0])->data), *(getg(args[1])->data)));
         return new GraphValue(g);
@@ -159,19 +140,14 @@ namespace spider
     
     Value* graph_symmetric_difference(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
-        
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "symmetric_difference");
         auto g = new GraphValue::Graph(graph::symmetric_difference(*(getg(args[0])->data), *(getg(args[1])->data)));
         return new GraphValue(g);
     }
     
     Value* graph_cartesian_product(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "cartesian_product");
         
         auto g = new GraphValue::Graph(graph::cartesian_product(*(getg(args[0])->data), *(getg(args[1])->data)));
         return new GraphValue(g);
@@ -179,20 +155,14 @@ namespace spider
     
     Value* graph_complement(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
-        
+        assert_arg_list(args, 1, {VType::Graph}, "complement");
         auto g = new GraphValue::Graph(graph::complement(*(getg(args[0])->data)));
         return new GraphValue(g);
     }
     
     Value* graph_edge_deletion_subgraph(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
-        
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "edge_deletion_subgraph");
         auto x = geti(args[1]);
         auto y = geti(args[2]);
         
@@ -205,6 +175,7 @@ namespace spider
         assert_size(args, 2);
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "vertex_deletion_subgraph");
         
         auto x = geti(args[1]);
         
@@ -214,10 +185,7 @@ namespace spider
     
     Value* graph_edge_contraction_minor(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "edge_contraction_minor");
         
         auto x = geti(args[1]);
         auto y = geti(args[2]);
@@ -228,18 +196,14 @@ namespace spider
     
     Value* graph_size(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "size");
                 
         return new IntegerValue(graph::Size(*(getg(args[0])->data)));
     }
     
     Value* graph_out_degree(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "out_degree");
         auto x = geti(args[1]);
                 
         return new IntegerValue(graph::outDegree(*(getg(args[0])->data), x->data));
@@ -247,10 +211,7 @@ namespace spider
     
     Value* graph_in_degree(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "in_degree");   
         auto x = geti(args[1]);
                 
         return new IntegerValue(graph::inDegree(*(getg(args[0])->data), x->data));
@@ -258,9 +219,7 @@ namespace spider
     
     Value* graph_degree(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "degree");
         
         auto x = geti(args[1]);
                 
@@ -269,50 +228,39 @@ namespace spider
     
     Value* graph_nregular(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
-                
+        assert_arg_list(args, 1, {VType::Graph}, "nregular");
+        
         return new IntegerValue(graph::nregular(*(getg(args[0])->data)));
     }
     
     Value* graph_radius(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "radius");
                 
         return new IntegerValue(graph::Radius(*(getg(args[0])->data)));
     }
     
     Value* graph_diameter(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
-                
+        assert_arg_list(args, 1, {VType::Graph}, "diameter");
         return new IntegerValue(graph::Radius(*(getg(args[0])->data)));
     }
     
     Value* graph_density(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
-                
+        assert_arg_list(args, 1, {VType::Graph}, "density");
         return new FloatValue(graph::Density(*(getg(args[0])->data)));
     }
     
     Value* graph_is_vertex(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "is_vertex");
         return new BoolValue(graph::isVertex(*(getg(args[0])->data), geti(args[1])->data));
     }
 		
     Value* graph_is_adjacent(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "is_adjacent");
         return new BoolValue(graph::isAdjacent(*(getg(args[0])->data), 
                                                geti(args[1])->data, 
                                                geti(args[2])->data));
@@ -320,33 +268,25 @@ namespace spider
         
     Value* graph_is_subgraph(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "is_subgraph");
         return new BoolValue(graph::isSubgraph(*(getg(args[0])->data), *(getg(args[1])->data)));
     }
         
     Value* graph_is_spanning_subgraph(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "is_spanning_subgraph");
         return new BoolValue(graph::isSpanningSubgraph(*(getg(args[0])->data), *(getg(args[1])->data)));
     }
         
     Value* graph_is_connected(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_connected");
         return new BoolValue(graph::isConnected(*(getg(args[0])->data)));
     }
         
     Value* graph_is_vertex_pair_connected(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "is_vertex_pair_connected");
         return new BoolValue(graph::isConnected(*(getg(args[0])->data), 
                                                 geti(args[1])->data, 
                                                 geti(args[2])->data));
@@ -354,104 +294,85 @@ namespace spider
         
     Value* graph_is_component(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "is_component");
         return new BoolValue(graph::isComponent(*(getg(args[0])->data), *(getg(args[1])->data)));
-        }
+    }
         
     Value* graph_is_regular(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_regular");
         return new BoolValue(graph::isRegular(*(getg(args[0])->data)));
         }
         
     Value* graph_is_eulerian(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_eulerian");
         return new BoolValue(graph::isEulerian(*(getg(args[0])->data)));
     }
         
     Value* graph_is_semi_eulerian(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_semi_eulerian");
         return new BoolValue(graph::isSemiEulerian(*(getg(args[0])->data)));
     }
         
     Value* graph_is_complete(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_complete");
         return new BoolValue(graph::isComplete(*(getg(args[0])->data)));
     }
         
     Value* graph_is_cyclic(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_cyclic");
         return new BoolValue(graph::isCyclic(*(getg(args[0])->data)));
     }
         
     Value* graph_is_edgeless(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_edgeless");
         return new BoolValue(graph::isEdgeless(*(getg(args[0])->data)));
     }
         
     Value* graph_is_complement(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Graph);
+        assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "is_complement");
         return new BoolValue(graph::isComplement(*(getg(args[0])->data), *(getg(args[1])->data)));
     }
         
     Value* graph_is_sparse(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_sparse");
         return new BoolValue(graph::isSparse(*(getg(args[0])->data)));
     }
         
     Value* graph_is_tree(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_tree");
         return new BoolValue(graph::isTree(*(getg(args[0])->data)));
     }
         
     Value* graph_is_empty(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "is_empty");
         return new BoolValue(graph::isEmpty(*(getg(args[0])->data)));
-        }
+    }
         
     Value* graph_is_centre(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "is_centre");
         return new BoolValue(graph::isCentre(*(getg(args[0])->data), geti(args[1])->data));
     }
         
     Value* graph_is_periphery(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "is_periphery");
         return new BoolValue(graph::isPeriphery(*(getg(args[0])->data), geti(args[1])->data));
     }
     
     Value* graph_bfs_animate(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "bfs_animate");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
@@ -472,9 +393,7 @@ namespace spider
     }
     Value* graph_bfs(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "bfs");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
@@ -491,7 +410,7 @@ namespace spider
     }
     Value* graph_bfs_cb(std::vector<Value*> args)
     {
-        assert_size(args, 5);
+        assert_size(args, 5, "bfs_cb");
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::Integer);
         assert_type(args[2], VType::Function);
@@ -543,9 +462,7 @@ namespace spider
     }
     Value* graph_dfs_animate(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "dfs_animate");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
@@ -566,9 +483,7 @@ namespace spider
     }
     Value* graph_dfs(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "dfs");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
         auto s = geti(args[1])->data;
@@ -585,7 +500,7 @@ namespace spider
     }
     Value* graph_dfs_cb(std::vector<Value*> args)
     {
-        assert_size(args, 5);
+        assert_size(args, 5, "dfs_cb");
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::Integer);
         assert_type(args[2], VType::Function);
@@ -637,8 +552,7 @@ namespace spider
     }
     Value* graph_kruskal_animate(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "kruskal_animate");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
@@ -656,8 +570,7 @@ namespace spider
     }
     Value* graph_kruskal(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "kruskal");
         auto g = new GraphValue::Graph();
         auto gv = new GraphValue(g);
 //         new WindowValue(gv, new CircularLayout(*gv));// FIXME: Leak
@@ -675,7 +588,7 @@ namespace spider
     }
     Value* graph_kruskal_cb(std::vector<Value*> args)
     {
-        assert_size(args, 3);
+        assert_size(args, 3, "kruskal_cb");
         assert_type(args[0], VType::Graph);
         assert_type(args[1], VType::Function);
         assert_type(args[2], VType::List);
@@ -763,98 +676,83 @@ namespace spider
     
     Value* graph_vertex_list(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "vertex_list");
         return convertToValue(graph::VertexList(*getg(args[0])->data));
     }
     Value* graph_edge_list(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "edge_list");
         auto el = graph::EdgeList(*getg(args[0])->data);
         return convertToValue(el);
     }
     Value* graph_sorted_edge_list(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "sorted_edge_list");
         auto el = graph::sortedEdgeList(*getg(args[0])->data);
         return convertToValue(el);
     }
     Value* graph_degree_map(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "degree_map");
         return convertToValue(graph::DegreeMap(*getg(args[0])->data));
     }
     
     Value* graph_degree_sequence(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "degree_sequence");
         return convertToValue(graph::DegreeSequence(*getg(args[0])->data));
     }
     Value* graph_centre(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "centre");
         return convertToValue(graph::Centre(*getg(args[0])->data));
     }
     
     Value* graph_periphery(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "periphery");
         return convertToValue(graph::Periphery(*getg(args[0])->data));
     }
     Value* graph_neighbors(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "neighbors");
         return convertToValue(graph::OutVertexList(*getg(args[0])->data, geti(args[1])->data));
     }
     
     Value* graph_in_vertex_list(std::vector<Value*> args)
     {
-        assert_size(args, 2);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
+        assert_arg_list(args, 2, {VType::Graph, VType::Integer}, "in_vertex_list");
         return convertToValue(graph::InVertexList(*getg(args[0])->data, geti(args[1])->data));
     }
     
     Value* graph_eulerian_trail(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "eulerian_trail");
         return convertToValue(graph::EulerianTrail(*getg(args[0])->data));
     }
     
     Value* graph_eulerian_circuit(std::vector<Value*> args)
     {
-        assert_size(args, 1);
+        assert_arg_list(args, 1, {VType::Graph}, "eulerian_circuit");
         assert_type(args[0], VType::Graph);
         return convertToValue(graph::EulerianCircuit(*getg(args[0])->data));
     }
     
     Value* graph_hamiltonian_path(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "hamiltonian_path");
         return convertToValue(graph::HamiltonianPath(*getg(args[0])->data));
     }
     
     Value* graph_hamiltonian_cycle(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "hamiltonian_cycle");
         return convertToValue(graph::HamiltonianCycle(*getg(args[0])->data));
     }
     
     Value* graph_vertex_coloring(std::vector<Value*> args)
     {
-        assert_size(args, 1);
-        assert_type(args[0], VType::Graph);
+        assert_arg_list(args, 1, {VType::Graph}, "vertex_coloring");
         auto state = graph::WelshPowellColoring(*getg(args[0])->data);
         std::vector<Value*> v = {convertToValue(state.getColorMap()), convertToValue(state.noOfColorsUsed())}; 
         return convertToValue(v);
@@ -862,10 +760,7 @@ namespace spider
     
     Value* graph_dijkstra_path(std::vector<Value*> args)
     {
-        assert_size(args, 3);
-        assert_type(args[0], VType::Graph);
-        assert_type(args[1], VType::Integer);
-        assert_type(args[2], VType::Integer);
+        assert_arg_list(args, 3, {VType::Graph, VType::Integer, VType::Integer}, "dijkstra_path");
         
         auto g = getg(args[0]);
         auto x = geti(args[1]);

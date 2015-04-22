@@ -1,7 +1,7 @@
 import "resource/functions";
 auto g = generate("petersen");
 
-auto w = display(g)
+auto w = display(g);
 change_layout(w "bicircular");
 display_vertex_coloring(w true);
 
