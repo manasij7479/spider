@@ -59,13 +59,13 @@ namespace spider
         {
             assert_size(args, greater_eq(3));
             if (tryDeclare(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
-                throw std::runtime_error("Declaration Failed.\n");
+                throw std::runtime_error(args[1] + " Declaration Failed.\n");
         }
         else if (args[0] == "assign")
         {
             assert_size(args, greater_eq(3));
             if (tryAssign(args[1], std::vector<std::string>(args.begin()+2, args.end())) == false)
-                throw std::runtime_error("Assignment Failed.\n");
+                throw std::runtime_error(args[1] + " Assignment Failed.\n");
         }
         else if (args[0] == "call")
         {
@@ -97,7 +97,7 @@ namespace spider
                 assignPrev(v);
             }
             else 
-                throw std::runtime_error("Bad keyword: '"+args[0]+"'.\n");
+                throw std::runtime_error("Failed to understand: '"+args[0]+"'.\n");
         }
         return table.top();
     }

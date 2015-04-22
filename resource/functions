@@ -110,6 +110,11 @@ function greaterf(float a)(float b)=(bool c);
 function lesserf(float a)(float b)=(bool c);
 function equalf(float a)(float b)=(bool c);
 
+function and(bool a)(bool b)=(bool c);
+function or(bool a)(bool b)=(bool c);
+function not(bool a)=(bool c);
+
+
 
 function create_list=(list a);
 function map(list l)(func f)=(list result);
