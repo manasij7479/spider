@@ -33,7 +33,7 @@ namespace spider
         readCallback = f;
     }
 
-    void Runtime::eval(std::vector<std::string> args)
+    SymbolTable::Map Runtime::eval(std::vector<std::string> args)
     {
         Value* v = nullptr;
         if (args[0] == "show")
@@ -97,8 +97,9 @@ namespace spider
             else 
                 throw std::runtime_error("Bad keyword: '"+args[0]+"'.\n");
         }
+        return table.top();
     }
-    void Runtime::eval(Statement& stmt)
+    SymbolTable::Map Runtime::eval(Statement& stmt)
     {
         if (stmt.hasTail())
         {
@@ -110,7 +111,7 @@ namespace spider
                 assert_type(prev, VType::Bool);
                 BoolValue* cond = getb(prev);
                 if (cond->data == true)
-                    eval(*(stmt.getTail()));
+                    return eval(*(stmt.getTail()));
             }
             else if (command[0] == "while")
             {
@@ -128,18 +129,21 @@ namespace spider
                     }
                     else eval(*(stmt.getTail())); 
                 }
+                return table.top();
             }
             else if (command[0] == "function")
             {
 //                 functions.def(command, stmt.getTail());
                 table.insert(command[1], new UserDefinedFunction(command, stmt.getTail(), this));
+                return table.top();
             }
         }
         else if (stmt.isBlock() == false)
-            eval(stmt.getSingle());
+            return eval(stmt.getSingle());
         else 
         {
-            if (!nested_mode) // in case of nested mode, caller manually pushes and pops the context
+//             if (!nested_mode) // in case of nested mode, caller manually pushes and pops the context
+//                 std::cerr << "Calling RP+\n";
                 table.push(); // for local variables
             for (auto inner_stmt : stmt.getBlock())
             {
@@ -148,8 +152,11 @@ namespace spider
                     break;
                 eval(*inner_stmt);
             }
-            if (!nested_mode)
-                table.pop();
+//             if (!nested_mode)
+//             {
+//                 std::cerr << "Calling RP-\n";
+                return table.pop();
+//             }
         }
     }
     Value* Runtime::getFromSymbolTable(std::string name)

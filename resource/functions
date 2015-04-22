@@ -4,7 +4,7 @@ function clear;
 function generate=(graph g);
 function insert_vertex(graph g)(int v)=(graph g);
 function remove_vertex(graph g)(int v)=(graph g);
-function insert_edge(graph g)(int v1)(int v2)=(graph g);
+function insert_edge(graph g)(int v1)(int v2)(int cost)=(graph g);
 function remove_edge(graph g)(int v1)(int v2)=(graph g);
 
 function order(graph g)=(int result);

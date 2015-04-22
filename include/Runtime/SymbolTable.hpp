@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include "Runtime/Type.hpp"
+#include <iostream>
 /**
  * \brief - to store a map of user defined identifiers.
  * **/
@@ -13,8 +14,8 @@ namespace spider
      * **/
     class SymbolTable
     {
-        typedef std::map<std::string, Value*> Map;
     public:
+        typedef std::map<std::string, Value*> Map;
         SymbolTable()///<Constructor
         {
             push();
@@ -26,7 +27,16 @@ namespace spider
         /**
 	 * \brief - to obtain the latest variable scope from stack top.
 	 * **/
-        void pop(){stack.pop_back();} //cleanup?
+        Map pop()
+        {
+            if (!stack.empty())
+            {
+                auto result = stack[stack.size()-1];
+                stack.pop_back();
+                return result;
+            }
+            else throw std::runtime_error("Symbol Table Stack Underflow");
+        } //cleanup?
         /**
 	 * \brief - to modify the value of an identifier
 	 * 
@@ -91,6 +101,26 @@ namespace spider
         /**
 	 * \brief - function to clear the stack.
 	 * **/
+        void dump()
+        {
+//             std::cerr << "TABLE START\n";
+//             for (auto&& map: stack)
+//             {
+//                 std::cerr <<"START SCOPE\n";
+//                 for (auto p: map)
+//                 {
+//                     if (p.second->type != VType::Function)
+//                     std::cerr << p.first << '\t' << p.second->show()<< std::endl;
+//                 }
+//                 std::cerr <<"END SCOPE\n";
+//             }
+//             std::cerr <<"END TABLE\n";
+//                 
+        }
+        Map top()
+        {
+            return Map(); // FIXME: Placeholder
+        }
         void clear()
         {
             stack.clear();
