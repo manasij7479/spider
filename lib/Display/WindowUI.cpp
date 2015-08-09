@@ -1,4 +1,6 @@
+#include "../../include/Layout/ManualLayout.hpp"
 #include "QtDisplay/WindowUI.hpp"
+#include<cmath>
 #include <QLabel>
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -14,6 +16,8 @@ namespace spider
 {
     WindowUI::WindowUI(GraphValue* gWrap, Layout* l):g(gWrap), layout(l)
     {
+        clickOnVertexFlag = false;
+        
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
         lp = new LayoutPainter(m_View, m_Scene);
@@ -73,6 +77,29 @@ namespace spider
         {
             change();
         }
+        else if (event->type() == QEvent::MouseButtonDblClick)
+        {
+            QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+            Point p = {mouseEvent->localPos().x(), mouseEvent->localPos().y()};
+            
+            if(!clickOnVertexFlag)
+            {
+                for(auto i=g->data->begin();i!=g->data->end();++i)
+                {
+                    if(pow((p.x-layout->getVertex(i->first).x),2) + pow((p.y-layout->getVertex(i->first).y),2) < 900)
+                    {
+                        clickOnVertexFlag = true;
+                        vertexOnHold = i->first;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                clickOnVertexFlag = false ;
+            }
+        }
 //         else if (event->type() == QEvent::MouseButtonPress)
 //         {
 //             QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
@@ -86,6 +113,11 @@ namespace spider
 //         return true;
 //     }
         return QObject::eventFilter(obj, event);
+    }
+    void WindowUI::changeToManualLayout(typename GraphValue::Graph::VertexType v, Point p)
+    {
+        Layout* newLayout = new ManualLayout(*layout,v,p);
+        changeLayout(newLayout);
     }
     void WindowUI::change()
     {

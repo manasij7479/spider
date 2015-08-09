@@ -3,7 +3,6 @@
 #include "graph/graph.hpp"
 #include "Runtime/GraphValue.hpp"
 #include "Layout/Layout.hpp"
-#include <iostream>
 #include <QWidget>
 class QGraphicsView;
 class QGraphicsScene;
@@ -80,6 +79,9 @@ namespace spider
 //         float scaleY;
         Layout* layout;
         LayoutPainter* lp;
+        bool clickOnVertexFlag;
+        typename GraphValue::Graph::VertexType vertexOnHold;
+        void changeToManualLayout(typename GraphValue::Graph::VertexType v, Point p);
     };
 }
 #endif
