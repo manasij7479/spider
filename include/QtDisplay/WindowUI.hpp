@@ -71,6 +71,8 @@ namespace spider
         void reset();
         void rot_right();
         void rot_left();
+        void insert_vertex();
+        void input_vertex();
     private:
         GraphValue* g;
         QGraphicsView* m_View;
@@ -79,7 +81,11 @@ namespace spider
 //         float scaleY;
         Layout* layout;
         LayoutPainter* lp;
+        QLineEdit* textbox;
+        
         bool clickOnVertexFlag;
+        bool addVertexFlag;
+        
         typename GraphValue::Graph::VertexType vertexOnHold;
         void changeToManualLayout(typename GraphValue::Graph::VertexType v, Point p);
     };

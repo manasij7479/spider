@@ -17,6 +17,7 @@ namespace spider
     WindowUI::WindowUI(GraphValue* gWrap, Layout* l):g(gWrap), layout(l)
     {
         clickOnVertexFlag = false;
+        addVertexFlag = false;
         
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
@@ -26,6 +27,8 @@ namespace spider
         auto fit = new QPushButton(QIcon("resource/fit_page.png"), "Fit Page");
         auto rotr = new QPushButton("Left");
         auto rotl = new QPushButton("Right");
+        auto insv = new QPushButton("Insert Vertex");
+
         auto layout = new QGridLayout();
         layout->addWidget(m_View, 0, 0, 10, 1);
         layout->addWidget(zin, 0, 1);
@@ -33,6 +36,7 @@ namespace spider
         layout->addWidget(fit, 2, 1);
         layout->addWidget(rotl, 3, 1);
         layout->addWidget(rotr, 4, 1);
+        layout->addWidget(insv, 5, 1);
         this->setLayout(layout);
         
         connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
@@ -40,6 +44,7 @@ namespace spider
         connect(fit, SIGNAL(clicked(bool)), this, SLOT(reset()));
         connect(rotl, SIGNAL(clicked(bool)), this, SLOT(rot_left()));
         connect(rotr, SIGNAL(clicked(bool)), this, SLOT(rot_right()));
+        connect(insv, SIGNAL(clicked(bool)), this, SLOT(insert_vertex()));
         
         m_View->setScene(m_Scene);
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
@@ -99,6 +104,12 @@ namespace spider
                 changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
                 clickOnVertexFlag = false ;
             }
+            if(addVertexFlag)
+            {
+                layout->getGraph().insertVertex(vertexOnHold);
+                changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                addVertexFlag = false;
+            }
         }
 //         else if (event->type() == QEvent::MouseButtonPress)
 //         {
@@ -144,6 +155,21 @@ namespace spider
     {
         m_View->rotate(-45);
     }
-
+    void WindowUI::insert_vertex()
+    {
+        textbox = new QLineEdit();
+        textbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
+        textbox->setPlaceholderText("Enter Vertex");
+        m_Scene->addWidget(textbox);
+        connect(textbox,SIGNAL(returnPressed()),this,SLOT(input_vertex()));
+    }
+    void WindowUI::input_vertex()
+    {
+        vertexOnHold = textbox->text().toInt();
+        textbox->hide();
+        addVertexFlag = true;
+    }
+    
+    
 
 }
