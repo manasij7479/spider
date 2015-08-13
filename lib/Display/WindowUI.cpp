@@ -85,7 +85,8 @@ namespace spider
         else if (event->type() == QEvent::MouseButtonDblClick)
         {
             QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-            Point p = {mouseEvent->localPos().x(), mouseEvent->localPos().y()};
+            Point p = {static_cast<float>(mouseEvent->localPos().x()), 
+                        static_cast<float>(mouseEvent->localPos().y())};
             
             if(!clickOnVertexFlag)
             {
