@@ -96,6 +96,13 @@ namespace spider
                     {
                         clickOnVertexFlag = true;
                         vertexOnHold = i->first;
+                        //TODO: Mark vertex somehow
+                        //Placeholder
+                        QMessageBox msgBox;
+                        msgBox.setWindowTitle("Vertex Selected");
+                        msgBox.setText(QString::fromUtf8(std::to_string(i->first).c_str()));
+                        msgBox.exec();
+                        //End placeholder
                         break;
                     }
                 }
