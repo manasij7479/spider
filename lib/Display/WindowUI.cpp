@@ -1,4 +1,4 @@
-#include "../../include/Layout/ManualLayout.hpp"
+#include "Layout/ManualLayout.hpp"
 #include "QtDisplay/WindowUI.hpp"
 #include<cmath>
 #include <QLabel>
@@ -29,15 +29,15 @@ namespace spider
         auto rotl = new QPushButton("Right");
         auto insv = new QPushButton("Insert Vertex");
 
-        auto layout = new QGridLayout();
-        layout->addWidget(m_View, 0, 0, 10, 1);
-        layout->addWidget(zin, 0, 1);
-        layout->addWidget(zout, 1, 1);
-        layout->addWidget(fit, 2, 1);
-        layout->addWidget(rotl, 3, 1);
-        layout->addWidget(rotr, 4, 1);
-        layout->addWidget(insv, 5, 1);
-        this->setLayout(layout);
+        menuLayout = new QGridLayout();
+        menuLayout->addWidget(m_View, 0, 0, 10, 1);
+        menuLayout->addWidget(zin, 0, 1);
+        menuLayout->addWidget(zout, 1, 1);
+        menuLayout->addWidget(fit, 2, 1);
+        menuLayout->addWidget(rotl, 3, 1);
+        menuLayout->addWidget(rotr, 4, 1);
+        menuLayout->addWidget(insv, 5, 1);
+        this->setLayout(menuLayout);
         
         connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
         connect(zout, SIGNAL(clicked(bool)), this, SLOT(zoom_out()));
@@ -168,7 +168,8 @@ namespace spider
         textbox = new QLineEdit();
         textbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
         textbox->setPlaceholderText("Enter Vertex");
-        m_Scene->addWidget(textbox);
+        //m_Scene->addWidget(textbox);
+        menuLayout->addWidget(textbox, 5 , 1);
         connect(textbox,SIGNAL(returnPressed()),this,SLOT(input_vertex()));
     }
     void WindowUI::input_vertex()

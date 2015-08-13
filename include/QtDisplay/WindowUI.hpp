@@ -82,7 +82,7 @@ namespace spider
         Layout* layout;
         LayoutPainter* lp;
         QLineEdit* textbox;
-        
+        QGridLayout* menuLayout; // For adding items dynamically
         bool clickOnVertexFlag;
         bool addVertexFlag;
         
