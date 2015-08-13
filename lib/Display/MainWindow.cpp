@@ -53,7 +53,7 @@ void MainWindow::setupActions()
     QAction* saveAction = new QAction(QString("Save"), this);
     QAction *clearAction = new QAction(QString("Clear"), this);
     QMenuBar* mb = this->menuBar();
-    
+    mb->setNativeMenuBar(false);
     
     
     auto fileMenu = mb->addMenu("File");
