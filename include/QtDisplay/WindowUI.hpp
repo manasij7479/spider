@@ -73,6 +73,8 @@ namespace spider
         void rot_left();
         void insert_vertex();
         void input_vertex();
+        void insert_edge();
+        void input_weight();
     private:
         GraphValue* g;
         QGraphicsView* m_View;
@@ -81,13 +83,16 @@ namespace spider
 //         float scaleY;
         Layout* layout;
         LayoutPainter* lp;
-        QLineEdit* textbox;
+        QLineEdit *vertexTextbox, *weightTextbox;
         QGridLayout* menuLayout; // For adding items dynamically
         
         bool clickOnVertexFlag;
         bool addVertexFlag;
+        bool addEdgeFlag;
         
         typename GraphValue::Graph::VertexType vertexOnHold;
+        typename GraphValue::Graph::EdgeType weight;
+        
         void changeToManualLayout(typename GraphValue::Graph::VertexType v, Point p);
         void getClickedVertex(Point p, bool& flag, typename GraphValue::Graph::VertexType& v);
     };

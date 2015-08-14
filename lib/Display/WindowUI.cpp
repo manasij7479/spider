@@ -19,6 +19,7 @@ namespace spider
     {
         clickOnVertexFlag = false;
         addVertexFlag = false;
+        addEdgeFlag = false;
         
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
@@ -29,6 +30,7 @@ namespace spider
         auto rotr = new QPushButton("Left");
         auto rotl = new QPushButton("Right");
         auto insv = new QPushButton("Insert Vertex");
+        auto inse = new QPushButton("Insert Edge");
 
         menuLayout = new QGridLayout();
         menuLayout->addWidget(m_View, 0, 0, 10, 1);
@@ -38,6 +40,7 @@ namespace spider
         menuLayout->addWidget(rotl, 3, 1);
         menuLayout->addWidget(rotr, 4, 1);
         menuLayout->addWidget(insv, 5, 1);
+        menuLayout->addWidget(inse, 6, 1);
         this->setLayout(menuLayout);
         
         connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
@@ -46,6 +49,7 @@ namespace spider
         connect(rotl, SIGNAL(clicked(bool)), this, SLOT(rot_left()));
         connect(rotr, SIGNAL(clicked(bool)), this, SLOT(rot_right()));
         connect(insv, SIGNAL(clicked(bool)), this, SLOT(insert_vertex()));
+        connect(inse, SIGNAL(clicked(bool)), this, SLOT(insert_edge()));
         
         m_View->setScene(m_Scene);
         m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
@@ -95,8 +99,27 @@ namespace spider
             }
             else
             {
-                changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
-                clickOnVertexFlag = false ;
+                if(addEdgeFlag)
+                {
+                    Layout* newLayout = layout;
+                    bool clickOnSecondVertexFlag;
+                    typename GraphValue::Graph::VertexType v;
+                    getClickedVertex(p, clickOnSecondVertexFlag, v);
+                    if(clickOnSecondVertexFlag)
+                    {
+                        newLayout->getGraph().insertEdge(vertexOnHold, v, weight);
+                        if(!newLayout->getGraph().isDirected())
+                            newLayout->getGraph().insertEdge(v, vertexOnHold, weight);
+                        changeLayout(newLayout);
+                        addEdgeFlag = false;
+                        clickOnVertexFlag = false;
+                    }
+                }
+                else
+                {
+                    changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                    clickOnVertexFlag = false;
+                }
             }
             if(addVertexFlag)
             {
@@ -127,7 +150,7 @@ namespace spider
     void WindowUI::getClickedVertex(Point p, bool& flag, typename GraphValue::Graph::VertexType& v)
     {
         flag = false;
-        for(auto i=g->data->begin();i!=g->data->end();++i)
+        for(auto i=layout->getGraph().begin();i!=layout->getGraph().end();++i)
         {
             if(pow((p.x-layout->getVertex(i->first).x),2) + pow((p.y-layout->getVertex(i->first).y),2) < 900)
             {
@@ -171,20 +194,32 @@ namespace spider
     }
     void WindowUI::insert_vertex()
     {
-        textbox = new QLineEdit();
-        textbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
-        textbox->setPlaceholderText("Enter Vertex");
+        vertexTextbox = new QLineEdit();
+        vertexTextbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
+        vertexTextbox->setPlaceholderText("Enter Vertex");
         //m_Scene->addWidget(textbox);
-        menuLayout->addWidget(textbox, 5 , 1);
-        connect(textbox,SIGNAL(returnPressed()),this,SLOT(input_vertex()));
+        menuLayout->addWidget(vertexTextbox, 5 , 1);
+        connect(vertexTextbox,SIGNAL(returnPressed()),this,SLOT(input_vertex()));
     }
     void WindowUI::input_vertex()
     {
-        vertexOnHold = textbox->text().toInt();
-        textbox->hide();
+        vertexOnHold = vertexTextbox->text().toInt();
+        vertexTextbox->hide();
         addVertexFlag = true;
     }
+    void WindowUI::insert_edge()
+    {
+        weightTextbox = new QLineEdit();
+        weightTextbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
+        weightTextbox->setPlaceholderText("Enter weight");
+        menuLayout->addWidget(weightTextbox, 6 , 1);
+        connect(weightTextbox,SIGNAL(returnPressed()),this,SLOT(input_weight()));
+    }
+    void WindowUI::input_weight()
+    {
+        weight = weightTextbox->text().toInt();
+        weightTextbox->hide();
+        addEdgeFlag = true;
+    }
     
-    
-
 }
