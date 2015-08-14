@@ -83,11 +83,13 @@ namespace spider
         LayoutPainter* lp;
         QLineEdit* textbox;
         QGridLayout* menuLayout; // For adding items dynamically
+        
         bool clickOnVertexFlag;
         bool addVertexFlag;
         
         typename GraphValue::Graph::VertexType vertexOnHold;
         void changeToManualLayout(typename GraphValue::Graph::VertexType v, Point p);
+        void getClickedVertex(Point p, bool& flag, typename GraphValue::Graph::VertexType& v);
     };
 }
 #endif

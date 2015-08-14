@@ -1,6 +1,7 @@
 #include "Layout/ManualLayout.hpp"
 #include "QtDisplay/WindowUI.hpp"
 #include<cmath>
+#include<QString>
 #include <QLabel>
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -90,22 +91,7 @@ namespace spider
             
             if(!clickOnVertexFlag)
             {
-                for(auto i=g->data->begin();i!=g->data->end();++i)
-                {
-                    if(pow((p.x-layout->getVertex(i->first).x),2) + pow((p.y-layout->getVertex(i->first).y),2) < 900)
-                    {
-                        clickOnVertexFlag = true;
-                        vertexOnHold = i->first;
-                        //TODO: Mark vertex somehow
-                        //Placeholder
-                        QMessageBox msgBox;
-                        msgBox.setWindowTitle("Vertex Selected");
-                        msgBox.setText(QString::fromUtf8(std::to_string(i->first).c_str()));
-                        msgBox.exec();
-                        //End placeholder
-                        break;
-                    }
-                }
+                getClickedVertex(p, clickOnVertexFlag, vertexOnHold);
             }
             else
             {
@@ -137,6 +123,26 @@ namespace spider
     {
         Layout* newLayout = new ManualLayout(*layout,v,p);
         changeLayout(newLayout);
+    }
+    void WindowUI::getClickedVertex(Point p, bool& flag, typename GraphValue::Graph::VertexType& v)
+    {
+        flag = false;
+        for(auto i=g->data->begin();i!=g->data->end();++i)
+        {
+            if(pow((p.x-layout->getVertex(i->first).x),2) + pow((p.y-layout->getVertex(i->first).y),2) < 900)
+            {
+                flag = true;
+                v = i->first;
+                //TODO: Mark vertex somehow
+                //Placeholder
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("Vertex Selected");
+                msgBox.setText(QString::fromUtf8(std::to_string(i->first).c_str()));
+                msgBox.exec();
+                //End placeholder
+                break;
+            }
+        }
     }
     void WindowUI::change()
     {
