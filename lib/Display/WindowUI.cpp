@@ -110,6 +110,7 @@ namespace spider
                         newLayout->getGraph().insertEdge(vertexOnHold, v, weight);
                         if(!newLayout->getGraph().isDirected())
                             newLayout->getGraph().insertEdge(v, vertexOnHold, weight);
+                        lp->setVertexSelected(false);
                         changeLayout(newLayout);
                         addEdgeFlag = false;
                         clickOnVertexFlag = false;
@@ -117,6 +118,7 @@ namespace spider
                 }
                 else
                 {
+                    lp->setVertexSelected(false);
                     changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
                     clickOnVertexFlag = false;
                 }
@@ -156,12 +158,10 @@ namespace spider
             {
                 flag = true;
                 v = i->first;
-                //TODO: Mark vertex somehow
                 //Placeholder
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("Vertex Selected");
-                msgBox.setText(QString::fromUtf8(std::to_string(i->first).c_str()));
-                msgBox.exec();
+                lp->selectVertex(i->first);
+                lp->setVertexSelected(true);
+                changeLayout(this->layout);
                 //End placeholder
                 break;
             }
@@ -184,6 +184,8 @@ namespace spider
     {
         m_View->setMatrix(QMatrix());
         clickOnVertexFlag = addVertexFlag = addEdgeFlag = false;
+        lp->setVertexSelected(false);
+        changeLayout(this->layout);
     }
     void WindowUI::rot_left()
     {
