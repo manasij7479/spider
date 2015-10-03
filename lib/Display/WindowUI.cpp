@@ -183,6 +183,7 @@ namespace spider
     void WindowUI::reset()
     {
         m_View->setMatrix(QMatrix());
+        clickOnVertexFlag = addVertexFlag = addEdgeFlag = false;
     }
     void WindowUI::rot_left()
     {
