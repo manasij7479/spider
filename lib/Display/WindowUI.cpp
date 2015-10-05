@@ -46,6 +46,7 @@ namespace spider
         menuLayout->addWidget(inse, 6, 1);
         this->setLayout(menuLayout);
         
+        connect(&(layout->getGraphValue()), SIGNAL(changed()), this, SLOT(change()));
         connect(zin, SIGNAL(clicked(bool)), this, SLOT(zoom_in()));
         connect(zout, SIGNAL(clicked(bool)), this, SLOT(zoom_out()));
         connect(fit, SIGNAL(clicked(bool)), this, SLOT(reset()));
@@ -117,6 +118,7 @@ namespace spider
                             newLayout->getGraph().insertEdge(v, vertexOnHold, weight);
                         lp->setVertexSelected(false);
                         changeLayout(newLayout);
+                        layout->getGraphValue().changeCallback();
                         addEdgeFlag = false;
                         clickOnVertexFlag = false;
                     }
@@ -132,6 +134,7 @@ namespace spider
             {
                 layout->getGraph().insertVertex(vertexOnHold);
                 changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                layout->getGraphValue().changeCallback();
                 addVertexFlag = false;
             }
         }
