@@ -81,6 +81,8 @@ namespace spider
                 zoom_out();
             else if (keyEvent->key() == Qt::Key_Escape)
                 reset();
+            else if(keyEvent->key() == Qt::Key_F5)
+                change();
             return true;
         }
         else if (event->type() == QEvent::Resize)
