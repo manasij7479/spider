@@ -21,6 +21,9 @@ namespace spider
         addVertexFlag = false;
         addEdgeFlag = false;
         
+        vertexTextbox = new QLineEdit();
+        weightTextbox = new QLineEdit();
+        
         m_Scene = new QGraphicsScene;
         m_View = new QGraphicsView();
         lp = new LayoutPainter(m_View, m_Scene);
@@ -188,6 +191,10 @@ namespace spider
         clickOnVertexFlag = addVertexFlag = addEdgeFlag = false;
         lp->setVertexSelected(false);
         changeLayout(this->layout);
+        if(!vertexTextbox->isHidden())
+            vertexTextbox->hide();
+        if(!weightTextbox->isHidden())
+            weightTextbox->hide();
     }
     void WindowUI::rot_left()
     {
@@ -199,7 +206,8 @@ namespace spider
     }
     void WindowUI::insert_vertex()
     {
-        vertexTextbox = new QLineEdit();
+        vertexTextbox->clear();
+        vertexTextbox->show();
         vertexTextbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
         vertexTextbox->setPlaceholderText("Enter Vertex");
         //m_Scene->addWidget(textbox);
@@ -214,7 +222,8 @@ namespace spider
     }
     void WindowUI::insert_edge()
     {
-        weightTextbox = new QLineEdit();
+        weightTextbox->clear();
+        weightTextbox->show();
         weightTextbox->setValidator(new QIntValidator(0,std::numeric_limits<int>::max()));
         weightTextbox->setPlaceholderText("Enter weight");
         menuLayout->addWidget(weightTextbox, 6 , 1);
