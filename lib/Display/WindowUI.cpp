@@ -93,7 +93,7 @@ namespace spider
         {
             change();
         }
-        else if (event->type() == QEvent::MouseButtonDblClick)
+        else if (event->type() == QEvent::MouseButtonPress)
         {
             QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
             Point p = {static_cast<float>(mouseEvent->localPos().x()), 
