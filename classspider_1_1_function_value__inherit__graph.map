@@ -1,0 +1,5 @@
+<map id="spider::FunctionValue" name="spider::FunctionValue">
+<area shape="rect" id="node4" href="$classspider_1_1_inbuilt_function.html" title="{spider::InbuiltFunction\n||+ InbuiltFunction()\l+ call()\l}" alt="" coords="5,513,156,605"/>
+<area shape="rect" id="node5" href="$classspider_1_1_user_defined_function.html" title="{spider::UserDefinedFunction\n||+ UserDefinedFunction()\l+ call()\l}" alt="" coords="180,513,368,605"/>
+<area shape="rect" id="node2" href="$classspider_1_1_value.html" title="Value contains the different datatypes that will be supported by the language. It maps the names of t..." alt="" coords="103,131,250,296"/>
+</map>

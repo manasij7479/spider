@@ -1,0 +1,16 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classspider_1_1_value.html" title="Value contains the different datatypes that will be supported by the language. It maps the names of t..." alt="" coords="124,259,223,285"/>
+<area shape="rect" id="node3" href="$classspider_1_1_bool_value.html" title="BoolValue returns the value of an integer declared using the Boolean datatype supported by the langua..." alt="" coords="283,5,407,32"/>
+<area shape="rect" id="node4" href="$classspider_1_1_dict_value.html" title="spider::DictValue" alt="" coords="283,56,406,83"/>
+<area shape="rect" id="node5" href="$classspider_1_1_float_value.html" title="FloatValue returns the value of an integer declared using the Float datatype supported by the languag..." alt="" coords="281,107,408,133"/>
+<area shape="rect" id="node6" href="$classspider_1_1_function_value.html" title="spider::FunctionValue" alt="" coords="271,157,419,184"/>
+<area shape="rect" id="node9" href="$classspider_1_1_graph_value.html" title="wrapper class for Graph (graph::AdjacencyList&lt;int,int&gt;) " alt="" coords="278,208,411,235"/>
+<area shape="rect" id="node10" href="$classspider_1_1_integer_value.html" title="IntegerValue returns the value of an integer declared using the Integer datatype supported by the lan..." alt="" coords="275,259,414,285"/>
+<area shape="rect" id="node11" href="$classspider_1_1_list_value.html" title="spider::ListValue" alt="" coords="285,309,404,336"/>
+<area shape="rect" id="node12" href="$classspider_1_1_string_value.html" title="StringValue returns the value of an integer declared using the String datatype supported by the langu..." alt="" coords="279,360,411,387"/>
+<area shape="rect" id="node13" href="$classspider_1_1_vattr_value.html" title="spider::VattrValue" alt="" coords="281,411,408,437"/>
+<area shape="rect" id="node14" href="$classspider_1_1_void_value.html" title="VoidValue returns nothing. It is a class declared to tackle all Void variables declared using the Voi..." alt="" coords="283,461,407,488"/>
+<area shape="rect" id="node15" href="$classspider_1_1_window_value.html" title="spider::WindowValue" alt="" coords="272,512,417,539"/>
+<area shape="rect" id="node7" href="$classspider_1_1_inbuilt_function.html" title="spider::InbuiltFunction" alt="" coords="485,132,636,159"/>
+<area shape="rect" id="node8" href="$classspider_1_1_user_defined_function.html" title="spider::UserDefinedFunction" alt="" coords="467,183,655,209"/>
+</map>

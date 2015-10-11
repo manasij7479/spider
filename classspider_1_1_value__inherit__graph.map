@@ -1,0 +1,15 @@
+<map id="spider::Value" name="spider::Value">
+<area shape="rect" id="node3" href="$classspider_1_1_bool_value.html" title="BoolValue returns the value of an integer declared using the Boolean datatype supported by the langua..." alt="" coords="5,388,129,495"/>
+<area shape="rect" id="node4" href="$classspider_1_1_dict_value.html" title="{spider::DictValue\n|+ data\l|+ DictValue()\l+ DictValue()\l+ show()\l}" alt="" coords="154,388,277,495"/>
+<area shape="rect" id="node5" href="$classspider_1_1_float_value.html" title="FloatValue returns the value of an integer declared using the Float datatype supported by the languag..." alt="" coords="301,388,428,495"/>
+<area shape="rect" id="node6" href="$classspider_1_1_function_value.html" title="{spider::FunctionValue\n||+ FunctionValue()\l+ call()\l+ show()\l+ getName()\l}" alt="" coords="452,381,600,502"/>
+<area shape="rect" id="node9" href="$classspider_1_1_graph_value.html" title="wrapper class for Graph (graph::AdjacencyList&lt;int,int&gt;) " alt="" coords="624,344,775,539"/>
+<area shape="rect" id="node10" href="$classspider_1_1_integer_value.html" title="IntegerValue returns the value of an integer declared using the Integer datatype supported by the lan..." alt="" coords="799,388,938,495"/>
+<area shape="rect" id="node11" href="$classspider_1_1_list_value.html" title="{spider::ListValue\n|+ data\l|+ ListValue()\l+ ListValue()\l+ show()\l}" alt="" coords="963,388,1081,495"/>
+<area shape="rect" id="node12" href="$classspider_1_1_string_value.html" title="StringValue returns the value of an integer declared using the String datatype supported by the langu..." alt="" coords="1105,388,1237,495"/>
+<area shape="rect" id="node13" href="$classspider_1_1_vattr_value.html" title="{spider::VattrValue\n|+ data\l|+ VattrValue()\l+ VattrValue()\l+ show()\l+ isKnown()\l+ count()\l}" alt="" coords="1261,373,1388,509"/>
+<area shape="rect" id="node14" href="$classspider_1_1_void_value.html" title="VoidValue returns nothing. It is a class declared to tackle all Void variables declared using the Voi..." alt="" coords="1412,403,1536,480"/>
+<area shape="rect" id="node15" href="$classspider_1_1_window_value.html" title="{spider::WindowValue\n|+ data\l|+ WindowValue()\l}" alt="" coords="1560,403,1705,480"/>
+<area shape="rect" id="node7" href="$classspider_1_1_inbuilt_function.html" title="{spider::InbuiltFunction\n||+ InbuiltFunction()\l+ call()\l}" alt="" coords="355,587,505,679"/>
+<area shape="rect" id="node8" href="$classspider_1_1_user_defined_function.html" title="{spider::UserDefinedFunction\n||+ UserDefinedFunction()\l+ call()\l}" alt="" coords="529,587,717,679"/>
+</map>

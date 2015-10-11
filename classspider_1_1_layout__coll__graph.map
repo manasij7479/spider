@@ -1,0 +1,7 @@
+<map id="spider::Layout" name="spider::Layout">
+<area shape="rect" id="node2" href="$classgraph_1_1_vertex_attribute.html" title="{graph::VertexAttribute\l\&lt; spider::GraphValue::\lGraph, spider::vec2 \&gt;\n||+ VertexAttribute()\l+ VertexAttribute()\l+ value()\l+ isKnown()\l+ count()\l+ getData()\l}" alt="" coords="5,441,159,621"/>
+<area shape="rect" id="node3" href="$classgraph_1_1_edge_attribute.html" title="{graph::EdgeAttribute\l\&lt; spider::GraphValue\l::Graph, Curve \&gt;\n||+ EdgeAttribute()\l+ value()\l}" alt="" coords="183,470,328,591"/>
+<area shape="rect" id="node4" href="$classspider_1_1_graph_value.html" title="wrapper class for Graph (graph::AdjacencyList&lt;int,int&gt;) " alt="" coords="352,433,503,628"/>
+<area shape="rect" id="node5" href="$classspider_1_1_value.html" title="Value contains the different datatypes that will be supported by the language. It maps the names of t..." alt="" coords="238,169,385,334"/>
+<area shape="rect" id="node7" href="$classgraph_1_1_adjacency_list.html" title="class to store adjacency list of a graph " alt="" coords="409,132,553,371"/>
+</map>
