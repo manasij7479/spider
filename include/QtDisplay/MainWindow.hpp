@@ -25,10 +25,10 @@ private slots:
     void run(const QString& str);
     void create(GraphValue* g, Layout* l);
     void error(const QString& s);
-    void compile(const QString& str);
-    void compile_run(const QString& str);
-    void triggerCompile();
-    void triggerCompileRun();
+//     void compile(const QString& str);
+//     void compile_run(const QString& str);
+//     void triggerCompile();
+//     void triggerCompileRun();
     void setClear();
 signals:
     void output(const QString&);
@@ -36,7 +36,7 @@ signals:
     void textEmitR(const QString&);
 private:
     void setupActions();
-    std::pair<QByteArray, QByteArray> compile_driver(const QString& in);
+    //std::pair<QByteArray, QByteArray> compile_driver(const QString& in);
     spider::EditorWrapper* editor;
     spider::Runtime* rt;
 //     QGridLayout* layout;
