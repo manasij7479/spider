@@ -3,7 +3,7 @@
 #include "TokenTypes.hpp"
 #include <iostream>
 #include <vector>
-namespace spc
+namespace spider
 {
     class Sema;
     void tabs(int t, std::ostream& out = std::cout);

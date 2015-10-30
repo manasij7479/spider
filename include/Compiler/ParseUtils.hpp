@@ -4,7 +4,7 @@
 #include "ParseResult.hpp"
 #include "GlobalState.hpp"
 #include <iostream>
-namespace spc
+namespace spider
 {
     typedef std::function<ParseResult(int)> ParserFunction;
     ParserFunction LinearChoice(const std::vector<ParserFunction>& functions, std::string error = "Syntax Error")

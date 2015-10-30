@@ -1,7 +1,7 @@
 #ifndef TOKEN_TYPES_HPP
 #define TOKEN_TYPES_HPP
 #include <string>
-namespace spc
+namespace spider
 {
     class Token
     {

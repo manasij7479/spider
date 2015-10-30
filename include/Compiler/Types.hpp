@@ -1,7 +1,7 @@
 #ifndef SPC_TYPES_HPP
 #define SPC_TYPES_HPP
 #include <vector>
-namespace spc
+namespace spider
 {
     class Type
     {

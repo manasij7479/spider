@@ -5,7 +5,7 @@
 extern "C" int yylex();
 extern FILE* yyout;
 extern FILE* yyin;
-namespace spc
+namespace spider
 {
     extern std::vector<std::vector<Token*>> Tokens;
     extern std::string exepath;

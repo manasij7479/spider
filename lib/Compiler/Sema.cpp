@@ -1,5 +1,5 @@
 #include "Compiler/Sema.hpp"
-namespace spc
+namespace spider
 {
     std::string Sema::getReturnType(std::string f)
     {
@@ -241,15 +241,15 @@ namespace spc
     //         std::cout << "Parsed" << std::endl;
     //         if (p.get() != nullptr)
     //             p.get()->dump();
-            spc::ASTNodeVector* v = static_cast<spc::ASTNodeVector*>(p.get());
-            std::vector<spc::ASTNode*> data = v->getData();
+            ASTNodeVector* v = static_cast<ASTNodeVector*>(p.get());
+            std::vector<ASTNode*> data = v->getData();
             for (auto node : data)
             {
     //             static_cast<spc::Stmt*>(node)->dump();
-                this->process(static_cast<spc::Stmt*>(node));
+                this->process(static_cast<Stmt*>(node));
             }
         }
-        spc::popState();
+        popState();
     }
     void Sema::process(FunctionPrototype* fp, bool codegen)
     {

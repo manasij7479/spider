@@ -3,7 +3,7 @@
 #include <map>
 #include <iostream>
 #include "Types.hpp"
-namespace spc
+namespace spider
 {
     class SymbolTable
     {

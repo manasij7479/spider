@@ -3,7 +3,7 @@
 #include "AST.hpp"
 #include <vector>
 #include <sstream>
-namespace spc
+namespace spider
 {
     class ParseResult
     {

@@ -4,7 +4,7 @@
 #include "AST.hpp"
 #include "ParseResult.hpp"
 #include "ParseUtils.hpp"
-namespace spc
+namespace spider
 {
     bool isCorrectSymbol(int index, std::string s)
     {

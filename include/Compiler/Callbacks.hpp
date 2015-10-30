@@ -3,7 +3,7 @@
 #include "TokenTypes.hpp"
 #include "GlobalState.hpp"
 #include <stdexcept>
-using namespace spc;
+using namespace spider;
 void scanInt(std::string str, int line)
 {
     insertToken(new IntLiteralToken(std::stoi(str), line));

@@ -1,6 +1,6 @@
 #include "Compiler/AST.hpp"
 #include "Compiler/Sema.hpp"
-namespace spc
+namespace spider
 {
     ASTNode::ASTNode()
     {

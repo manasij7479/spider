@@ -2,7 +2,7 @@
 #define PARSE_EXPR_HPP
 #include "ParseSymbol.hpp"
 #include <iostream>
-namespace spc
+namespace spider
 {
     ParseResult parseExpr(int index);
     ParseResult parseIntLiteralExpr(int index)

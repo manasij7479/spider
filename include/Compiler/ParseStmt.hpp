@@ -1,7 +1,7 @@
 #ifndef PARSE_STMT_HPP
 #define PARSE_STMT_HPP
 #include "ParseExpr.hpp"
-namespace spc
+namespace spider
 {
     ParseResult parseStmt(int index);
     /*

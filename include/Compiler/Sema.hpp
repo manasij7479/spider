@@ -9,7 +9,7 @@
 #include <functional>
 #include "ParseResult.hpp"
 #include <cctype>
-namespace spc
+namespace spider
 {
     std::function<ParseResult(int)> ZeroOrMore(const std::function<ParseResult(int)>& f);
     ParseResult parseStmt(int index);
