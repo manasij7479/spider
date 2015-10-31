@@ -15,13 +15,13 @@ namespace spider
     class Runtime
     {
     public:
-        Runtime(spider::SymbolTable t = SymbolTable(), bool nested_mode_ = false);
-        SymbolTable::Map eval(std::vector<std::string> args);
-        SymbolTable::Map eval(Statement& stmt);
+        Runtime(spider::RuntimeSymbolTable t = RuntimeSymbolTable(), bool nested_mode_ = false);
+        RuntimeSymbolTable::Map eval(std::vector<std::string> args);
+        RuntimeSymbolTable::Map eval(Statement& stmt);
         Value* getFromSymbolTable(std::string name);
         void setShowCallback(std::function<void(std::string)> f);
         void setReadCallback(std::function<std::string(std::string)> f);
-        SymbolTable* getSymbolTable(){return &table;}
+        RuntimeSymbolTable* getSymbolTable(){return &table;}
         void setNestedMode(bool b){nested_mode = b;}
     private:
         bool tryShow(std::vector<std::string> idf);
@@ -38,7 +38,7 @@ namespace spider
         std::vector<Value*> substituteArgs(std::vector<std::string> args);
         Value* prev;
         Value* prev_to_prev;
-        SymbolTable table;
+        RuntimeSymbolTable table;
 //         FunctionSystem functions;
         bool breakflag;
         bool nested_mode;

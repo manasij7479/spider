@@ -8,7 +8,7 @@
 #include "Runtime/FunctionValue.hpp"
 namespace spider
 {
-    Runtime::Runtime(SymbolTable t, bool nested_mode_) : table(t)
+    Runtime::Runtime(RuntimeSymbolTable t, bool nested_mode_) : table(t)
     {
         prev_to_prev = prev = new VoidValue();
         breakflag = false;
@@ -33,7 +33,7 @@ namespace spider
         readCallback = f;
     }
 
-    SymbolTable::Map Runtime::eval(std::vector<std::string> args)
+    RuntimeSymbolTable::Map Runtime::eval(std::vector<std::string> args)
     {
         Value* v = nullptr;
         if (args[0] == "show")
@@ -101,7 +101,7 @@ namespace spider
         }
         return table.top();
     }
-    SymbolTable::Map Runtime::eval(Statement& stmt)
+    RuntimeSymbolTable::Map Runtime::eval(Statement& stmt)
     {
         if (stmt.hasTail())
         {

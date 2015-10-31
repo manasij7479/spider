@@ -7,7 +7,7 @@
 namespace spider
 {
     class Statement;
-    class SymbolTable;
+    class RuntimeSymbolTable;
     class Runtime;
     typedef std::function<Value*(std::vector<Value*>)> Function;
     std::map< std::string, Function >& getInbuiltFunctions();

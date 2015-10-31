@@ -3,6 +3,11 @@
 #include "Compiler/AST.hpp"
 #include "Compiler/ParseUtils.hpp"
 #include "Compiler/ParseStmt.hpp"
+#include "Compiler/GlobalState.hpp"
+#include "Compiler/ParseStmt.hpp"
+#include "Compiler/Sema.hpp"
+#include <cstdio>
+
 #include <memory>
 namespace spider
 {

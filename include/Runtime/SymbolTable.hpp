@@ -12,11 +12,11 @@ namespace spider
     /**
      * \brief - Class to implement symbol table containing names and values of user defined identifiers.
      * **/
-    class SymbolTable
+    class RuntimeSymbolTable
     {
     public:
         typedef std::map<std::string, Value*> Map;
-        SymbolTable()///<Constructor
+        RuntimeSymbolTable()///<Constructor
         {
             push();
         }
