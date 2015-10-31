@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "QtDisplay/SpiderEditor.hpp"
 #include <iostream>
+#include <sstream>
 #include "Runtime/Runtime.hpp"
 #include "Runtime/WindowValue.hpp"
 #include "Compiler/Frontend.hpp"
@@ -108,9 +109,14 @@ void MainWindow::run(const QString& text)
     ASTNode* result;
     std::string error;
     std::tie(result, error) = compile_string_to_ast(text.toStdString());
-    QString out = "Error : " + QString(error.c_str());
     if (error != "")
-        emit output(out);
+        emit output(error.c_str());
+    else
+    {
+        std::ostringstream dump;
+        result->dump(0, dump);
+        emit output(dump.str().c_str());
+    }
 //    if (rt == nullptr)
 //        rt = new spider::Runtime();
 //    if (clearFlag == true)
