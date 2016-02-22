@@ -113,6 +113,13 @@ namespace spider
         return new GraphValue(g);
     }
     
+    Value* graph_get_GML_graph(std::vector<Value*> args)
+    {
+        assert_arg_list(args, 1, {VType::String}, "getGMLGraph");
+        auto g = new GraphValue::Graph(graph::getGMLGraph((gets(args[0])->data)));
+        return new GraphValue(g);
+    }
+    
     Value* graph_union(std::vector<Value*> args)
     {
         assert_arg_list(args, 2, {VType::Graph, VType::Graph}, "union");

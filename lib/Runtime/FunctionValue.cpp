@@ -38,7 +38,7 @@ namespace spider
             
             //Graph Functions
             GMAP(insert_vertex), GMAP(insert_edge), GMAP(remove_vertex), GMAP(remove_edge),
-            GMAP(order), GMAP(generate),GMAP(union), GMAP(intersection), GMAP(join),
+            GMAP(order), GMAP(generate), GMAP(get_GML_graph), GMAP(union), GMAP(intersection), GMAP(join),
             GMAP(symmetric_difference), GMAP(cartesian_product), GMAP(complement),
             GMAP(edge_deletion_subgraph), GMAP(vertex_deletion_subgraph),
             GMAP(edge_contraction_minor), GMAP(size), GMAP(out_degree), GMAP(in_degree),
