@@ -24,3 +24,5 @@ spider
 
 #Kdevelop project
 *.kdev4*
+
+.directory
