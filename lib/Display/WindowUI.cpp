@@ -56,7 +56,9 @@ namespace spider
         connect(inse, SIGNAL(clicked(bool)), this, SLOT(insert_edge()));
         
         m_View->setScene(m_Scene);
-        m_View->setDragMode(QGraphicsView::DragMode::ScrollHandDrag);
+        m_View->setDragMode(QGraphicsView::DragMode::NoDrag);
+        m_View->verticalScrollBar()->blockSignals(true);
+        m_View->horizontalScrollBar()->blockSignals(true);
         m_View->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_View->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_View->setRenderHints( QPainter::Antialiasing | QPainter::HighQualityAntialiasing );
@@ -126,14 +128,16 @@ namespace spider
                 else
                 {
                     lp->setVertexSelected(false);
-                    changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                    QPointF qp = m_View->mapToScene(p.x, p.y);
+                    changeToManualLayout(vertexOnHold, {(float)qp.x()-10,(float)qp.y()-10});
                     clickOnVertexFlag = false;
                 }
             }
             if(addVertexFlag)
             {
                 layout->getGraph().insertVertex(vertexOnHold);
-                changeToManualLayout(vertexOnHold, {p.x-10,p.y-10});
+                QPointF qp = m_View->mapToScene(p.x, p.y);
+                changeToManualLayout(vertexOnHold, {(float)qp.x()-10,(float)qp.y()-10});
                 layout->getGraphValue().changeCallback();
                 addVertexFlag = false;
             }
@@ -159,10 +163,11 @@ namespace spider
     }
     void WindowUI::getClickedVertex(Point p, bool& flag, typename GraphValue::Graph::VertexType& v)
     {
+        QPointF qp = m_View->mapToScene(p.x, p.y);
         flag = false;
         for(auto i=layout->getGraph().begin();i!=layout->getGraph().end();++i)
         {
-            if(pow((p.x-layout->getVertex(i->first).x),2) + pow((p.y-layout->getVertex(i->first).y),2) < 900)
+            if(pow((qp.x()-layout->getVertex(i->first).x), 2) + pow((qp.y()-layout->getVertex(i->first).y), 2) < 900)
             {
                 flag = true;
                 v = i->first;
