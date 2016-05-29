@@ -69,6 +69,7 @@ namespace spider
         void zoom_in();
         void zoom_out();
         void reset();
+        void resetSelection();
         void rot_right();
         void rot_left();
         void insert_vertex();

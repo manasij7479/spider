@@ -86,7 +86,7 @@ namespace spider
             else if (keyEvent->key() == Qt::Key_W)
                 zoom_out();
             else if (keyEvent->key() == Qt::Key_Escape)
-                reset();
+                resetSelection();
             else if(keyEvent->key() == Qt::Key_F5)
                 change();
             return true;
@@ -193,9 +193,8 @@ namespace spider
     {
         m_View->scale(0.9, 0.9);
     }
-    void WindowUI::reset()
+    void WindowUI::resetSelection()
     {
-        m_View->setMatrix(QMatrix());
         clickOnVertexFlag = addVertexFlag = addEdgeFlag = false;
         lp->setVertexSelected(false);
         changeLayout(this->layout);
@@ -203,6 +202,10 @@ namespace spider
             vertexTextbox->hide();
         if(!weightTextbox->isHidden())
             weightTextbox->hide();
+    }
+    void WindowUI::reset()
+    {
+        m_View->setMatrix(QMatrix());
     }
     void WindowUI::rot_left()
     {
