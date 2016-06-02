@@ -76,6 +76,10 @@ namespace spider
         void input_vertex();
         void insert_edge();
         void input_weight();
+        void move_left();
+        void move_right();
+        void move_up();
+        void move_down();
     private:
         GraphValue* g;
         QGraphicsView* m_View;
